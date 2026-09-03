@@ -34,6 +34,8 @@ nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
 nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:15px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
 nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
 nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+nav.secciones a.volver{background:var(--dorado);color:var(--marino-2);font-weight:800;margin-left:6px;white-space:nowrap}
+nav.secciones a.volver:hover{background:var(--terracota);color:#fff}
 
 /* ===== HERO ===== */
 .hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
@@ -239,6 +241,7 @@ footer b{color:var(--crema)}
       <a href="#verificacion">Verificación</a>
       <a href="#autoevaluacion">Autoevaluación</a>
       <a href="#glosario">Glosario</a>
+      <a href="../index.html" class="volver">← Volver al menú</a>
     </nav>
   </div>
 </header>
@@ -704,8 +707,8 @@ document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'}
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-/* scroll-spy */
-const links=[...document.querySelectorAll('#navSecs a')];
+/* scroll-spy — solo enlaces de sección (anclas #), ignora el botón de volver al menú */
+const links=[...document.querySelectorAll('#navSecs a')].filter(a=>a.getAttribute('href').startsWith('#'));
 const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
 const spy=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
