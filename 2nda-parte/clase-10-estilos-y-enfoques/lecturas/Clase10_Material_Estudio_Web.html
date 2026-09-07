@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 10 · Estilos y modelos de aprendizaje — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:16px;line-height:1.15;display:block}
+.marca small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+nav.secciones a.volver{background:var(--dorado);color:var(--marino-2);font-weight:800;margin-left:6px;white-space:nowrap}
+nav.secciones a.volver:hover{background:var(--terracota);color:#fff}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:12px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5.5vw,62px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(15px,1.8vw,19px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:24px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(23px,3.2vw,36px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:15px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(17px,2vw,22px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.1vw,23px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:13px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:14px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:15px;color:var(--marino)}
+.tl-item p{font-size:12.5px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:14.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:14.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:13.5px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:11px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:19px;color:var(--marino)}
+.flip-frontal p{font-size:12.5px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:11px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:17px}
+.flip-dorso span{font-size:12px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:15.5px;display:block}
+.nodo small{color:var(--gris);font-size:12px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:6px}
+.nodo-detalle p{font-size:14.5px}
+
+/* ===== VAK TABLA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:13px}
+table.comp td{padding:10px 14px;font-size:13.5px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:16.5px;margin-bottom:4px}
+.caso-vak p{font-size:14px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== CHAEA INVENTARIO ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:13.5px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:21px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:15px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="kolb"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="vak"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="chaea"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:14.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:15.5px}
+.glos-item dd{font-size:13.5px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:20px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:20px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:14.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(19px,2.4vw,27px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--dorado)}
+.refs{font-size:13px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:13px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:19px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 220 170" fill="none"><polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="8"/><line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="10"/><line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="10"/><line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="10"/></svg>
+      <span><small>Material de estudio · Clase 10</small><b>Estilos y modelos de aprendizaje</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#definicion">Definición</a>
+      <a href="#mitos">Mitos</a>
+      <a href="#kolb">Kolb</a>
+      <a href="#vak">VAK</a>
+      <a href="#chaea">CHAEA</a>
+      <a href="#integracion">Integración</a>
+      <a href="#critica">Crítica</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+      <a href="../index.html" class="volver">← Volver al menú</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 220 170" fill="none">
+    <polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.14)" stroke="#D9A441" stroke-width="2.5"/>
+    <line x1="0" y1="79" x2="88" y2="79" stroke="#F7F1E5" stroke-width="2" opacity=".7"/>
+    <circle cx="4" cy="79" r="4" fill="#F7F1E5" opacity=".7"/>
+    <line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="3"/>
+    <line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="3"/>
+    <line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="3"/>
+  </svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>Estilos y modelos<br>de <em>aprendizaje</em></h1>
+  <p class="sub">Kolb · VAK · Honey-Alonso: distintas formas de procesar la experiencia.<br>Material interactivo para estudiar a tu ritmo — con quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · DEFINICIÓN ═══════════ -->
+<section class="bloque" id="definicion">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>¿Qué es un estilo de aprendizaje?</h2></div>
+  <p class="sec-intro reveal">El punto de partida de toda la unidad es una pregunta simple y potente.</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Si todos los sujetos construimos conocimiento activamente (Piaget, Vygotski, Bruner), ¿por qué no todos aprendemos del mismo modo ni con la misma facilidad ante las mismas propuestas?»</p>
+  </div>
+
+  <div class="tarjeta reveal">
+    <h3>La definición</h3>
+    <p style="font-family:var(--serif);font-size:clamp(16px,1.9vw,21px);color:var(--marino)">Conjunto de <strong style="color:var(--terracota)">preferencias, tendencias y disposiciones</strong> que caracterizan la forma en que una persona <strong>percibe, procesa, almacena y recupera información</strong>.</p>
+  </div>
+
+  <p class="mini reveal" style="text-align:center;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--gris)">Cómo se fue construyendo el concepto</p>
+  <div class="timeline reveal">
+    <div class="tl-item"><div class="dot">54</div><h4>Witkin (1954)</h4><p>Dependencia e independencia de campo: primeros antecedentes.</p></div>
+    <div class="tl-item"><div class="dot">78</div><h4>Dunn y Dunn (1978)</h4><p>Enseñar según el estilo individual; base del VAK.</p></div>
+    <div class="tl-item"><div class="dot">84</div><h4>Kolb (1984)</h4><p>Ciclo experiencial: 4 etapas, 4 estilos.</p></div>
+    <div class="tl-item"><div class="dot">86</div><h4>Honey y Mumford (1986)</h4><p>Cuatro estilos derivados del ciclo de Kolb.</p></div>
+    <div class="tl-item"><div class="dot">92</div><h4>Alonso (1992)</h4><p>Adaptación hispanohablante: nace el CHAEA.</p></div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>Se conecta con lo que ya vimos</h3>
+    <p>Las <strong>inteligencias múltiples</strong> de Gardner, los <strong>modelos representacionales</strong> de Bruner (enactivo / icónico / simbólico) y la <strong>ZDP</strong> de Vygotski ya anticipaban esta diversidad: no todos entran al aprendizaje por la misma puerta.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · MITOS ═══════════ -->
+<section class="bloque" id="mitos">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Mito o realidad</h2></div>
+  <p class="sec-intro reveal">Antes de avanzar, despejemos el terreno. Clasificá cada afirmación — vas a recibir feedback inmediato.</p>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Un estilo de aprendizaje es una capacidad fija con la que se nace.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Los estilos son tendencias que se moldean y cambian con la experiencia vital, la educación y el contexto. No son innatos ni definitivos.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Los estilos son tendencias que se moldean y cambian con la experiencia vital, la educación y el contexto.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Una persona con estilo visual es más inteligente que una con estilo kinestésico.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Los estilos son modos de procesar, no niveles de rendimiento. No miden inteligencia ni capacidad.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Los estilos son modos de procesar, no niveles de rendimiento. No confundir con las inteligencias múltiples: Gardner habla de qué capacidades tenemos; los estilos, de cómo preferimos procesar.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«Un estilo de aprendizaje puede cambiar con la experiencia, la educación y el contexto.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> Los estilos son tendencias flexibles, no destinos fijos. Cambian con la experiencia, la edad, la educación y el contexto sociocultural.</div>
+    <div class="feedback ok"><strong>¡Correcto, es realidad!</strong> Los estilos son tendencias flexibles, no destinos fijos: cambian con la experiencia, la edad, la educación y el contexto sociocultural.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Diagnosticar el estilo de un niño permite etiquetarlo para siempre.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito (y un riesgo).</strong> El estilo es una herramienta de lectura pedagógica para el docente, no una etiqueta clínica. Usarlo para encasillar limita expectativas.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> El estilo es una herramienta de lectura pedagógica para el docente, no una etiqueta clínica ni un diagnóstico definitivo.</div>
+  </div>
+
+  <p class="destacado reveal">Una tendencia, no una sentencia.</p>
+</section>
+
+<!-- ═══════════ 3 · KOLB ═══════════ -->
+<section class="bloque" id="kolb">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">3</span><h2>Lente 1 · Kolb: el ciclo experiencial</h2></div>
+  <p class="sec-intro reveal">Para Kolb (1984) —influenciado por Dewey, Lewin y Piaget— aprender es un proceso cíclico de cuatro etapas. Tocá cada etapa para ver su descripción.</p>
+
+  <div class="tarjeta reveal" style="border-left-color:var(--terracota)">
+    <div class="ciclo-flex">
+      <div class="ciclo-nodos">
+        <button class="nodo sel" data-etapa="ec"><b>1 · Experiencia concreta (EC)</b><small>Aprende sintiendo</small></button>
+        <button class="nodo" data-etapa="or"><b>2 · Observación reflexiva (OR)</b><small>Aprende mirando</small></button>
+        <button class="nodo" data-etapa="ca"><b>3 · Conceptualización abstracta (CA)</b><small>Aprende pensando</small></button>
+        <button class="nodo" data-etapa="ea"><b>4 · Experimentación activa (EA)</b><small>Aprende haciendo</small></button>
+      </div>
+      <div class="nodo-detalle" id="nodoDetalle">
+        <h4 id="ndTitulo">Experiencia concreta</h4>
+        <p id="ndTexto">El sujeto se involucra directamente en una experiencia. Aprende sintiendo, experimentando, estando presente. Es el punto de partida del ciclo.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-intro reveal" style="margin-top:26px"><strong>Los cuatro estilos resultantes.</strong> Según qué etapas privilegiás, emerge tu perfil. Tocá cada tarjeta para ver sus propuestas afines.</p>
+  <div class="kolb-grid reveal">
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">EC + OR</span><h4>Divergente</h4><p>Imaginativo, orientado a las personas, generador de ideas.</p><span class="ayuda">Tocá para ver propuestas afines →</span></div><div class="flip-cara flip-dorso k1"><strong>Divergente</strong><span>Aprende bien en lluvia de ideas y discusión abierta. Propuestas afines: situaciones abiertas, exploración, trabajo creativo grupal.</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">OR + CA</span><h4>Asimilador</h4><p>Razonamiento inductivo, construye modelos teóricos.</p><span class="ayuda">Tocá para ver propuestas afines →</span></div><div class="flip-cara flip-dorso k2"><strong>Asimilador</strong><span>Aprende bien con lecturas, conferencias y tiempo para reflexionar. Propuestas afines: cuentos complejos, registro, análisis.</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">CA + EA</span><h4>Convergente</h4><p>Resuelve problemas, toma decisiones, aplica ideas.</p><span class="ayuda">Tocá para ver propuestas afines →</span></div><div class="flip-cara flip-dorso k3"><strong>Convergente</strong><span>Aprende bien con tareas prácticas y experimentos definidos. Propuestas afines: desafíos con resultado concreto, juegos con reglas.</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">EA + EC</span><h4>Acomodador</h4><p>Intuitivo, orientado a la acción, aprende de los errores.</p><span class="ayuda">Tocá para ver propuestas afines →</span></div><div class="flip-cara flip-dorso k4"><strong>Acomodador</strong><span>Aprende bien con proyectos y trabajo de campo. Propuestas afines: juego libre, salidas, situaciones cambiantes.</span></div></div></div>
+  </div>
+
+  <div class="tarjeta dorado reveal" style="margin-top:20px">
+    <h3>Kolb en la sala: el proyecto «Animales del campo»</h3>
+    <p>Una secuencia didáctica puede recorrer deliberadamente las cuatro etapas:</p>
+    <ul class="lista" style="margin-top:8px">
+      <li><strong>EC</strong> — Visita a la granja: experiencia directa, tocar, ver, oler.</li>
+      <li><strong>OR</strong> — Dibujo y registro de lo observado: representar con distancia.</li>
+      <li><strong>CA</strong> — Charla sobre rasgos comunes de los animales: construir categorías.</li>
+      <li><strong>EA</strong> — Libro colectivo para la biblioteca de sala: producto final.</li>
+    </ul>
+    <p style="margin-top:10px"><strong>Idea clave:</strong> una propuesta que recorre el ciclo completo ofrece puntos de entrada para todos los estilos. No hace falta diagnosticar a cada niño: hace falta diseñar secuencias completas.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · VAK ═══════════ -->
+<section class="bloque" id="vak">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">4</span><h2>Lente 2 · VAK: los canales sensoriales</h2></div>
+  <p class="sec-intro reveal">El modelo VAK (Dunn y Dunn, 1978; también VARK cuando suma lectoescritura) propone preferencias por canales sensoriales para percibir y procesar información.</p>
+
+  <table class="comp reveal">
+    <tr><th></th><th>👁 VISUAL</th><th>👂 AUDITIVO</th><th>🤸 KINESTÉSICO</th></tr>
+    <tr><td>Aprende mejor con…</td><td>Imágenes, diagramas, mapas, colores, gráficos, videos.</td><td>Explicaciones orales, debates, canciones, ritmos, podcasts.</td><td>Movimiento, manipulación, experimentos, juego dramático, construcción.</td></tr>
+    <tr><td>En el jardín…</td><td>Dibuja para entender. Recuerda dónde estaba algo. Necesita ver para creer.</td><td>Repite en voz alta. Memoriza canciones. Habla mientras trabaja.</td><td>Necesita tocar. Aprende jugando. Se inquieta si está mucho tiempo quieto.</td></tr>
+    <tr><td>Propuestas afines</td><td>Organizadores visuales, código de colores, láminas, cuentos ilustrados.</td><td>Canciones, cuentos orales, consignas claras, música de fondo.</td><td>Rincones de exploración, juego libre, actividades manuales, salidas.</td></tr>
+  </table>
+
+  <p class="destacado reveal">Una propuesta que contempla los tres canales ofrece puntos de entrada para todos.</p>
+
+  <p class="sec-intro reveal" style="margin-top:30px"><strong>Entrená la mirada:</strong> leé cada caso del jardín y elegí el canal predominante. Vas a recibir la justificación.</p>
+
+  <div class="caso-vak reveal" data-ok="V">
+    <h4>👦 Mateo · 4 años</h4>
+    <p>Cuando la docente le explica algo solo con palabras, se distrae y mira a otro lado. Pero cuando dibuja en el pizarrón o le muestra una imagen, presta atención inmediatamente. En el rincón de arte dice «mirá lo que hice» antes de explicar verbalmente.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Visual! ✔</strong> Dibuja para entender, necesita ver para creer. La imagen capta su atención de inmediato.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Mateo es <strong>visual</strong>: se distrae con lo solo verbal y responde al instante ante imágenes y dibujos.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="K">
+    <h4>👧 Valentina · 4 años</h4>
+    <p>No se queda quieta. Necesita tocar todo, construir y destruir. Cuando tiene que sentarse a escuchar un cuento, se inquieta y juega con los botones de su remera. Pero cuando el cuento incluye sonidos, aplausos y movimiento, participa entusiasmada.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Kinestésico! ✔</strong> Necesita tocar, manipular, moverse. Se inquieta si está mucho tiempo quieta.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Valentina es <strong>kinestésica</strong>: necesita implicación corporal para sostener la atención.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="A">
+    <h4>👦 Santiago · 5 años</h4>
+    <p>Aprende todas las canciones de memoria. Repite en voz alta las consignas antes de hacerlas. Cuando tiene que resolver un problema, murmura los pasos para sí mismo.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Auditivo! ✔</strong> Repite en voz alta, memoriza canciones, usa su propia voz para procesar.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Santiago es <strong>auditivo</strong>: memoriza mejor escuchando y repite en voz alta lo que aprende.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="V">
+    <h4>👧 Camila · 5 años</h4>
+    <p>Siempre recuerda dónde estaban las cosas («el libro de los animales estaba al lado de la ventana»). Cuando aprende algo nuevo, necesita ver un ejemplo gráfico. Clasifica hojas por color y forma antes de preguntar cómo se llaman.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Visual! ✔</strong> Recuerda ubicaciones espaciales, clasifica por atributos visibles, necesita ejemplos gráficos.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Camila es <strong>visual</strong>: ordena el mundo con la vista y la ubicación espacial.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="K">
+    <h4>👦 Tomás · 4 años</h4>
+    <p>Cuando la docente explica «más grande» y «más chico» con palabras, Tomás no entiende. Pero cuando le da dos bloques de distinto tamaño para comparar tocándolos, entiende al instante. En construcciones es el más creativo.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Kinestésico! ✔</strong> Manipula para entender: necesita el contacto físico con los objetos para comprender.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Tomás es <strong>kinestésico</strong>: comprende comparando bloques con las manos, no con palabras.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="A">
+    <h4>👧 Lucía · 5 años</h4>
+    <p>Participa cuando la docente cuenta historias con diferentes tonos de voz. Pide que le repitan los cuentos una y otra vez. Memoriza canciones al primer intento y siempre quiere ser la narradora en dramatización.</p>
+    <div class="vak-btns"><button class="vak-btn">👁 Visual</button><button class="vak-btn">👂 Auditivo</button><button class="vak-btn">🤸 Kinestésico</button></div>
+    <div class="feedback ok"><strong>¡Auditivo! ✔</strong> Disfruta de historias contadas, pide repeticiones, memoriza canciones fácilmente.</div>
+    <div class="feedback mal"><strong>No es ese canal.</strong> Lucía es <strong>auditiva</strong>: el mundo del sonido y la voz es su puerta de entrada.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · CHAEA ═══════════ -->
+<section class="bloque" id="chaea">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">5</span><h2>Lente 3 · Honey-Alonso: el CHAEA</h2></div>
+  <p class="sec-intro reveal">Honey y Mumford (1986) derivaron cuatro estilos del ciclo de Kolb. Catalina Alonso (1992) los adaptó al contexto hispanohablante y construyó el cuestionario CHAEA (versión completa: 40 ítems).</p>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>⚡ Activo — «Actúa primero, piensa después»<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p><strong>Aprende con:</strong> actividades nuevas, desafíos, juegos de rol, trabajo grupal, resolución de problemas.</p><p><strong>Le cuesta:</strong> la teoría pura y las tareas que requieren mucha paciencia estática.</p><p><strong>En el jardín:</strong> propuestas con movimiento, situaciones nuevas, dinámicas grupales.</p></div>
+    </details>
+    <details class="acordeon"><summary>🔍 Reflexivo — «Observa y analiza antes de actuar»<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p><strong>Aprende con:</strong> tiempo para investigar, revisar lo ocurrido, pensar antes de responder.</p><p><strong>Le cuesta:</strong> hablar sin preparación y tomar decisiones rápidas.</p><p><strong>En el jardín:</strong> momentos de silencio, registro, observación sistemática.</p></div>
+    </details>
+    <details class="acordeon"><summary>📚 Teórico — «Busca la lógica y los modelos»<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p><strong>Aprende con:</strong> lecturas, marcos conceptuales, preguntas complejas, sistemas ordenados.</p><p><strong>Le cuesta:</strong> la ambigüedad y las actividades sin fundamento claro.</p><p><strong>En el jardín:</strong> necesita el «por qué» antes del «cómo» de cada propuesta.</p></div>
+    </details>
+    <details class="acordeon"><summary>🛠 Pragmático — «¿Para qué me sirve esto?»<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p><strong>Aprende con:</strong> demostraciones prácticas, aplicaciones concretas, problemas reales.</p><p><strong>Le cuesta:</strong> lo que no tiene aplicación evidente y las discusiones sin conclusión.</p><p><strong>En el jardín:</strong> conecta cada actividad con su uso en la sala.</p></div>
+    </details>
+  </div>
+
+  <div class="tarjeta dorado reveal" style="margin-top:18px">
+    <h3>El CHAEA en tu propia formación docente</h3>
+    <p>Una clase que incluye momentos variados atrae a todos los perfiles: <strong>la cita que da el marco</strong> (teórico) → <strong>el análisis de un caso de sala</strong> (pragmático/activo) → <strong>la lectura y escritura individual</strong> (reflexivo) → <strong>la puesta en común</strong> (activo). Y ojo: tendemos a enseñar como nos gusta aprender.</p>
+  </div>
+
+  <div class="tarjeta marino reveal" style="margin-top:18px">
+    <h3>Probalo en vos: mini-inventario CHAEA (versión abreviada)</h3>
+    <p class="mini">En cada par, marcá la opción que MÁS te describe como aprendiz. No hay respuestas correctas: es una herramienta de reflexión, no un diagnóstico.</p>
+    <div id="chaeaForm">
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q1" value="izq"> Me gusta participar activamente y probar cosas nuevas.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q1" value="der"> Prefiero observar y analizar antes de actuar.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q2" value="izq"> Disfruto de los desafíos y las situaciones imprevistas.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q2" value="der"> Prefiero tener tiempo para planificar antes de hacer.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q3" value="izq"> Aprendo mejor haciendo y experimentando.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q3" value="der"> Aprendo mejor pensando y reflexionando.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q4" value="izq"> Me gusta el trabajo en grupo y las dinámicas.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q4" value="der"> Prefiero trabajar solo/a y en silencio.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q5" value="izq"> Busco la utilidad práctica de lo que aprendo.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q5" value="der"> Busco entender los principios y la teoría.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q6" value="izq"> Me impaciente con las explicaciones largas sin acción.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q6" value="der"> Me impaciente con las actividades sin fundamento teórico.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q7" value="izq"> Prefiero las tareas con resultado concreto.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q7" value="der"> Prefiero las tareas que me hacen pensar.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q8" value="izq"> Me gusta hablar y debatir para aprender.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q8" value="der"> Me gusta escuchar y reflexionar para aprender.</label>
+      </div></div>
+      <button class="btn-principal" id="btnChaea">Ver mi perfil tentativo</button>
+      <p class="mini" id="chaeaAviso" style="margin-top:10px;display:none;color:var(--terracota)">Te faltan responder algunas filas.</p>
+    </div>
+    <div id="chaeaResultado"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 6 · INTEGRACIÓN ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">6</span><h2>Tres lentes, un mismo niño</h2></div>
+  <p class="sec-intro reveal">Los tres modelos se superponen: describen la misma complejidad desde ángulos distintos.</p>
+
+  <table class="comp reveal">
+    <tr><th>Modelo</th><th>Criterio</th><th>Categorías</th><th>Utilidad principal</th></tr>
+    <tr><td>Kolb (1984)</td><td>Fases del ciclo de la experiencia (percibir y procesar)</td><td>Divergente · Asimilador · Convergente · Acomodador</td><td>Diseñar secuencias completas</td></tr>
+    <tr><td>VAK (1978)</td><td>Canal sensorial predominante</td><td>Visual · Auditivo · Kinestésico</td><td>Puntos de entrada rápidos en la sala</td></tr>
+    <tr><td>CHAEA (1994)</td><td>Disposición hacia acción, reflexión, lógica o aplicación</td><td>Activo · Reflexivo · Teórico · Pragmático</td><td>Conocer el propio estilo docente</td></tr>
+  </table>
+
+  <div class="tarjeta marino reveal" style="margin-top:20px;text-align:center">
+    <h3>Valentina (4 años), vista con los tres lentes</h3>
+    <p>Necesita tocar todo, se lanza a la acción sin dudar y aprende del error en proyectos. Tocá cada lente:</p>
+    <div class="capas">
+      <button class="capa-btn" data-lente="kolb">🔍 Kolb</button>
+      <button class="capa-btn" data-lente="vak">🔍 VAK</button>
+      <button class="capa-btn" data-lente="chaea">🔍 CHAEA</button>
+    </div>
+    <div class="capa-out" id="capaOut"></div>
+    <p class="mini" style="margin-top:14px">Los modelos no la «es»: son lentes distintos para apreciar la misma complejidad. La clave no es encasillar, sino ampliar la mirada.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CRÍTICA ═══════════ -->
+<section class="bloque" id="critica">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">7</span><h2>La mirada crítica</h2></div>
+  <p class="sec-intro reveal">Pashler et al. (2008) publicaron un meta-análisis en <em>Psychological Science in the Public Interest</em> que cuestionó la evidencia del enfoque. Abrí cada crítica:</p>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>1 · Evidencia empírica débil<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Varios estudios meta-analíticos cuestionan que enseñar «al estilo» de cada alumno mejore los resultados de aprendizaje. Es la <strong>ilusión del encaje perfecto</strong>: el match estilo-método no produce el salto de rendimiento que la teoría predice.</p></div>
+    </details>
+    <details class="acordeon"><summary>2 · El riesgo de la etiqueta<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Diagnosticar a un niño como «kinestésico» puede <strong>limitar las expectativas</strong> sobre lo que puede lograr en otros formatos — una profecía que tiende a cumplirse porque el adulto deja de proponerle otros caminos.</p></div>
+    </details>
+    <details class="acordeon"><summary>3 · Dependencia del contenido<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Alguien puede aprender matemática de manera visual y literatura de manera auditiva. <strong>No existe un estilo universal</strong> que aplique igual en todos los dominios.</p></div>
+    </details>
+    <details class="acordeon"><summary>4 · Diversidad cultural<span class="chev">▾</span></summary>
+      <div class="cuerbo"><p>Un estilo «kinestésico» puede ser también un estilo asociado a contextos donde <strong>el aprendizaje ocurre fundamentalmente en la práctica</strong>, no en el texto escrito. Lo cultural y social moldea los modos de aprender.</p></div>
+    </details>
+  </div>
+
+  <p class="destacado reveal" style="margin-top:18px">Estas críticas no invalidan el enfoque: lo moderan.</p>
+
+  <div class="dos-col reveal" style="margin-top:14px">
+    <div class="col-si"><h3>✅ Uso productivo</h3><ul>
+      <li><strong>Ampliar la mirada</strong> sobre los alumnos</li>
+      <li><strong>Diversificar</strong> las propuestas de enseñanza</li>
+      <li><strong>Reflexionar</strong> sobre el propio modo de aprender (y sus sesgos)</li>
+      <li>Diseñar secuencias con <strong>múltiples puntos de entrada</strong> (en sintonía con el DUA)</li>
+    </ul></div>
+    <div class="col-no"><h3>❌ Riesgos a evitar</h3><ul>
+      <li><strong>Etiquetar</strong>: «este niño es kinestésico, punto»</li>
+      <li><strong>Confundir estilo con capacidad</strong></li>
+      <li><strong>Asumir inmutabilidad</strong> del estilo</li>
+      <li><strong>Usarlos para limitar</strong> en lugar de ampliar</li>
+    </ul></div>
+  </div>
+  <p class="destacado reveal">Los estilos son una herramienta de <strong>lectura pedagógica</strong>, no un sistema de clasificación de personas.</p>
+</section>
+
+<!-- ═══════════ 8 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">8</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">1 · Un estilo de aprendizaje es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Una capacidad fija con la que se nace</button>
+      <button class="quiz-op">Una tendencia que puede cambiar con la experiencia</button>
+      <button class="quiz-op">Un diagnóstico definitivo de cómo aprende cada persona</button>
+      <button class="quiz-op">Lo mismo que inteligencia múltiple</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Es una tendencia que se construye con la experiencia y puede cambiar según el contexto, la educación y la situación.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Un estilo es una <strong>tendencia que cambia con la experiencia</strong>: no es capacidad fija, no es diagnóstico definitivo ni equivale a las inteligencias múltiples.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · ¿Cuál de estos NO es un estilo del modelo de Kolb?</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Divergente</button>
+      <button class="quiz-op">Kinestésico</button>
+      <button class="quiz-op">Asimilador</button>
+      <button class="quiz-op">Acomodador</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> «Kinestésico» pertenece al modelo VAK (canales sensoriales). Los estilos de Kolb son: divergente, asimilador, convergente y acomodador.</div>
+    <div class="feedback mal"><strong>✘ Ojo.</strong> «Kinestésico» es del modelo VAK. Los estilos de Kolb son: divergente (EC+OR), asimilador (OR+CA), convergente (CA+EA) y acomodador (EA+EC).</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">3 · El CHAEA fue adaptado al contexto hispanohablante por…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">David Kolb, en 1984</button>
+      <button class="quiz-op">Catalina Alonso, en 1992</button>
+      <button class="quiz-op">Dunn y Dunn, en 1978</button>
+      <button class="quiz-op">Witkin, en 1954</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Catalina Alonso (1992) adaptó el modelo de Honey y Mumford y construyó el cuestionario CHAEA, de amplio uso en España y América Latina.</div>
+    <div class="feedback mal"><strong>✘ No es ese/a.</strong> Fue <strong>Catalina Alonso (1992)</strong>, a partir del modelo de Honey y Mumford (1986), basado a su vez en el ciclo de Kolb.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">4 · Según Pashler et al. (2008), enseñar «al estilo» de cada alumno…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Garantiza mejores resultados de aprendizaje</button>
+      <button class="quiz-op">No mejora comprobablemente los resultados de aprendizaje</button>
+      <button class="quiz-op">Solo funciona en nivel inicial</button>
+      <button class="quiz-op">Reemplaza la necesidad de planificar</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El meta-análisis cuestiona la evidencia del «match» estilo-método. Por eso los estilos se usan para ampliar la mirada, no como receta.</div>
+    <div class="feedback mal"><strong>✘ Al revés.</strong> Pashler et al. concluyen que <strong>no hay evidencia sólida</strong> de que enseñar al estilo de cada alumno mejore los resultados. Las críticas moderan el enfoque, no lo invalidan.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">5 · Un niño puede ser «acomodador» según Kolb, «activo» según CHAEA y «kinestésico» según VAK. Esto demuestra que…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Uno de los tres modelos está mal aplicado</button>
+      <button class="quiz-op">Hay que elegir un solo modelo y descartar los demás</button>
+      <button class="quiz-op">Los inventarios no sirven para nada</button>
+      <button class="quiz-op">Los modelos se superponen: son lentes distintos para la misma diversidad</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Como Valentina: los tres lentes describen ángulos distintos de la misma persona. La clave no es encasillar, sino ampliar la mirada.</div>
+    <div class="feedback mal"><strong>✘ No exactamente.</strong> Los modelos <strong>se superponen</strong>: describen la misma complejidad desde ángulos distintos. Ninguno «es» al niño; juntos amplían la mirada docente.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:11.5px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:15.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">9</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de las clases 9 y 10. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Estilo de aprendizaje</dt><dd>Preferencias, tendencias y disposiciones que caracterizan cómo una persona percibe, procesa, almacena y recupera información. No es capacidad ni rasgo fijo: es una tendencia que cambia con la experiencia.</dd></dl>
+    <dl class="glos-item reveal"><dt>Ciclo de aprendizaje experiencial (Kolb)</dt><dd>Cuatro etapas —experiencia concreta, observación reflexiva, conceptualización abstracta y experimentación activa— cuyo privilegio da origen a cuatro estilos.</dd></dl>
+    <dl class="glos-item reveal"><dt>Estilo divergente</dt><dd>EC + OR. Imaginativo, orientado a las personas, generador de ideas. Fuerte en situaciones abiertas y exploración.</dd></dl>
+    <dl class="glos-item reveal"><dt>Estilo asimilador</dt><dd>OR + CA. Razona inductivamente, crea modelos teóricos. Fuerte en lecturas y reflexión.</dd></dl>
+    <dl class="glos-item reveal"><dt>Estilo convergente</dt><dd>CA + EA. Resuelve problemas, aplica ideas. Fuerte en tareas prácticas y definidas.</dd></dl>
+    <dl class="glos-item reveal"><dt>Estilo acomodador</dt><dd>EA + EC. Intuitivo, orientado a la acción, aprende del error. Fuerte en proyectos y cambios.</dd></dl>
+    <dl class="glos-item reveal"><dt>Modelo VAK</dt><dd>Clasifica los estilos según el canal sensorial predominante: visual, auditivo, kinestésico. Útil para diversificar, aunque cuestionado como modelo fijo.</dd></dl>
+    <dl class="glos-item reveal"><dt>CHAEA (Honey-Alonso)</dt><dd>Cuestionario de estilos adaptado al mundo hispanohablante (Alonso, 1992): activo, reflexivo, teórico, pragmático. Versión completa: 40 ítems.</dd></dl>
+    <dl class="glos-item reveal"><dt>Hinge question</dt><dd>Pregunta diagnóstica ubicada en un pivote de la clase: si la mayoría responde bien, se avanza; si no, se re-enseña con otro ejemplo.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Consigna puente a la Clase 11 · Motivación y educabilidad</h3>
+    <p class="consigna">«¿Alguna vez sentiste que "no querías" aprender algo aunque sabías que podías? ¿Qué influyó en esa falta de motivación?»</p>
+    <p style="font-size:14px;color:#C9D2E0;margin-top:10px">Reflexión escrita · ½ carilla · Guía: una situación concreta, qué sentías, qué factores influyeron, qué habría necesitado.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Alonso, C., Gallego, D. y Honey, P. (1994). <em>Los estilos de aprendizaje</em>. Mensajero. · Dunn, R. y Dunn, K. (1978). <em>Teaching Students Through Their Individual Learning Styles</em>. Reston. · Honey, P. y Mumford, A. (1986). <em>The Manual of Learning Styles</em>. Peter Honey. · Kolb, D. (1984). <em>Experiential Learning</em>. Prentice Hall. · Pashler, H. et al. (2008). Learning Styles: Concepts and Evidence. <em>PSPI, 9</em>(3), 105–119.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 10 — Estilos y modelos de aprendizaje<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy — solo enlaces de sección (anclas #), ignora el botón de volver al menú */
+const links=[...document.querySelectorAll('#navSecs a')].filter(a=>a.getAttribute('href').startsWith('#'));
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  caja.addEventListener('pregunta-resuelta',()=>{});
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+});
+
+/* casos VAK */
+document.querySelectorAll('.caso-vak').forEach(caso=>{
+  const correcta=caso.dataset.ok;
+  const btns=[...caso.querySelectorAll('.vak-btn')];
+  const mapa={V:0,A:1,K:2};
+  const fbOk=caso.querySelector('.feedback.ok'),fbMal=caso.querySelector('.feedback.mal');
+  let resuelta=false;
+  btns.forEach((b,i)=>{
+    const letra=['V','A','K'][i];
+    b.addEventListener('click',()=>{
+      if(resuelta)return; resuelta=true;
+      const bien=letra===correcta;
+      b.classList.add(bien?'bien':'mal');
+      btns[mapa[correcta]].classList.add('bien');
+      btns.forEach(x=>x.disabled=true);
+      (bien?fbOk:fbMal).classList.add('ver');
+      registrarRespuesta(bien);
+    });
+  });
+});
+
+/* flips */
+document.querySelectorAll('.flip').forEach(f=>{
+  const go=()=>f.classList.toggle('volteada');
+  f.addEventListener('click',go);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+});
+
+/* nodos del ciclo Kolb */
+const nodos={
+  ec:{t:'1 · Experiencia concreta (EC)',d:'El sujeto se involucra directamente en una experiencia. Aprende sintiendo, experimentando, estando presente. Es el punto de partida del ciclo.'},
+  or:{t:'2 · Observación reflexiva (OR)',d:'El sujeto reflexiona sobre la experiencia desde diferentes perspectivas. Observa, escucha, registra. Aprende mirando y pensando.'},
+  ca:{t:'3 · Conceptualización abstracta (CA)',d:'El sujeto integra sus observaciones en teorías, modelos o principios generales. Aprende pensando y analizando lógicamente.'},
+  ea:{t:'4 · Experimentación activa (EA)',d:'El sujeto usa las teorías para tomar decisiones y resolver problemas. Aprende haciendo, influyendo activamente sobre el entorno.'}
+};
+document.querySelectorAll('.nodo').forEach(n=>n.addEventListener('click',()=>{
+  document.querySelectorAll('.nodo').forEach(x=>x.classList.remove('sel'));
+  n.classList.add('sel');
+  const info=nodos[n.dataset.etapa];
+  document.getElementById('ndTitulo').textContent=info.t;
+  document.getElementById('ndTexto').textContent=info.d;
+}));
+
+/* valentina por capas (usada en sección integración) */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  kolb:{t:'Lente Kolb · Acomodadora (EA + EC)',d:'Intuitiva, orientada a la acción. Aprende del error a través de proyectos y situaciones cambiantes.'},
+  vak:{t:'Lente VAK · Kinestésica',d:'Percibe a través del movimiento y el tacto. Necesita implicación corporal para sostener la atención.'},
+  chaea:{t:'Lente CHAEA · Activa',d:'Se lanza a la acción sin dudar. Los desafíos nuevos y el trabajo grupal son su terreno.'}
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* mini-inventario CHAEA */
+document.getElementById('btnChaea').addEventListener('click',()=>{
+  const total=8;let resp=0,izq=0,der=0;
+  for(let i=1;i<=total;i++){
+    const r=document.querySelector(`input[name="q${i}"]:checked`);
+    if(r){resp++; r.value==='izq'?izq++:der++;}
+  }
+  const aviso=document.getElementById('chaeaAviso');
+  if(resp<total){aviso.style.display='block';return;}
+  aviso.style.display='none';
+  const out=document.getElementById('chaeaResultado');
+  const perfilIzq={t:'Perfil de acción: Activo / Pragmático',d:'Tiendes a lanzarte a hacer, buscar lo práctico y aprender con acción concreta. Tus fortalezas: iniciativa, energía, aplicación. A cuidar: la paciencia con la teoría y las tareas largas.'};
+  const perfilDer={t:'Perfil de reflexión: Reflexivo / Teórico',d:'Tiendes a observar, analizar y buscar fundamentos antes de actuar. Tus fortalezas: profundidad, rigor, perspectiva. A cuidar: la improvisación y el salto a la acción sin pensar.'};
+  const p=izq>der?perfilIzq:perfilDer;
+  out.innerHTML=`<h4>${p.t}</h4><p>${p.d}</p><p style="margin-top:10px;font-size:13px;color:#C9D2E0">Columna acción: ${izq} · Columna reflexión: ${der}</p><p style="margin-top:8px;font-size:12.5px;color:#8FA0B8">Recordá: es una herramienta de reflexión, no un diagnóstico. El CHAEA completo tiene 40 ítems.</p>`;
+  out.classList.remove('ver');void out.offsetWidth;out.classList.add('ver');
+  out.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Dominás los tres lentes y sus límites. Listo para la Clase 11.'
+      :aciertos>=3?'¡Muy bien! Repasá las preguntas donde fallaste usando el glosario.'
+      :'Volvé a las secciones 1, 5 y 7 y volvé a intentar. Con leer con atención, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>

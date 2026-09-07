@@ -1,0 +1,679 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 7 · Bruner y Ausubel: aprender con sentido — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:19px;line-height:1.15;display:block}
+.marca small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:15px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:14.5px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(41px,6.6vw,74.5px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(18px,2.2vw,23px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:29px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(27.5px,3.8vw,43px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:18px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(20.5px,2.4vw,26.5px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(20.5px,2.5vw,27.5px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:15.5px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:17px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:18px;color:var(--marino)}
+.tl-item p{font-size:15px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:15.5px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:17.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:17.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:16px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:17px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:13px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:23px;color:var(--marino)}
+.flip-frontal p{font-size:15px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:13px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:20.5px}
+.flip-dorso span{font-size:14.5px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:18.5px;display:block}
+.nodo small{color:var(--gris);font-size:14.5px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:6px}
+.nodo-detalle p{font-size:17.5px}
+
+/* ===== VAK TABLA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:15.5px}
+table.comp td{padding:10px 14px;font-size:16px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:20px;margin-bottom:4px}
+.caso-vak p{font-size:17px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:16px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== CHAEA INVENTARIO ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:16px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:25px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:18px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="comprender"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="disenar"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="mejorar"]{background:var(--oliva);color:#fff}
+.capa-btn[data-lente="aplicacion"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="transferencia"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="coconstruccion"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:53px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:17.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:18.5px}
+.glos-item dd{font-size:16px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:24px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:24px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:17.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(23px,2.9vw,32.5px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.4vw,26.5px);color:var(--dorado)}
+.refs{font-size:15.5px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:15.5px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 220 170" fill="none"><polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="8"/><line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="10"/><line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="10"/><line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="10"/></svg>
+      <span><small>Material de estudio · Clase 7</small><b>Bruner y Ausubel: aprender con sentido</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#puente">Puente</a>
+      <a href="#bruner">Bruner</a>
+      <a href="#modos">Modos</a>
+      <a href="#espiral">Espiral</a>
+      <a href="#ausubel">Ausubel</a>
+      <a href="#subsumidores">Subsumidores</a>
+      <a href="#diferencias">Diferencias</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 220 170" fill="none" role="img" aria-label="Del descubrimiento (engranaje) al significado (ancla): Bruner y Ausubel, aprender con sentido">
+    <ellipse cx="110" cy="90" rx="96" ry="74" fill="rgba(217,164,65,.10)"/>
+    <text x="110" y="16" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2.5px" fill="#D9A441">BRUNER ⟷ AUSUBEL · APRENDER CON SENTIDO</text>
+    <!-- espiral entre ambos: el conocimiento que se retoma con mayor complejidad -->
+    <path d="M82 96 q7 -13 14 0 q7 13 14 0 q7 -13 14 0" stroke="#C4633E" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <!-- engranaje: descubrimiento / construcción activa -->
+    <circle cx="63" cy="86" r="18" fill="rgba(217,164,65,.22)" stroke="#D9A441" stroke-width="2.5"/>
+    <circle cx="63" cy="86" r="6" fill="rgba(217,164,65,.5)"/>
+    <line x1="63" y1="62" x2="63" y2="110" stroke="#D9A441" stroke-width="0" />
+    <g stroke="#D9A441" stroke-width="2.4">
+      <line x1="56" y1="63" x2="52" y2="57"/><line x1="70" y1="63" x2="74" y2="57"/>
+      <line x1="56" y1="109" x2="52" y2="115"/><line x1="70" y1="109" x2="74" y2="115"/>
+      <line x1="41" y1="79" x2="35" y2="76"/><line x1="41" y1="93" x2="35" y2="96"/>
+      <line x1="85" y1="79" x2="91" y2="76"/><line x1="85" y1="93" x2="91" y2="96"/>
+    </g>
+    <!-- ancla: subsumidores / anclaje al saber previo -->
+    <line x1="157" y1="60" x2="157" y2="118" stroke="#7D8655" stroke-width="3"/>
+    <line x1="147" y1="70" x2="167" y2="70" stroke="#7D8655" stroke-width="2.5"/>
+    <path d="M147 104 a10 10 0 0 1 20 0" stroke="#7D8655" stroke-width="2.5" fill="none"/>
+    <circle cx="157" cy="128" r="8" fill="rgba(125,134,85,.4)" stroke="#7D8655" stroke-width="2.5"/>
+    <circle cx="157" cy="56" r="4.5" stroke="#7D8655" stroke-width="2.5" fill="none"/>
+    <text x="63" y="140" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">descubrir</text>
+    <text x="157" y="140" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">dar sentido</text>
+    <text x="110" y="158" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8px;font-weight:600;letter-spacing:1px" fill="#D9A441">NI · PRIMARIA · SECUNDARIA — LOS MISMOS CONTENIDOS, MÁS COMPLEJOS</text>
+  </svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>Bruner y Ausubel: <em>aprender con sentido</em></h1>
+  <p class="sub">Del aprendizaje por descubrimiento al aprendizaje significativo.<br>Unidad II · Clase 7 de la Unidad II — el giro hacia la enseñanza.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · EL PUENTE ═══════════ -->
+<section class="bloque" id="puente">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>¿Por qué Bruner y Ausubel?</h2></div>
+  <p class="sec-intro reveal">Hasta acá, las teorías nos explicaron <strong>cómo aprende el sujeto</strong>. Pero queda una pregunta sin responder: <em>¿cómo enseña la docente?</em></p>
+
+  <div class="grid2 reveal">
+    <div class="tarjeta marino">
+      <h3>Piaget y Vygotski</h3>
+      <p><strong>Cómo aprende el sujeto</strong> → mecanismos del desarrollo cognitivo, papel del otro y del contexto social.</p>
+      <p style="color:var(--tinta)">Pero… ¿cómo se traduce la ZDP en una propuesta de sala? ¿Qué actividades generan conflicto cognitivo? ¿Qué hace exactamente la docente cuando «provoca» el aprendizaje?</p>
+    </div>
+    <div class="tarjeta dorado">
+      <h3>Bruner y Ausubel</h3>
+      <p><strong>Cómo enseñar</strong> → cómo diseñar actividades de aprendizaje, cómo partir de lo que el niño ya sabe, qué tipo de intervención es más potente.</p>
+      <p>Dos respuestas desde ángulos distintos: Bruner pone el acento en la <strong>exploración activa y el descubrimiento</strong>. Ausubel reivindica la <strong>recepción significativa</strong>: se puede aprender algo que te enseñan, siempre que se conecte con lo que ya sabés.</p>
+    </div>
+  </div>
+  <p class="destacado reveal">Lejos de ser opuestos, son complementarios. Esta clase te da herramientas para <strong>diseñar la enseñanza</strong>, no solo para interpretar el aprendizaje.</p>
+</section>
+
+<!-- ═══════════ 2 · BRUNER ═══════════ -->
+<section class="bloque" id="bruner">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Bruner: aprender descubriendo</h2></div>
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«El acto del descubrimiento tiene en sí mismo una recompensa intrínseca.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Jerome Bruner (1915–2016), psicólogo y pedagogo estadounidense</span></p>
+  </div>
+  <p class="sec-intro reveal" style="margin-top:6px">Para Bruner, aprender no es recibir información sino <strong>construirla activamente</strong> a través de la exploración, la formulación de hipótesis y la resolución de problemas. El conocimiento no se presenta como producto terminado: se presenta como un proceso que el sujeto construye.</p>
+
+  <div class="grid3 reveal" style="margin-top:6px">
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>1 · Exploración activa</h3>
+      <p>La docente <strong>no da la respuesta de entrada</strong>: genera condiciones para que el niño la construya.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>2 · El error como información</h3>
+      <p>No es un fracaso: es parte del proceso. <strong>Dice algo sobre cómo el niño está pensando</strong> y qué hipótesis está probando.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>3 · Ambiente rico y desafiante</h3>
+      <p>Materiales variados, posibilidades de exploración y preguntas abiertas: <strong>el andamio del descubrimiento</strong>.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>En la sala de nivel inicial</h3>
+    <p>Una docente propone a los niños de sala de 4 jugar con materiales naturales: hojas, semillas, piedritas, ramas. No da consignas cerradas: invita a explorar, agrupar, comparar. Cuando un niño dice «esta piedrita es más pesada que todas las demás», la docente no corrige ni valida: pregunta <strong>«¿cómo podrías comprobarlo?»</strong> El niño está aprendiendo a través del descubrimiento. La docente está operando como facilitadora del proceso.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · MODOS DE REPRESENTACIÓN ═══════════ -->
+<section class="bloque" id="modos">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">3</span><h2>Los modos de representación</h2></div>
+  <p class="sec-intro reveal">Bruner identificó tres modos en que representamos el conocimiento. No son estadios que se superan definitivamente, como en Piaget: son <strong>formas que coexisten y se combinan</strong>.</p>
+
+  <div class="grid3 reveal">
+    <div class="tarjeta dorado">
+      <h3>🖐️ Enactivo · la acción</h3>
+      <p>El conocimiento a través del cuerpo y el movimiento. Se aprende <strong>haciendo</strong>: amasando, trepando, armando, construyendo. Predominante en los primeros años.</p>
+      <p style="font-size:15.5px;color:#5C5242"><em>Ejemplo NI:</em> los niños mezclan pintura con las manos para descubrir los colores.</p>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>🖼️ Icónico · la imagen</h3>
+      <p>La representación a través de imágenes y percepciones. El niño puede pensar <strong>«en imágenes»</strong> antes de poder simbolizar. El dibujo, el modelado y la observación son vías privilegiadas.</p>
+      <p style="font-size:15.5px;color:#4C5236"><em>Ejemplo NI:</em> representan el cuento con dibujos antes de poder escribirlo.</p>
+    </div>
+    <div class="tarjeta marino">
+      <h3>🔤 Simbólico · el lenguaje</h3>
+      <p>La representación a través de símbolos abstractos: lenguaje, números, códigos. <strong>Emerge apoyándose en los modos anteriores</strong>; no debe forzarse antes de consolidarlos.</p>
+      <p style="font-size:15.5px;color:var(--tinta)"><em>Ejemplo NI:</em> nombran los colores descubiertos y empiezan a escribir sus nombres.</p>
+    </div>
+  </div>
+
+  <p class="destacado reveal">En el nivel inicial, los modos <strong>enactivo e icónico</strong> son predominantes. Una pedagogía que saltea estos modos y apela directamente al simbólico pierde el anclaje en la experiencia y la imagen que los niños necesitan para construir conocimiento.</p>
+</section>
+
+<!-- ═══════════ 4 · CURRÍCULUM EN ESPIRAL ═══════════ -->
+<section class="bloque" id="espiral">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">4</span><h2>El currículum en espiral</h2></div>
+  <p class="sec-intro reveal">Bruner propuso organizar los contenidos <strong>en espiral</strong>: los mismos temas se retoman en distintos momentos del desarrollo, con mayor complejidad y abstracción cada vez.</p>
+
+  <div class="timeline reveal" style="grid-template-columns:repeat(3,1fr)">
+    <div class="tl-item"><span class="dot"></span><h4>Nivel Inicial</h4><p>Concreto y experiencial: cantidad, espacio, tiempo, convivencia</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>Primaria</h4><p>Los mismos temas con más complejidad y representación simbólica</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>Secundaria</h4><p>Abstracción y conceptualización crecientes</p></div>
+  </div>
+
+  <div class="tarjeta dorado reveal">
+    <h3>La idea fuerte de la espiral</h3>
+    <p><strong>Ningún contenido es «demasiado difícil» para los niños pequeños si se presenta de la manera adecuada a su modo de representación predominante.</strong> La pregunta no es «¿pueden entender esto?» sino «¿cómo lo presento para que lo puedan construir a su manera?».</p>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · AUSUBEL ═══════════ -->
+<section class="bloque" id="ausubel">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">5</span><h2>Ausubel: la distinción clave</h2></div>
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Si tuviera que reducir toda la psicología educativa a un solo principio, enunciaría este: el factor aislado más importante que influye en el aprendizaje es <strong>lo que el alumno ya sabe</strong>.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— David Ausubel (1918–2008), psicólogo educativo estadounidense</span></p>
+  </div>
+  <p class="sec-intro reveal" style="margin-top:6px">Ausubel dialogó y discutió con Bruner: el aprendizaje por descubrimiento es valioso, pero sobreestima su necesidad. Gran parte del conocimiento humano <strong>se aprende de manera receptiva</strong>, y eso no es un problema. La distinción central de Ausubel no es entre «descubrir» y «recibir»: es entre <strong>significativo y mecánico</strong>.</p>
+
+  <div class="tarjeta reveal">
+    <table class="comp">
+      <tr><th>Aprendizaje mecánico ✗</th><th>Aprendizaje significativo ✓</th></tr>
+      <tr><td>Se memoriza sin comprender</td><td>Se comprende conectando con lo que ya se sabe</td></tr>
+      <tr><td>El conocimiento nuevo queda aislado</td><td>Se integra a la red de conocimiento existente</td></tr>
+      <tr><td>Se olvida fácilmente</td><td>Es duradero y transferible a situaciones nuevas</td></tr>
+      <tr><td>Repetición sin conexión <em>(ej.: repetir «5 es más que 3» sin entender por qué)</em></td><td>Relación no arbitraria con lo que ya sé <em>(ej.: la M de «mamá» para aprender la letra M)</em></td></tr>
+    </table>
+  </div>
+
+  <p class="destacado reveal">El aprendizaje puede ser <strong>receptivo y significativo al mismo tiempo</strong>: la docente que explica conectando con lo que los niños ya saben promueve aprendizaje significativo aunque no lo «descubran» por sí solos.</p>
+</section>
+
+<!-- ═══════════ 6 · CONDICIONES Y SUBSUMIDORES ═══════════ -->
+<section class="bloque" id="subsumidores">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">6</span><h2>Condiciones y subsumidores</h2></div>
+  <p class="sec-intro reveal">Para que el aprendizaje sea significativo, Ausubel plantea <strong>dos condiciones simultáneas</strong>:</p>
+
+  <div class="grid2 reveal">
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>1 · Material potencialmente significativo</h3>
+      <p>La nueva información <strong>debe poder relacionarse de manera no arbitraria</strong> con la estructura cognitiva del sujeto. No puede ser un cúmulo de datos inconexos.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>2 · Disposición del sujeto</h3>
+      <p>El sujeto debe tener la <strong>intención de relacionar</strong> el nuevo conocimiento con lo que ya sabe. El aprendizaje significativo no ocurre de manera automática: requiere actitud activa.</p>
+    </div>
+  </div>
+
+  <div class="grid2 reveal">
+    <div class="tarjeta marino">
+      <h3>🔗 Subsumidores</h3>
+      <p>Ideas y conceptos <strong>ya existentes en la mente del niño</strong> que sirven de «anzuelo» o ancla para el conocimiento nuevo. Sin subsumidores adecuados, el aprendizaje significativo es difícil o imposible.</p>
+    </div>
+    <div class="tarjeta dorado">
+      <h3>🗝️ Organizadores previos</h3>
+      <p>Presentaciones introductorias que <strong>activan o construyen los subsumidores</strong> antes del contenido nuevo. En el jardín: preguntar «¿qué saben sobre…?» al comenzar una unidad.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>En la sala: la unidad sobre los medios de transporte</h3>
+    <ol style="margin:10px 0 0 20px;font-size:16.5px;line-height:1.8">
+      <li>La docente pregunta: «¿En qué vinieron hoy? ¿Cuántos vinieron caminando? ¿Quién vino en colectivo?»</li>
+      <li>Anota todo en un afiche <strong>sin corregir ni evaluar</strong>: eso es activar los subsumidores.</li>
+      <li>Desarrolla la unidad conectando cada contenido nuevo con lo que los niños ya mencionaron.</li>
+      <li>Al final vuelven al afiche: «¿Qué aprendimos? ¿Qué cambió en lo que sabíamos?»</li>
+    </ol>
+    <p style="margin-top:10px">El afiche inicial y el final: <strong>la evidencia visible del aprendizaje significativo</strong>. Esta activación no es «calentamiento»: es la condición del aprendizaje significativo.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CONVERGENCIAS Y DIFERENCIAS ═══════════ -->
+<section class="bloque" id="diferencias">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">7</span><h2>Bruner y Ausubel: convergencias y diferencias</h2></div>
+  <p class="sec-intro reveal">Son <strong>complementarios, no opuestos</strong>. El cuadro comparativo de la clase:</p>
+
+  <div class="tarjeta reveal">
+    <table class="comp">
+      <tr><th>Dimensión</th><th>BRUNER</th><th>AUSUBEL</th></tr>
+      <tr><td><strong>Concepción del aprendizaje</strong></td><td>Construcción activa por descubrimiento</td><td>Recepción activa y significativa</td></tr>
+      <tr><td><strong>Rol de la docente</strong></td><td>Facilitadora: no da la respuesta</td><td>Transmite, pero activando saberes previos</td></tr>
+      <tr><td><strong>Rol del error</strong></td><td>Información del proceso</td><td>Señal de falta de subsumidores</td></tr>
+      <tr><td><strong>¿Qué se activa antes de enseñar?</strong></td><td>Exploración libre, preguntas abiertas</td><td>Organizadores previos («¿qué saben?»)</td></tr>
+      <tr><td><strong>Concepto clave</strong></td><td>Aprendizaje por descubrimiento</td><td>Aprendizaje significativo</td></tr>
+    </table>
+  </div>
+
+  <p class="destacado reveal">Punto de contacto: el aprendizaje requiere <strong>actividad mental del sujeto</strong> y <strong>conexión con lo que ya sabe</strong>. En eso, Bruner y Ausubel están del mismo lado.</p>
+</section>
+
+<!-- ═══════════ 8 · INTEGRACIÓN EN LA SALA ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">8</span><h2>Las dos lentes en acción</h2></div>
+  <p class="sec-intro reveal">Modelo de análisis para practicar de cara a la Clase 8. Antes de la unidad sobre dinosaurios, la docente de sala de 5 pregunta «¿qué saben?», anota todo en un afiche sin corregir, propone explorar libros, figuras y videos libres, y al final vuelven al afiche. Tocá cada lente para ver el análisis:</p>
+
+  <div class="capas reveal">
+    <div class="capa-btns">
+      <button class="capa-btn" data-lente="bruner">Lente Bruner</button>
+      <button class="capa-btn" data-lente="ausubel">Lente Ausubel</button>
+      <button class="capa-btn" data-lente="integradora">Mirada integradora</button>
+    </div>
+    <div class="capa-out" id="capaOut"><p class="capahint">Elegí una lente para leer la situación.</p></div>
+  </div>
+
+  <div class="tarjeta dorado reveal">
+    <h3>En tu propia práctica</h3>
+    <p>La pregunta «¿qué saben de…?» no es un trámite ni una técnica de motivación: es la <strong>condición del aprendizaje significativo</strong> (Ausubel). Y la exploración libre sin consigna de resultado no es tiempo muerto: es el <strong>ambiente del descubrimiento</strong> (Bruner). Dos autores, una misma manera de tratar a los niños: como sujetos que ya saben algo y lo construyen activamente.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">9</span><h2>Autoevaluación</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">1 · Para Bruner, el error en el aprendizaje por descubrimiento es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Información sobre cómo el niño está pensando</button>
+      <button class="quiz-op">Un fracaso que la docente debe corregir de inmediato</button>
+      <button class="quiz-op">Señal de que el niño no tiene subsumidores</button>
+      <button class="quiz-op">Algo a evitar con consignas más cerradas</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El error no es fracaso: es parte del proceso y dice algo sobre cómo el niño está construyendo conocimiento y qué hipótesis está probando.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> En Bruner, el error es información del proceso: dice algo sobre cómo el niño está pensando.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · Los tres modos de representación de Bruner son…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Sensoriomotor, preoperatorio y operatorio</button>
+      <button class="quiz-op">Enactivo, icónico y simbólico</button>
+      <button class="quiz-op">Asimilación, acomodación y equilibración</button>
+      <button class="quiz-op">ZDP, andamiaje y mediación</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Enactivo (acción), icónico (imágenes), simbólico (lenguaje y símbolos). Coexisten y se combinan; en el nivel inicial predominan los dos primeros.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Los modos de representación son enactivo, icónico y simbólico — las otras opciones son de Piaget y Vygotski.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">3 · La diferencia entre aprendizaje significativo y mecánico es que…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Uno se descubre y el otro se recibe</button>
+      <button class="quiz-op">Uno exige más esfuerzo que el otro</button>
+      <button class="quiz-op">En el significativo el conocimiento se conecta con lo que ya sé; en el mecánico queda aislado</button>
+      <button class="quiz-op">Uno es para niños y el otro para adultos</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La distinción de Ausubel no es descubrir vs. recibir, sino si el conocimiento se conecta de manera no arbitraria con la estructura cognitiva o queda aislado y se olvida.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> La clave para Ausubel es la conexión con lo que ya se sabe: el significativo se integra a la red existente; el mecánico queda aislado y se olvida.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">4 · Los subsumidores son…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Tareas que los niños resuelven por completo solos</button>
+      <button class="quiz-op">Refuerzos que la docente administra tras cada conducta</button>
+      <button class="quiz-op">Ideas ya existentes en la estructura cognitiva que sirven de ancla al conocimiento nuevo</button>
+      <button class="quiz-op">Los tres modos de representación de Bruner</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Los subsumidores son los «anzuelos»: ideas previas a las que se ancla el conocimiento nuevo. Los organizadores previos los activan («¿qué saben sobre…?»).</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Los subsumidores son las ideas ya existentes que sirven de anclaje al conocimiento nuevo (Ausubel).</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">5 · El currículum en espiral de Bruner implica…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Repetir exactamente lo mismo todos los años</button>
+      <button class="quiz-op">No avanzar de tema hasta dominarlo por completo</button>
+      <button class="quiz-op">Ordenar los contenidos de lo más difícil a lo más fácil</button>
+      <button class="quiz-op">Retomar los mismos contenidos en distintos momentos con mayor complejidad</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Los mismos temas se retoman con mayor complejidad y abstracción. Ningún contenido es demasiado difícil si se presenta de manera adecuada al modo de representación.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> La espiral retoma los mismos contenidos en distintos momentos con mayor complejidad: no repite ni saltea, profundiza.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:18.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">10</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 7, tomados del material de lectura de la cátedra. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Aprendizaje por descubrimiento (Bruner)</dt><dd>Forma de aprendizaje en la que el sujeto construye el conocimiento a través de la exploración activa, la formulación de hipótesis y la resolución de problemas. La docente no presenta el conocimiento como producto terminado: genera condiciones para que el sujeto lo construya.</dd></dl>
+    <dl class="glos-item reveal"><dt>Modos de representación (Bruner)</dt><dd>Tres formas de representar el conocimiento: enactivo (acción), icónico (imágenes) y simbólico (lenguaje y símbolos abstractos). No son estadios que se superan: coexisten y se combinan. En el nivel inicial predominan los dos primeros.</dd></dl>
+    <dl class="glos-item reveal"><dt>Modo enactivo</dt><dd>Representación a través de la acción motriz: el niño conoce haciendo, trepando, amasando, construyendo. Fundamental en los primeros años.</dd></dl>
+    <dl class="glos-item reveal"><dt>Modo icónico</dt><dd>Representación a través de imágenes y percepciones. El dibujo, el modelado y la observación son vías privilegiadas. El niño puede pensar «en imágenes» antes de simbolizar.</dd></dl>
+    <dl class="glos-item reveal"><dt>Modo simbólico</dt><dd>Representación a través de símbolos abstractos: lenguaje, números, códigos. Emerge apoyándose en los modos anteriores; no debe forzarse antes de consolidar el anclaje enactivo e icónico.</dd></dl>
+    <dl class="glos-item reveal"><dt>Currículum en espiral (Bruner)</dt><dd>Organización curricular en la que los mismos contenidos se retoman en distintos momentos del desarrollo con mayor complejidad. Ningún contenido es demasiado difícil si se presenta de manera adecuada al modo de representación del sujeto.</dd></dl>
+    <dl class="glos-item reveal"><dt>Aprendizaje significativo (Ausubel)</dt><dd>Aprendizaje que ocurre cuando el nuevo conocimiento se conecta de manera no arbitraria con las ideas que ya existen en la estructura cognitiva del sujeto. Es duradero y transferible.</dd></dl>
+    <dl class="glos-item reveal"><dt>Aprendizaje mecánico (Ausubel)</dt><dd>Aprendizaje memorístico y aislado: se memoriza sin comprender, el conocimiento queda sin conexión y se olvida fácilmente. La distinción mecánico/significativo es independiente de si el aprendizaje se descubre o se recibe.</dd></dl>
+    <dl class="glos-item reveal"><dt>Subsumidores (Ausubel)</dt><dd>Ideas y conceptos ya existentes en la estructura cognitiva que sirven de anclaje para el nuevo conocimiento. Sin subsumidores adecuados, el aprendizaje significativo es difícil o imposible.</dd></dl>
+    <dl class="glos-item reveal"><dt>Organizadores previos (Ausubel)</dt><dd>Presentaciones introductorias que activan o construyen los subsumidores antes de presentar el contenido nuevo. En el jardín: preguntar «¿qué saben sobre…?» al comenzar una unidad.</dd></dl>
+    <dl class="glos-item reveal"><dt>Material potencialmente significativo</dt><dd>Primera condición del aprendizaje significativo: la nueva información debe poder relacionarse de manera no arbitraria con la estructura cognitiva del sujeto. No puede ser un cúmulo de datos inconexos.</dd></dl>
+    <dl class="glos-item reveal"><dt>Disposición del sujeto</dt><dd>Segunda condición del aprendizaje significativo: el sujeto debe tener la intención de relacionar lo nuevo con lo que ya sabe. El aprendizaje significativo no ocurre de manera automática: requiere actitud activa.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 11 · CIERRE BAND ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14.5px;color:var(--dorado);font-weight:700">Tarea · para la Clase 8</p>
+    <h3>Analizá una actividad en media carilla</h3>
+    <p class="consigna">Pensá en una actividad que hayas observado o imaginado para sala de 4 o 5 años. Analizala desde Bruner Y desde Ausubel: ¿hay aprendizaje por descubrimiento? ¿Hay conexión con los saberes previos? ¿Qué rol cumple la docente?</p>
+    <p style="font-size:17px;color:#C9D2E0;margin-top:10px">Traé el análisis escrito para compartir al inicio de la Clase 8.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Ausubel, D. (1963, 1968). <em>Educational psychology: A cognitive view</em>. Nueva York: Holt, Rinehart and Winston. · Bruner, J. (1960). <em>The process of education</em>. Cambridge: Harvard University Press. · Bruner, J. (1966). <em>Toward a theory of instruction</em>. Cambridge: Harvard University Press. · Pozo, J. I. (1989). <em>Teorías cognitivas del aprendizaje</em>. Madrid: Morata.</p>
+  </div>
+</section>
+
+</main></main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 7 — Bruner y Ausubel: aprender con sentido<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+  }));
+});
+
+/* caso por capas */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  bruner:{t:'Lente Bruner · Ambiente rico y exploración',d:'La docente no da la respuesta: ofrece libros, figuras y videos para explorar libremente y vuelve al afiche al final. Los niños construyen hipótesis sobre cómo eran los dinosaurios; el error —pensar que todos eran enormes, por ejemplo— es información sobre cómo están pensando. Su rol es de facilitadora: preguntar, esperar, acompañar.'},
+  ausubel:{t:'Lente Ausubel · Organizadores previos',d:'Preguntar "¿qué saben de los dinosaurios?" antes de enseñar es activar los subsumidores: ideas existentes que sirven de ancla al conocimiento nuevo. La docente anota sin corregir ni evaluar —no es un trámite, es la condición del aprendizaje significativo— y el afiche se retoma al final para ver qué cambió: la evidencia visible del aprendizaje.'},
+  integradora:{t:'Mirada integradora · Bruner Y Ausubel',d:'Ambos enfoques se combinan: la exploración libre (Bruner) no tiene sentido sin la activación de los saberes previos (Ausubel), y el organizador previo cobra vida cuando los niños descubren por sí mismos. La pregunta inicial y el ambiente rico son dos lados de la misma intervención docente.'}
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Distinguís las propuestas de Bruner y de Ausubel y su complementariedad. Lista/o para la Clase 8 (Gardner y el cierre de la Unidad II).'
+      :aciertos>=3?'¡Muy bien! Repasá las secciones 2 y 5 (Bruner y Ausubel) y la tabla comparativa.'
+      :'Volvé a las secciones 2, 5 y 7 y volvé a intentar. Con leer con atención, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,674 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 6 · Neurociencias, integración y cierre — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:19px;line-height:1.15;display:block}
+.marca small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:15px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:14.5px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(41px,6.6vw,74.5px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(18px,2.2vw,23px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:29px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(27.5px,3.8vw,43px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:18px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(20.5px,2.4vw,26.5px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(20.5px,2.5vw,27.5px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:15.5px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:17px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:18px;color:var(--marino)}
+.tl-item p{font-size:15px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:15.5px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:17.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:17.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:16px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:17px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:13px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:23px;color:var(--marino)}
+.flip-frontal p{font-size:15px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:13px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:20.5px}
+.flip-dorso span{font-size:14.5px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:18.5px;display:block}
+.nodo small{color:var(--gris);font-size:14.5px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:6px}
+.nodo-detalle p{font-size:17.5px}
+
+/* ===== VAK TABLA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:15.5px}
+table.comp td{padding:10px 14px;font-size:16px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:20px;margin-bottom:4px}
+.caso-vak p{font-size:17px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:16px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== CHAEA INVENTARIO ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:16px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:25px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:18px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="comprender"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="disenar"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="mejorar"]{background:var(--oliva);color:#fff}
+.capa-btn[data-lente="aplicacion"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="transferencia"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="coconstruccion"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:53px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:17.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:18.5px}
+.glos-item dd{font-size:16px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:24px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:24px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:17.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(23px,2.9vw,32.5px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.4vw,26.5px);color:var(--dorado)}
+.refs{font-size:15.5px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:15.5px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 220 170" fill="none"><polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="8"/><line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="10"/><line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="10"/><line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="10"/></svg>
+      <span><small>Material de estudio · Clase 6</small><b>Neurociencias, integración y cierre</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#mitos">Mitos</a>
+      <a href="#neuroeducacion">Neuroeducación</a>
+      <a href="#plasticidad">Plasticidad</a>
+      <a href="#emocion">Emoción</a>
+      <a href="#sueno">Sueño</a>
+      <a href="#integracion">Integración</a>
+      <a href="#cierre">Cierre</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 220 170" fill="none" role="img" aria-label="El cerebro que aprende: plasticidad, emoción, sueño y movimiento — lo que las neurociencias aportan a la educación">
+    <ellipse cx="110" cy="88" rx="96" ry="74" fill="rgba(217,164,65,.10)"/>
+    <text x="110" y="16" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2.5px" fill="#D9A441">NEUROCIENCIAS · INTEGRACIÓN · CIERRE</text>
+    <!-- hemisferios -->
+    <ellipse cx="87" cy="86" rx="26" ry="36" fill="rgba(217,164,65,.24)" stroke="#D9A441" stroke-width="2.5"/>
+    <ellipse cx="133" cy="86" rx="26" ry="36" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="2.5"/>
+    <!-- circunvoluciones -->
+    <path d="M72 78 q10 -8 20 0 M72 92 q10 -8 20 0 M68 70 q12 -10 22 0" stroke="rgba(247,241,229,.45)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M118 76 q10 -8 20 0 M118 90 q10 -8 20 0 M122 66 q10 -8 18 0" stroke="rgba(247,241,229,.45)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- sinapsis: nodos y conexiones -->
+    <circle cx="87" cy="58" r="4.5" fill="#C4633E"/>
+    <circle cx="133" cy="56" r="4.5" fill="#D9A441"/>
+    <circle cx="110" cy="42" r="4.5" fill="#7D8655"/>
+    <circle cx="110" cy="120" r="4.5" fill="#C4633E"/>
+    <path d="M87 58 L110 42 L133 56 L110 120 L87 58 M110 42 L110 120" stroke="rgba(247,241,229,.55)" stroke-width="1.6"/>
+    <!-- corazón de la emoción -->
+    <path d="M110 84 c-3 -6 -12 -4 -12 3 c0 6 12 12 12 12 c0 0 12 -6 12 -12 c0 -7 -9 -9 -12 -3 Z" fill="rgba(196,99,62,.75)"/>
+    <text x="110" y="152" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">plasticidad · emoción · sueño · movimiento</text>
+  </svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>Neurociencias, <em>integración y cierre</em></h1>
+  <p class="sub">¿Qué nos dice el cerebro sobre cómo aprendemos?<br>Cierre de la Unidad II: seis clases, una mirada integradora.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · MITOS ═══════════ -->
+<section class="bloque" id="mitos">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>Activación: mitos y verdades sobre el cerebro</h2></div>
+  <p class="sec-intro reveal">Las mismas afirmaciones que se debaten en clase, ahora autocorregidas. Clasificá cada una — vas a recibir feedback inmediato y el porqué.</p>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Solo usamos el 10% del cerebro.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Las técnicas de neuroimagen muestran actividad en todo el cerebro, incluso durante el reposo. No existe una zona silenciosa del 90% esperando ser «activada».</div>
+    <div class="feedback ok"><strong>¡Correcto, es un mito!</strong> Usamos el cerebro completo. La idea del 10% es una leyenda urbana sin base neurocientífica.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«El cerebro infantil es más plástico que el del adulto.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es verdad.</strong> La plasticidad —capacidad del cerebro de modificarse con la experiencia— es máxima en los primeros años de vida, aunque nunca se apaga por completo.</div>
+    <div class="feedback ok"><strong>¡Correcto!</strong> Los primeros años son el período de mayor plasticidad de toda la vida. Por eso el nivel inicial importa tanto desde la neurociencia.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«El juego no genera aprendizajes cognitivos reales.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> El juego motor activa el cerebelo y mejora la atención; el juego simbólico ejercita funciones cognitivas centrales. El juego no es tiempo perdido: es aprendizaje con base neurológica.</div>
+    <div class="feedback ok"><strong>¡Correcto, es un mito!</strong> El juego implica movimiento, emoción, lenguaje y resolución de problemas: todo lo que el cerebro en desarrollo necesita para aprender.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Las emociones interfieren con el aprendizaje y deben controlarse en clase.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Las emociones son condición necesaria del aprendizaje (Immordino-Yang): sin el marcador emocional que indica que algo importa, el cerebro no consolida la información. Lo que sí daña es el estrés crónico.</div>
+    <div class="feedback ok"><strong>¡Correcto, es un mito!</strong> No recordamos lo que nos resulta indiferente. La emoción no es ruido: es parte del mecanismo del aprendizaje. Otra cosa es el estrés crónico, que sí lo perjudica.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«Dormir bien ayuda a consolidar la memoria.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es verdad.</strong> Durante el sueño, las conexiones sinápticas formadas durante el día se estabilizan y organizan. Un niño que duerme poco no consolida lo aprendido.</div>
+    <div class="feedback ok"><strong>¡Correcto!</strong> El sueño consolida el aprendizaje: las rutinas de sueño en la infancia tienen consecuencias cognitivas directas.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«La inteligencia es fija: se nace inteligente o no.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Verdadero</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> El cerebro es plástico: se modifica en función de la experiencia a lo largo de toda la vida. La inteligencia se desarrolla, no se nace con una cuota fija.</div>
+    <div class="feedback ok"><strong>¡Correcto, es un mito!</strong> La plasticidad neuronal fundamenta la idea de que las capacidades se construyen con experiencias, oportunidades y enseñanza.</div>
+  </div>
+
+  <p class="destacado reveal">Cada mito desterrado es una decisión pedagógica mejor fundamentada: saber por qué el juego, la emoción y el sueño importan no es opcional.</p>
+</section>
+
+<!-- ═══════════ 2 · NEUROEDUCACIÓN ═══════════ -->
+<section class="bloque" id="neuroeducacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Neurociencias y educación: un diálogo necesario</h2></div>
+  <p class="sec-intro reveal">La neuroeducación (Mora, 2013) es la zona de encuentro entre neurociencia, psicología y educación. Tres preguntas ordenan el diálogo:</p>
+
+  <div class="grid3 reveal">
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>1 · ¿Qué aportan?</h3>
+      <p>Conocimiento sobre <strong>cómo el cerebro aprende</strong>: plasticidad, emoción, memoria, sueño, movimiento.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>2 · ¿Reemplazan a las teorías?</h3>
+      <p><strong>No.</strong> Las complementan. En muchos casos <strong>las confirman desde otro nivel de análisis</strong>.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>3 · ¿Determinan qué hacer en el aula?</h3>
+      <p>No como prescripción técnica —«hagan esto porque lo dice la neurociencia»— sino como <strong>marco de comprensión</strong> que enriquece la reflexión pedagógica.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Solo se puede aprender aquello que se ama.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Francisco Mora, <em>Neuroeducación</em> (subtítulo)</span></p>
+    <p style="font-size:16.5px;color:var(--tinta)">¿Están de acuerdo? ¿Qué implicaría esa frase para el jardín? Es el tipo de afirmación que provoca sin necesitar explicación larga.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · PLASTICIDAD ═══════════ -->
+<section class="bloque" id="plasticidad">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">3</span><h2>Plasticidad neuronal y ventanas de oportunidad</h2></div>
+  <p class="sec-intro reveal">El cerebro no es una estructura fija: <strong>se modifica estructuralmente en función de la experiencia</strong>. Las sinapsis se forman, se refuerzan y se podan a lo largo de toda la vida, pero con intensidades muy diferentes.</p>
+
+  <div class="timeline reveal" style="grid-template-columns:repeat(5,1fr)">
+    <div class="tl-item"><span class="dot"></span><h4>0–3 años</h4><p>Plasticidad máxima</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>3–6 años</h4><p>Muy alta · NI</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>6–12 años</h4><p>Alta, en descenso</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>Adolescencia</h4><p>Poda y reorganización</p></div>
+    <div class="tl-item"><span class="dot"></span><h4>Adultez</h4><p>Sigue, más lenta</p></div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>El nivel inicial es el período más relevante desde la neurociencia</h3>
+    <p>Los primeros años constituyen <strong>ventanas de oportunidad</strong>: períodos en los que el cerebro está especialmente receptivo para ciertos aprendizajes —el lenguaje, la regulación emocional, las bases del pensamiento matemático—. Las experiencias del jardín —el vínculo con los adultos, la riqueza del lenguaje, las oportunidades de exploración y juego— <strong>tienen consecuencias neuronales duraderas</strong>.</p>
+  </div>
+
+  <p class="destacado reveal">Esto no significa que lo que no se aprende antes de los 5 ya no pueda aprenderse: las ventanas no se cierran para siempre. Significa que las condiciones son especialmente favorables en este período — y que el nivel inicial no es una antesala, es un momento fundante.</p>
+</section>
+
+<!-- ═══════════ 4 · EMOCIÓN ═══════════ -->
+<section class="bloque" id="emocion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">4</span><h2>Emoción y aprendizaje</h2></div>
+  <p class="sec-intro reveal">Emoción y cognición no son sistemas separados. La tradición racionalista trató a las emociones como ruido que interfería con el pensamiento «puro». La neurociencia contemporánea deshace ese malentendido.</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Las emociones son condición necesaria del aprendizaje: sin el marcador emocional que indica que algo importa, el cerebro no consolida la información.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Mary Helen Immordino-Yang, 2016</span></p>
+  </div>
+
+  <div class="grid3 reveal" style="margin-top:6px">
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>❤️ Emoción positiva</h3>
+      <p>Aprendemos <strong>lo que nos importa</strong>. El interés, la curiosidad, la sorpresa y el placer del descubrimiento no son condimentos: <strong>son parte del mecanismo</strong> del aprendizaje.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>⚠️ Estrés crónico</h3>
+      <p>El cortisol sostenido <strong>daña el hipocampo</strong>, estructura clave para la formación de memorias. Un niño que vive en alerta o miedo tiene comprometida su capacidad de aprender, más allá de sus capacidades.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>🏫 Clima emocional del aula</h3>
+      <p>Una sala donde <strong>el error es seguro</strong>, el vínculo es predecible y el niño se siente aceptado es una sala con <strong>condiciones neurológicas para aprender</strong>.</p>
+    </div>
+  </div>
+
+  <p class="destacado reveal">El cuidado del clima emocional no es una tarea secundaria respecto de los contenidos: es una condición neurológica del aprendizaje.</p>
+</section>
+
+<!-- ═══════════ 5 · SUEÑO Y MOVIMIENTO ═══════════ -->
+<section class="bloque" id="sueno">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">5</span><h2>Sueño, movimiento y juego</h2></div>
+  <p class="sec-intro reveal">Dos factores frecuentemente subestimados en la educación, con evidencia neurocientífica sólida:</p>
+
+  <div class="grid2 reveal">
+    <div class="tarjeta" style="border-left-color:var(--marino)">
+      <h3>😴 El sueño</h3>
+      <p>Durante el sueño, <strong>el cerebro consolida lo aprendido durante la vigilia</strong>: las conexiones sinápticas formadas durante el día se estabilizan y organizan.</p>
+      <p>Un niño que duerme poco no solo está cansado: su cerebro <strong>no terminó el proceso de consolidación del aprendizaje</strong>. Las rutinas de sueño en la infancia tienen consecuencias cognitivas directas.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>🤸 El movimiento</h3>
+      <p>El movimiento <strong>activa el cerebelo</strong> y mejora el flujo sanguíneo cerebral, con efectos positivos sobre la atención y el aprendizaje.</p>
+      <p>Mantener niños quietos y sentados para «concentrarse mejor» <strong>contradice lo que sabemos sobre el cerebro en desarrollo</strong>. El juego motor no es tiempo perdido: es aprendizaje con base neurológica.</p>
+    </div>
+  </div>
+
+  <p class="destacado reveal">Sueño, movimiento y juego no son «extras» del curriculum: son condiciones que el cerebro necesita para aprender.</p>
+</section>
+
+<!-- ═══════════ 6 · INTEGRACIÓN ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">6</span><h2>Las teorías y las neurociencias: puntos de encuentro</h2></div>
+  <p class="sec-intro reveal">Las neurociencias no reemplazan a las teorías psicológicas: en muchos casos <strong>las confirman desde otro nivel de análisis</strong>. El cuadro integrador de la clase:</p>
+
+  <div class="tarjeta reveal">
+    <table class="comp">
+      <tr><th>Teoría</th><th>Punto de contacto con neurociencias</th><th>Tensión o límite</th></tr>
+      <tr><td><strong>Conductismo</strong></td><td>El refuerzo positivo tiene base neurológica: activa circuitos de recompensa (dopamina)</td><td>No considera lo que ocurre «dentro» del cerebro; ignora emoción y contexto</td></tr>
+      <tr><td><strong>Cognitivismo (Ausubel)</strong></td><td>Activar conocimientos previos reduce la carga de la memoria de trabajo y facilita la consolidación</td><td>La metáfora computacional subestima el rol de las emociones</td></tr>
+      <tr><td><strong>Psicogenética (Piaget)</strong></td><td>La plasticidad neuronal es la base biológica del constructivismo; el conflicto cognitivo activa nuevas conexiones</td><td>Los estadios son más flexibles y contexto-dependientes de lo que Piaget planteó</td></tr>
+      <tr><td><strong>Sociocultural (Vygotski)</strong></td><td>La interacción social activa sistemas de aprendizaje vicario; el lenguaje estructura redes neurales</td><td>Vygotski no tenía evidencia neurológica: sus conceptos son funcionales, no anatómicos</td></tr>
+    </table>
+  </div>
+
+  <div class="tarjeta dorado reveal">
+    <h3>Para pensar</h3>
+    <p>¿En qué fila de este cuadro encajaría la frase de Mora —«solo se puede aprender aquello que se ama»? ¿Y el juego motor de la sala de 3? La idea no es encasillar: es <strong>desarrollar una mirada integradora</strong> que use las teorías y la neurociencia como lentes complementarias para situaciones siempre singulares.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CIERRE ═══════════ -->
+<section class="bloque" id="cierre">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">7</span><h2>Cierre de unidad: seis clases, un arco</h2></div>
+  <p class="sec-intro reveal">La Unidad II se abrió preguntando qué es la Psicología de la Educación y qué relaciones posibles hay entre psicología y educación. Seis clases después, el recorrido completo:</p>
+
+  <div class="grid3 reveal" style="margin-top:6px">
+    <div class="tarjeta marino"><h3>Clases 1 y 2</h3><p><strong>¿Qué es la Psicología de la Educación?</strong> y <strong>Psicología y Educación: relaciones posibles</strong> — el marco de la disciplina.</p></div>
+    <div class="tarjeta marino"><h3>Clase 3</h3><p><strong>La especificidad del aprendizaje escolar</strong> — demandas cognitivas, oficio de alumno, curriculum oculto.</p></div>
+    <div class="tarjeta marino"><h3>Clase 4</h3><p><strong>Conductismo y cognitivismo</strong> — de los reflejos a los procesos mentales.</p></div>
+    <div class="tarjeta marino"><h3>Clase 5</h3><p><strong>Piaget y Vygotski</strong> — la construcción del conocimiento, individual y social.</p></div>
+    <div class="tarjeta marino"><h3>Clase 6</h3><p><strong>Neurociencias</strong> — el cerebro que aprende: plasticidad, emoción, sueño, movimiento.</p></div>
+    <div class="tarjeta dorado"><h3>Lo que aprendimos sobre aprender</h3><p><strong>Ninguna teoría agota la complejidad de lo que ocurre cuando un niño aprende.</strong> El desafío es la mirada integradora.</p></div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>Evaluación diagnóstica formativa · sin nota, media hoja</h3>
+    <p>Para cerrar el arco de la unidad, respondé en tu carpeta (no se corrige con nota):</p>
+    <ol style="margin:10px 0 0 20px;font-size:16.5px;line-height:1.8">
+      <li>De todas las teorías que vimos en estas seis clases (conductismo, cognitivismo, Piaget, Vygotski, neurociencias), <strong>¿cuál te resultó más útil</strong> para pensar tu futura práctica en el jardín? ¿Por qué?</li>
+      <li>¿<strong>Qué pregunta</strong> sobre el aprendizaje te quedó sin responder, o te generó más dudas que certezas?</li>
+      <li>¿<strong>Cambió tu idea de qué es «aprender»</strong> desde la Clase 1? ¿Qué agregarías o quitarías hoy?</li>
+    </ol>
+    <p style="margin-top:10px">Son preguntas abiertas: la 1 te dice qué conceptos aterrizaron, la 2 es el punto de partida de la próxima unidad y la 3 cierra el arco de las seis clases.</p>
+  </div>
+
+  <p class="destacado reveal">La clase que se recuerda no es la que acumula más contenidos: es la que cierra un arco emocionalmente. Lo que aprendimos sobre aprender vale tanto para los niños del jardín como para nosotras.</p>
+</section>
+
+<!-- ═══════════ 8 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">8</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">1 · La plasticidad neuronal es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Mayor en los primeros años de vida, aunque nunca se apaga</button>
+      <button class="quiz-op">Igual a lo largo de toda la vida</button>
+      <button class="quiz-op">Exclusiva de los adultos</button>
+      <button class="quiz-op">La capacidad de hablar varios idiomas</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El cerebro se modifica con la experiencia toda la vida, pero la plasticidad es máxima en los primeros años: ese es el fundamento neurocientífico del nivel inicial.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> La plasticidad es mucho mayor en la infancia y va disminuyendo con la edad, aunque el cerebro nunca deja de modificarse.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · Según Immordino-Yang, las emociones…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Interfieren con el aprendizaje y deben controlarse</button>
+      <button class="quiz-op">Son condición necesaria del aprendizaje</button>
+      <button class="quiz-op">Son secundarias: lo importante es la instrucción</button>
+      <button class="quiz-op">Solo importan en la adolescencia</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Sin el marcador emocional que indica que algo importa, el cerebro no consolida la información. No recordamos lo que nos resulta indiferente.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Las emociones no interfieren: son condición necesaria. Lo que sí daña el aprendizaje es el estrés crónico (cortisol sostenido).</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">3 · El cortisol sostenido (estrés crónico)…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Mejora la memoria a largo plazo</button>
+      <button class="quiz-op">No tiene efectos sobre el aprendizaje</button>
+      <button class="quiz-op">Daña el hipocampo y compromete la formación de memorias</button>
+      <button class="quiz-op">Fortalece las conexiones sinápticas</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El cortisol sostenido daña el hipocampo, estructura clave para la memoria. Un niño que vive en alerta o miedo tiene comprometida su capacidad de aprender.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> El estrés crónico es el enemigo del aprendizaje: el cortisol sostenido daña el hipocampo, clave para la formación de memorias.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">4 · Durante el sueño, el cerebro…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Se apaga por completo hasta el despertar</button>
+      <button class="quiz-op">Olvida activamente lo aprendido en el día</button>
+      <button class="quiz-op">Consolida y organiza lo aprendido durante la vigilia</button>
+      <button class="quiz-op">Solo recupera energía muscular</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Durante el sueño las conexiones sinápticas formadas durante el día se estabilizan y organizan. Un niño que duerme poco no consolida lo aprendido.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> El sueño consolida el aprendizaje: las sinapsis del día se estabilizan y organizan mientras dormimos.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">5 · Las neurociencias, respecto de las teorías psicológicas…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Las reemplazan por completo</button>
+      <button class="quiz-op">Las contradicen siempre</button>
+      <button class="quiz-op">No tienen ninguna relación con ellas</button>
+      <button class="quiz-op">Las complementan y en muchos casos las confirman desde otro nivel de análisis</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La plasticidad neuronal fundamenta el constructivismo; la interacción social de Vygotski tiene correlatos neuronales; los conocimientos previos de Ausubel tienen explicación en la activación de redes.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Las neurociencias no reemplazan ni contradicen a las teorías: las complementan y en muchos casos las confirman desde otro nivel de análisis.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:18.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">9</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 6, tomados del material de lectura de la cátedra. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Neuroeducación</dt><dd>Campo de encuentro entre neurociencia, psicología y educación (Mora, 2013). Estudia cómo el conocimiento sobre el funcionamiento cerebral puede enriquecer la comprensión de los procesos de aprendizaje y orientar —sin determinar— las prácticas de enseñanza.</dd></dl>
+    <dl class="glos-item reveal"><dt>Plasticidad neuronal</dt><dd>Capacidad del cerebro de modificarse estructuralmente en función de la experiencia: formación, refuerzo y poda de conexiones sinápticas. Es mayor en los primeros años de vida, lo que fundamenta la importancia del nivel inicial.</dd></dl>
+    <dl class="glos-item reveal"><dt>Sinapsis</dt><dd>Conexión entre neuronas a través de la cual se transmiten señales. El aprendizaje modifica las sinapsis: se forman, se refuerzan y se podan en función de la experiencia.</dd></dl>
+    <dl class="glos-item reveal"><dt>Ventanas de oportunidad</dt><dd>Períodos del desarrollo en los que el cerebro está especialmente receptivo para ciertos aprendizajes (lenguaje, regulación emocional, bases del pensamiento matemático). Los primeros cinco años son la ventana de mayor plasticidad. No se «cierran para siempre»: son condiciones especialmente favorables.</dd></dl>
+    <dl class="glos-item reveal"><dt>Marcador emocional</dt><dd>En Immordino-Yang (2016), la señal emocional que indica que algo importa. Sin ese marcador, el cerebro no consolida la información en la memoria a largo plazo. No recordamos lo que nos resulta indiferente.</dd></dl>
+    <dl class="glos-item reveal"><dt>Estrés crónico</dt><dd>Estado sostenido de alerta o miedo. La producción permanente de cortisol daña las conexiones del hipocampo y compromete la capacidad de aprender, más allá de las capacidades cognitivas del niño.</dd></dl>
+    <dl class="glos-item reveal"><dt>Cortisol</dt><dd>Hormona del estrés. En dosis sostenidas, daña las conexiones del hipocampo, estructura clave para la formación de memorias.</dd></dl>
+    <dl class="glos-item reveal"><dt>Hipocampo</dt><dd>Estructura cerebral clave para la formación de memorias. Es especialmente vulnerable al estrés crónico.</dd></dl>
+    <dl class="glos-item reveal"><dt>Consolidación de la memoria</dt><dd>Proceso por el cual las conexiones sinápticas formadas durante la vigilia se estabilizan y organizan. Ocurre principalmente durante el sueño. Un niño que duerme poco no consolida lo aprendido.</dd></dl>
+    <dl class="glos-item reveal"><dt>Cerebelo</dt><dd>Estructura que se activa con el movimiento y mejora el flujo sanguíneo cerebral, con efectos positivos sobre la atención y el aprendizaje. Fundamenta el valor del juego motor en el nivel inicial.</dd></dl>
+    <dl class="glos-item reveal"><dt>Mirada integradora</dt><dd>Actitud profesional que usa las distintas teorías del aprendizaje y los aportes de las neurociencias como lentes complementarias para comprender situaciones singulares. Ninguna teoría agota la complejidad de lo que ocurre cuando un niño aprende.</dd></dl>
+    <dl class="glos-item reveal"><dt>Neuroimagen</dt><dd>Técnicas que permiten observar el cerebro en funcionamiento (por ejemplo, resonancia magnética funcional). Uno de los avances que impulsó el diálogo entre neurociencias y educación.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · CIERRE BAND ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14.5px;color:var(--dorado);font-weight:700">Cierre de unidad · para la Unidad III</p>
+    <h3>Consigna de reflexión personal</h3>
+    <p class="consigna">«Pensá en algo que dijiste "esto no es para mí" — un deporte, un idioma, las matemáticas, lo que sea. ¿Qué pasó? ¿Cambió esa situación?»</p>
+    <p style="font-size:17px;color:#C9D2E0;margin-top:10px">Reflexión escrita de media carilla. Es el punto de partida de la próxima unidad: motivación y educabilidad.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Immordino-Yang, M. H. (2016). <em>Emotions, learning and the brain</em>. New York: Norton. · Mora, F. (2013). <em>Neuroeducación. Solo se puede aprender aquello que se ama</em>. Madrid: Alianza. · Piaget, J. (1954). <em>The construction of reality in the child</em>. New York: Basic Books. · Vygotski, L. (1978). <em>Mind in society</em>. Cambridge: Harvard University Press.</p>
+  </div>
+</section>
+
+</main></main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 6 — Neurociencias, integración y cierre<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+  }));
+});
+
+/* caso por capas */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  // (sin capas en esta clase)
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Integrás los aportes de las neurociencias y los conectás con las teorías de la unidad. Cierre redondo.'
+      :aciertos>=3?'¡Muy bien! Repasá neuroeducación, plasticidad y emoción usando el glosario.'
+      :'Volvé a las secciones 2, 3 y 4 y volvé a intentar. Con leer con atención, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>
