@@ -1,0 +1,9 @@
+# Office temporal files
+~$*
+Thumbs.db
+# Personal drafts
+*_borrador.*
+# Private folder (if used)
+privados/
+# OS generated files
+.DS_Store

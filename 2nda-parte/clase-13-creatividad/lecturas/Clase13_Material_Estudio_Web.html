@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 13 · Aprendizaje y creatividad — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:16px;line-height:1.15;display:block}
+.marca small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+nav.secciones a.volver{background:var(--dorado);color:var(--marino-2);font-weight:800;margin-left:6px;white-space:nowrap}
+nav.secciones a.volver:hover{background:var(--terracota);color:#fff}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:12px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5.5vw,62px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(15px,1.8vw,19px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:24px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(23px,3.2vw,36px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:15px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(17px,2vw,22px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.1vw,23px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:13px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:14px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:15px;color:var(--marino)}
+.tl-item p{font-size:12.5px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:14.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:14.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:13.5px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:11px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:19px;color:var(--marino)}
+.flip-frontal p{font-size:12.5px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:11px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:17px}
+.flip-dorso span{font-size:12px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:15.5px;display:block}
+.nodo small{color:var(--gris);font-size:12px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:6px}
+.nodo-detalle p{font-size:14.5px}
+
+/* ===== TABLA CLIMA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:13px}
+table.comp td{padding:10px 14px;font-size:13.5px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:16.5px;margin-bottom:4px}
+.caso-vak p{font-size:14px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== INVENTARIO DE AULA ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:13.5px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:21px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:15px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="kolb"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="vak"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="chaea"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:14.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:15.5px}
+.glos-item dd{font-size:13.5px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:20px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:20px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:14.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(19px,2.4vw,27px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--dorado)}
+.refs{font-size:13px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:13px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:19px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Bombilla de crayones con un brote creciendo de bloques de juego" style="width:34px;height:34px" fill="none"><defs><clipPath id="c13vidrio-m"><circle cx="120" cy="106" r="58"/></clipPath></defs><g><rect x="47.6" y="36.7" width="13" height="28" rx="6.5" transform="rotate(-50 54.1 50.7)" fill="#C4633E"/><rect x="77.2" y="14.1" width="13" height="28" rx="6.5" transform="rotate(-25 83.7 28.1)" fill="#D9A441"/><rect x="113.5" y="6" width="13" height="28" rx="6.5" fill="#7D8655"/><rect x="149.8" y="14.1" width="13" height="28" rx="6.5" transform="rotate(25 156.3 28.1)" fill="#D9A441"/><rect x="179.4" y="36.7" width="13" height="28" rx="6.5" transform="rotate(50 185.9 50.7)" fill="#C4633E"/></g><circle cx="120" cy="106" r="62" fill="rgba(217,164,65,.10)" stroke="#D9A441" stroke-width="5"/><g clip-path="url(#c13vidrio-m)"><path d="M72 134 C 80 84 162 72 170 118" stroke="#D9A441" stroke-width="13" stroke-linecap="round" opacity=".26"/><path d="M78 146 C 98 102 158 98 166 138" stroke="#C4633E" stroke-width="11" stroke-linecap="round" opacity=".22"/><path d="M88 66 C 112 52 148 54 164 72" stroke="#7D8655" stroke-width="9" stroke-linecap="round" opacity=".20"/></g><path d="M120 101 C 119 89 121 79 120 67" stroke="#7D8655" stroke-width="5" stroke-linecap="round"/><path d="M120 88 C 108 86 100 78 98 67 C 110 69 118 76 120 88 Z" fill="#7D8655"/><path d="M120 80 C 132 78 140 70 142 59 C 130 61 122 68 120 80 Z" fill="#8DA85E"/><rect x="106.5" y="100" width="27" height="22" rx="4" fill="#8DA85E"/><rect x="91" y="122" width="27" height="22" rx="4" fill="#C4633E"/><rect x="122" y="122" width="27" height="22" rx="4" fill="#D9A441"/><path d="M97 164 L143 164 L137 180 L103 180 Z" fill="#C4633E"/><rect x="101" y="181" width="38" height="9" rx="4.5" fill="#D9A441"/><rect x="105" y="192" width="30" height="8" rx="4" fill="#D9A441" opacity=".75"/><rect x="113" y="202" width="14" height="6" rx="3" fill="#B85C39"/><circle cx="36" cy="150" r="3.5" fill="#D9A441"/><circle cx="204" cy="142" r="3" fill="#C4633E"/><circle cx="48" cy="196" r="3" fill="#7D8655"/><circle cx="196" cy="186" r="3.5" fill="#D9A441"/><path d="M30 96 L38 92 L34 102 Z" fill="#7D8655" opacity=".9"/><path d="M206 102 L214 98 L210 108 Z" fill="#C4633E" opacity=".9"/></svg>
+      <span><small>Material de estudio · Clase 13</small><b>Aprendizaje y creatividad</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#definicion">Definición</a>
+      <a href="#mitos">Mitos</a>
+      <a href="#kolb">Las 4P</a>
+      <a href="#vak">El clima</a>
+      <a href="#chaea">Auditoría</a>
+      <a href="#integracion">Integración</a>
+      <a href="#critica">Crítica</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+      <a href="../index.html" class="volver">← Volver al menú</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 240 240" role="img" aria-label="Bombilla de crayones con un brote creciendo de bloques de juego" fill="none"><defs><clipPath id="c13vidrio-h"><circle cx="120" cy="106" r="58"/></clipPath></defs><g><rect x="47.6" y="36.7" width="13" height="28" rx="6.5" transform="rotate(-50 54.1 50.7)" fill="#C4633E"/><rect x="77.2" y="14.1" width="13" height="28" rx="6.5" transform="rotate(-25 83.7 28.1)" fill="#D9A441"/><rect x="113.5" y="6" width="13" height="28" rx="6.5" fill="#7D8655"/><rect x="149.8" y="14.1" width="13" height="28" rx="6.5" transform="rotate(25 156.3 28.1)" fill="#D9A441"/><rect x="179.4" y="36.7" width="13" height="28" rx="6.5" transform="rotate(50 185.9 50.7)" fill="#C4633E"/></g><circle cx="120" cy="106" r="62" fill="rgba(217,164,65,.10)" stroke="#D9A441" stroke-width="5"/><g clip-path="url(#c13vidrio-h)"><path d="M72 134 C 80 84 162 72 170 118" stroke="#D9A441" stroke-width="13" stroke-linecap="round" opacity=".26"/><path d="M78 146 C 98 102 158 98 166 138" stroke="#C4633E" stroke-width="11" stroke-linecap="round" opacity=".22"/><path d="M88 66 C 112 52 148 54 164 72" stroke="#7D8655" stroke-width="9" stroke-linecap="round" opacity=".20"/></g><path d="M120 101 C 119 89 121 79 120 67" stroke="#7D8655" stroke-width="5" stroke-linecap="round"/><path d="M120 88 C 108 86 100 78 98 67 C 110 69 118 76 120 88 Z" fill="#7D8655"/><path d="M120 80 C 132 78 140 70 142 59 C 130 61 122 68 120 80 Z" fill="#8DA85E"/><rect x="106.5" y="100" width="27" height="22" rx="4" fill="#8DA85E"/><rect x="91" y="122" width="27" height="22" rx="4" fill="#C4633E"/><rect x="122" y="122" width="27" height="22" rx="4" fill="#D9A441"/><path d="M97 164 L143 164 L137 180 L103 180 Z" fill="#C4633E"/><rect x="101" y="181" width="38" height="9" rx="4.5" fill="#D9A441"/><rect x="105" y="192" width="30" height="8" rx="4" fill="#D9A441" opacity=".75"/><rect x="113" y="202" width="14" height="6" rx="3" fill="#B85C39"/><circle cx="36" cy="150" r="3.5" fill="#D9A441"/><circle cx="204" cy="142" r="3" fill="#C4633E"/><circle cx="48" cy="196" r="3" fill="#7D8655"/><circle cx="196" cy="186" r="3.5" fill="#D9A441"/><path d="M30 96 L38 92 L34 102 Z" fill="#7D8655" opacity=".9"/><path d="M206 102 L214 98 L210 108 Z" fill="#C4633E" opacity=".9"/></svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>Aprendizaje y<br><em>creatividad</em></h1>
+  <p class="sub">El experimento de los conejos · las cuatro pes de Isaksen · los asesinos de Dabdoub · el clima de Ekvall.<br>Material interactivo para estudiar a tu ritmo — con quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · DEFINICIÓN ═══════════ -->
+<section class="bloque" id="definicion">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>¿Qué es la creatividad?</h2></div>
+  <p class="sec-intro reveal">Antes de las definiciones: la provocación de Ken Robinson (TED, 2006).</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Mi argumento es que la creatividad es tan importante en la educación como la alfabetización, y deberíamos darle el mismo estatus.» Si eso es cierto… ¿por qué tantas salas parecen trabajar <em>contra</em> ella?</p>
+  </div>
+
+  <div class="tarjeta reveal">
+    <h3>La definición</h3>
+    <p style="font-family:var(--serif);font-size:clamp(16px,1.9vw,21px);color:var(--marino)">Capacidad de <strong style="color:var(--terracota)">transformar la realidad</strong> mediante producciones <strong style="color:var(--terracota)">originales</strong>: combinan habilidades cognitivas y actitudes favorables, y culminan al <strong>comunicar la idea o el producto</strong> a otros.</p>
+  </div>
+
+  <p class="mini reveal" style="text-align:center;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--gris)">Cómo se fue construyendo el campo</p>
+  <div class="timeline reveal">
+    <div class="tl-item"><div class="dot">26</div><h4>Wallas (1926)</h4><p>Proceso creativo: preparación, incubación, iluminación.</p></div>
+    <div class="tl-item"><div class="dot">83</div><h4>Ekvall (1983)</h4><p>El clima creativo: nueve dimensiones universales.</p></div>
+    <div class="tl-item"><div class="dot">89</div><h4>Kirton (1989)</h4><p>Dos estilos: quien mejora lo existente y quien rompe el esquema.</p></div>
+    <div class="tl-item"><div class="dot">00</div><h4>Isaksen (2000)</h4><p>Marco sistémico de las cuatro pes: persona, proceso, producto, clima.</p></div>
+    <div class="tl-item"><div class="dot">s/f</div><h4>Dabdoub</h4><p>La creatividad en la escuela: ¿una «especie» en extinción?</p></div>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>Se conecta con lo que ya vimos</h3>
+    <p>La <strong>motivación intrínseca</strong> (y su enemiga, la sobrejustificación), la <strong>autoestima académica</strong> y la <strong>resiliencia</strong> pisan el mismo terreno que la creatividad: el error tratado con dignidad. Mismo cultivo, distintas flores.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · MITOS ═══════════ -->
+<section class="bloque" id="mitos">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Mito o realidad</h2></div>
+  <p class="sec-intro reveal">Antes de avanzar, despejemos el terreno. Clasificá cada afirmación — vas a recibir feedback inmediato.</p>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«La creatividad es un don: o se nace creativo o no se es.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Es una capacidad general implicada en aprender, que involucra procesos cognitivos, afectivos y sociales. Se cultiva o se apaga: no es un destino genético.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Es una capacidad general implicada en aprender. Como toda capacidad, se cultiva o se apaga según las experiencias — empezando por las de los primeros años.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Creatividad es cosa del arte; en ciencias o en la resolución de problemas no aplica.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> No existe un dominio único: ocurre en las artes, en las ciencias, en los vínculos. La jerarquía de materias que pone «abajo las artes» es herencia de la industrialización, no una ley natural.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> La creatividad ocurre en todos los dominios. La jerarquía escolar («arriba matemáticas… abajo artes») la reduce artificialmente: es herencia del siglo XIX, dice Robinson.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«El clima del aula puede cultivar o enterrar la creatividad de un grupo entero.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> Para Ekvall (1983), el clima —las condiciones cotidianas del grupo— permite o impide crear. Y sus ingredientes son universales: sin importar cultura o país, necesitamos lo mismo para crear.</div>
+    <div class="feedback ok"><strong>¡Correcto, es realidad!</strong> El clima creativo tiene nueve dimensiones identificables (Ekvall). No es magia ni genética: son decisiones adultas repetidas todos los días.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Ejecutar prolijamente el modelo de la maestra ya es una actividad creativa.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> Veinte conejos idénticos sobre el modelo pueden ser ejecuciones hábiles… y no productos creativos: les falta novedad y decisión propia. Recordá el experimento de Dabdoub.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Producto creativo exige originalidad y novedad respecto de un modelo ajeno. Ejecución hábil ≠ creatividad: es la distinción que sostiene toda la clase.</div>
+  </div>
+
+  <p class="destacado reveal">Capacidad general, no don reservado a pocos.</p>
+</section>
+
+<!-- ═══════════ 3 · LAS CUATRO PES ═══════════ -->
+<section class="bloque" id="kolb">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">3</span><h2>Lente 1 · Las cuatro pes (Isaksen, 2000)</h2></div>
+  <p class="sec-intro reveal">Para salir de las definiciones vagas: cuatro elementos para mirar la creatividad en cualquier contexto educativo. Tocá cada p para ver su descripción.</p>
+
+  <div class="tarjeta reveal" style="border-left-color:var(--terracota)">
+    <div class="ciclo-flex">
+      <div class="ciclo-nodos">
+        <button class="nodo sel" data-etapa="ec"><b>1 · Persona</b><small>Quién crea</small></button>
+        <button class="nodo" data-etapa="or"><b>2 · Proceso</b><small>Cómo se genera</small></button>
+        <button class="nodo" data-etapa="ca"><b>3 · Producto</b><small>Qué queda</small></button>
+        <button class="nodo" data-etapa="ea"><b>4 · Clima (press)</b><small>Dónde ocurre</small></button>
+      </div>
+      <div class="nodo-detalle" id="nodoDetalle">
+        <h4 id="ndTitulo">1 · Persona</h4>
+        <p id="ndTexto">Rasgos y actitudes que se repiten en quien crea: fluidez, flexibilidad, curiosidad, toma de riesgos, tolerancia a la ambigüedad, independencia. Nada de esto es destino fijo.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-intro reveal" style="margin-top:26px"><strong>Los asesinos frecuentes.</strong> Dabdoub describe conductas escolares que entierran la creatividad. Tocá cada tarjeta para ver a qué p golpean y cuál es el antídoto.</p>
+  <div class="kolb-grid reveal">
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">ASESINO 01</span><h4>Avergonzar el error</h4><p>Risas, señales, correcciones públicas frente al grupo.</p><span class="ayuda">Tocá para ver el antídoto →</span></div><div class="flip-cara flip-dorso k1"><strong>Avergonzar el error</strong><span>Golpea la PERSONA: instala inseguridad, baja autoestima y temor al ridículo — «el cemento» de los ladrillos, dice Dabdoub. Antídoto: tratar el error como información («¿qué descubriste probando esto?»).</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">ASESINO 02</span><h4>Imponer el modelo a copiar</h4><p>Veinte resultados idénticos siguiendo instrucciones paso a paso.</p><span class="ayuda">Tocá para ver el antídoto →</span></div><div class="flip-cara flip-dorso k2"><strong>Imponer el modelo a copiar</strong><span>Golpea PRODUCTO y PROCESO: elimina la decisión propia y la incubación. Antídoto: consignas abiertas con criterios claros — libertad con encuadre.</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">ASESINO 03</span><h4>Premiar solo el resultado</h4><p>Sellos dorados, concursos, colgar «el más lindo».</p><span class="ayuda">Tocá para ver el antídoto →</span></div><div class="flip-cara flip-dorso k3"><strong>Premiar solo el resultado</strong><span>Golpea la MOTIVACIÓN (recordá la sobrejustificación, Clase 11): el interés se muda al premio. Antídoto: feedback descriptivo del proceso, no veredictos estéticos.</span></div></div></div>
+    <div class="flip" tabindex="0"><div class="flip-inner"><div class="flip-cara flip-frontal"><span class="combo">ASESINO 04</span><h4>Separar juego y trabajo</h4><p>«Después jugamos: ahora trabajamos en cosas serias.»</p><span class="ayuda">Tocá para ver el antídoto →</span></div><div class="flip-cara flip-dorso k4"><strong>Separar juego y trabajo</strong><span>Golpea el CLIMA: mata el juego-humor y el tiempo para idear (Ekvall). Antídoto: integrar fantasía y juego dentro del proyecto serio, no como premio final.</span></div></div></div>
+  </div>
+
+  <div class="tarjeta dorado reveal" style="margin-top:20px">
+    <h3>Las 4P en una misma mañana: la fila de hormigas</h3>
+    <p>El paseo del jardín se topa con hormigas cargando hojas. Todo el grupo se agacha, hipnotizado:</p>
+    <ul class="lista" style="margin-top:8px">
+      <li><strong>Persona</strong> — la curiosidad se dispara: observar, preguntar, hipotetizar.</li>
+      <li><strong>Proceso</strong> — de la pregunta al proyecto: investigar, diseñar un «hotel de hormigas».</li>
+      <li><strong>Producto</strong> — mural o terrario: algo novedoso y útil para la sala.</li>
+      <li><strong>Clima</strong> — la decisión adulta: «dejemos las hormigas, no está en la planificación» entierra las tres pes anteriores.</li>
+    </ul>
+    <p style="margin-top:10px"><strong>Idea clave:</strong> el clima decide si las otras tres pes florecen. Por eso es la p más poderosa en manos de un docente.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · EL CLIMA CREATIVO ═══════════ -->
+<section class="bloque" id="vak">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">4</span><h2>Lente 2 · El clima creativo (Ekvall, 1983)</h2></div>
+  <p class="sec-intro reveal">Ekvall estudió organizaciones innovadoras y perfiló el ambiente donde la creatividad florece. Sus nueve dimensiones se transfirieron luego a escuelas con resultados equivalentes.</p>
+
+  <table class="comp reveal">
+    <tr><th>Dimensión</th><th>Qué mira</th><th>En tu futura sala</th></tr>
+    <tr><td>🔥 Desafío y compromiso</td><td>Grado de involucramiento en actividades y metas.</td><td>Propuestas que ni aburren ni desalientan.</td></tr>
+    <tr><td>🕊️ Libertad</td><td>Independencia para elegir cómo hacer las cosas.</td><td>Elegir materiales, formas y temas dentro de un encuadre.</td></tr>
+    <tr><td>🤝 Confianza y apertura</td><td>Seguridad emocional en las relaciones.</td><td>Preguntar y mostrar sin miedo a la burla.</td></tr>
+    <tr><td>⏳ Tiempo para idear</td><td>Tiempo real para generar ideas nuevas.</td><td>Proyectos que retoman y maduran en varias jornadas.</td></tr>
+    <tr><td>😄 Juego y humor</td><td>Espontaneidad y soltura del grupo.</td><td>Reír, jugar con las ideas, dejar lugar a la fantasía.</td></tr>
+    <tr><td>💡 Apoyo a las ideas</td><td>Cómo se reciben las ideas nuevas.</td><td>«Sí, ¿y qué más podrías hacer?» en vez de «sí, pero…».</td></tr>
+    <tr><td>💬 Discusión o debate</td><td>Desacuerdos entre puntos de vista.</td><td>Opinar distinto y fundamentarlo sin temor.</td></tr>
+    <tr><td>🪂 Toma de riesgos</td><td>Tolerancia a la incertidumbre y la ambigüedad.</td><td>Probar cosas nuevas sin castigar el resultado.</td></tr>
+    <tr><td>☮️ Conflicto bajo</td><td>Tensiones personales (conviene mantenerlas bajas).</td><td>Colaboración en lugar de competencia permanente.</td></tr>
+  </table>
+
+  <p class="destacado reveal">Sin importar cultura, grupo social o país: necesitamos lo mismo para crear.</p>
+
+  <p class="sec-intro reveal" style="margin-top:30px"><strong>Entrená la mirada:</strong> leé cada escena real de jardín y elegí qué dimensión del clima se está pisando. Vas a recibir la justificación.</p>
+
+  <div class="caso-vak reveal" data-ok="V">
+    <h4>🧱 El castillo interrumpido</h4>
+    <p>El grupo construye un castillo gigante con cajas desde hace tres días. Hoy faltaba decidir cómo hacer la puerta. La docente interrumpe: «Guarden eso, ahora tenemos que hacer la ficha de los números porque estamos apurados».</p>
+    <div class="vak-btns"><button class="vak-btn">⏳ Tiempo para idear</button><button class="vak-btn">☮️ Conflicto bajo</button><button class="vak-btn">😄 Juego y humor</button></div>
+    <div class="feedback ok"><strong>¡Tiempo para idear! ✔</strong> El proyecto que madura necesita tiempo real. Interrumpirlo comunica que lo importante siempre es «otra cosa».</div>
+    <div class="feedback mal"><strong>No era esa.</strong> Lo pisado es el <strong>tiempo para idear</strong>: tres días de construcción colectiva abortados por la agenda adulta.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="K">
+    <h4>🎨 El marrón no existe</h4>
+    <p>Mateo mezcla todas las pinturas explorando qué pasa. Sale un marrón lodoso. La maestra, delante de todos: «Mirá lo que hiciste, ensuciaste todo. Ahora empezá de nuevo».</p>
+    <div class="vak-btns"><button class="vak-btn">🕊️ Libertad</button><button class="vak-btn">🤝 Confianza y apertura</button><button class="vak-btn">🪂 Toma de riesgos</button></div>
+    <div class="feedback ok"><strong>¡Toma de riesgos! ✔</strong> Mezclar todas las pinturas para ver qué pasa ES experimentación arriesgada. Castigarla públicamente enseña a no probar nunca más.</div>
+    <div class="feedback mal"><strong>No era esa.</strong> La dimensión pisada es la <strong>toma de riesgos</strong>: la exploración se convirtió en vergüenza pública.</div>
+  </div>
+
+  <div class="caso-vak reveal" data-ok="V">
+    <h4>🏆 El concurso de dibujos</h4>
+    <p>Para el acto, la sala organiza un concurso: el dibujo más lindo se cuelga en el centro del mural y gana sello dorado; los demás van atrás, más chiquitos.</p>
+    <div class="vak-btns"><button class="vak-btn">💡 Apoyo a las ideas</button><button class="vak-btn">⏳ Tiempo para idear</button><button class="vak-btn">🕊️ Libertad</button></div>
+    <div class="feedback ok"><strong>¡Apoyo a las ideas! ✔</strong> El concurso deja de sostener las producciones de casi todos: compara niños entre sí y manda los «perdedores» al fondo del mural.</div>
+    <div class="feedback mal"><strong>No era esa.</strong> Lo golpeado es el <strong>apoyo a las ideas</strong>: una sola producción gana; las demás aprenden que su manera no vale.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · AUDITORÍA ═══════════ -->
+<section class="bloque" id="chaea">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">5</span><h2>Lente 3 · Auditoría: ¿tu sala crea o entierra?</h2></div>
+  <p class="sec-intro reveal">Para Dabdoub, los mensajes escolares son <strong>ladrillos</strong> que levantan barreras; el cemento es la inseguridad, la baja autoestima y el temor al rechazo. Este inventario no puntúa bien ni mal: te deja ver tus tendencias como futura docente.</p>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>🧱 Los ladrillos: conductas que entierran<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Avergonzar por el error · controlar en exceso con instrucciones rígidas · abusar de recompensas externas · expectativas muy bajas o muy altas · restringir la elección · ignorar esfuerzos («nunca es suficiente») · usar el temor al castigo como motivador · evitar «perder el tiempo» fuera de programa · separar juego y trabajo · fomentar competencia · evaluar con estereotipos.</p></div>
+    </details>
+    <details class="acordeon"><summary>🌱 El antídoto: preguntas que abren<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>«¿Qué pasaría si…?» · «¿De qué otra manera…?» · «¿Y por qué no…?» — y la regla de oro del lenguaje: reemplazar la frase asesina <strong>«sí, pero…»</strong> por su versión generativa: <strong>«sí, tu idea es interesante y ¿qué más podrías hacer?»</strong>.</p></div>
+    </details>
+    <details class="acordeon"><summary>🌊 El flujo (Csikszentmihalyi, 1990)<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Esa absorción completa cuando desafío y habilidad están en sintonía: el tiempo se altera y la actividad se vuelve fin en sí misma. Respetar tiempos y ritmos individuales es una condición del clima creativo, no un lujo.</p></div>
+    </details>
+  </div>
+
+  <div class="tarjeta marino reveal" style="margin-top:18px">
+    <h3>Probalo en vos: mini-inventario de aula (8 pares)</h3>
+    <p class="mini">En cada par, marcá la opción que MÁS se parece a cómo imaginás tu futura sala. No hay respuestas correctas: es una herramienta de reflexión.</p>
+    <div id="chaeaForm">
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q1" value="izq"> Ante algo distinto a lo pedido, pregunto por su idea antes de corregir.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q1" value="der"> Corrijo rápido hacia lo esperado para no perder tiempo.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q2" value="izq"> Propongo consignas abiertas con criterios claros.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q2" value="der"> Trabajo casi siempre con modelos terminados para copiar.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q3" value="izq"> El error se conversa como parte de aprender.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q3" value="der"> El error se corrige en público para que no se repita.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q4" value="izq"> Los proyectos duran varios días y retoman lo hecho.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q4" value="der"> Cada actividad empieza y termina en la misma jornada.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q5" value="izq"> Hay tiempo de juego y fantasía dentro del trabajo serio.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q5" value="der"> Primero el trabajo; el juego es premio si sobra tiempo.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q6" value="izq"> A las ideas respondo «sí, ¿y qué más podrías hacer?».</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q6" value="der"> Suelo responder «sí, pero…» y enumerar los problemas.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q7" value="izq"> Celebro la variedad de resultados, no solo el más prolijo.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q7" value="der"> Cuelgo los mejores trabajos como modelo a imitar.</label>
+      </div></div>
+      <div class="chaea-item"><div class="par">
+        <label><input type="radio" name="q8" value="izq"> El grupo elige temas y materiales dentro de un encuadre.</label><span class="sep">⟷</span>
+        <label><input type="radio" name="q8" value="der"> Decido yo todos los temas y materiales para mantener el orden.</label>
+      </div></div>
+      <button class="btn-principal" id="btnChaea">Ver mi sala tentativa</button>
+      <p class="mini" id="chaeaAviso" style="margin-top:10px;display:none;color:var(--terracota)">Te faltan responder algunas filas.</p>
+    </div>
+    <div id="chaeaResultado"></div>
+  </div>
+</section>
+
+<!-- ═══════════ 6 · INTEGRACIÓN ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">6</span><h2>Cuatro pes, una misma sala</h2></div>
+  <p class="sec-intro reveal">Las cuatro pes no compiten: miran la misma complejidad desde ángulos distintos.</p>
+
+  <table class="comp reveal">
+    <tr><th>P</th><th>Qué mira</th><th>Pregunta clave para tu sala</th></tr>
+    <tr><td>👤 Persona</td><td>Rasgos y actitudes de quien crea.</td><td>¿Qué disposiciones estoy cultivando — o apagando?</td></tr>
+    <tr><td>⚙️ Proceso</td><td>Las etapas de generación (Wallas).</td><td>¿Hay tiempo real para incubación, o todo debe ser inmediato?</td></tr>
+    <tr><td>📦 Producto</td><td>El resultado tangible o intangible.</td><td>¿Mis consignas permiten novedad, o solo reproducen un modelo?</td></tr>
+    <tr><td>🌤️ Clima</td><td>Las condiciones cotidianas del grupo.</td><td>¿Qué dimensión de Ekvall puedo fortalecer esta semana?</td></tr>
+  </table>
+
+  <div class="tarjeta marino reveal" style="margin-top:20px;text-align:center">
+    <h3>La misma propuesta, dos climas posibles</h3>
+    <p>Veinte niños van a hacer el cartelito de cumpleaños de Sofía. Tocá cada clima:</p>
+    <div class="capas">
+      <button class="capa-btn" data-lente="crea">🔍 Clima que crea</button>
+      <button class="capa-btn" data-lente="entierra">🌧️ Clima que entierra</button>
+    </div>
+    <div class="capa-out" id="capaOut"></div>
+    <p class="mini" style="margin-top:14px">No hay actividades creativas por naturaleza: hay decisiones adultas que vuelven una propuesta creativa — o la vacían.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CRÍTICA ═══════════ -->
+<section class="bloque" id="critica">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">7</span><h2>La mirada crítica</h2></div>
+  <p class="sec-intro reveal">Robinson provoca («¿las escuelas matan la creatividad?»). Antes de aceptar el diagnóstico completo, abrí cada matiz:</p>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>1 · ¿Robinson exagera?<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Su tesis es polémica a propósito: sirve para abrir el debate, no como dato empírico cerrado. La investigación (Treffinger, Isaksen y Dorval, 1996) muestra que la creatividad <strong>puede enseñarse</strong>; lo discutible es cuánto «deseduca» exactamente la escuela. Un buen ejercicio: contrastar la tesis con TU propio recorrido escolar.</p></div>
+    </details>
+    <details class="acordeon"><summary>2 · Creatividad ≠ libertad sin límites<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>La consigna abierta necesita <strong>encuadre claro</strong>: criterios, tiempos, propósito. Evaluar también requiere criterios — originalidad, novedad y utilidad son justamente eso. Sin encuadre, la «creatividad» se convierte en desorden difícil de sostener.</p></div>
+    </details>
+    <details class="acordeon"><summary>3 · El «sí, y…» tampoco es infinito<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Sostener ideas propias convive con criterios de calidad y utilidad (Kirton: quien mejora lo existente también crea). El objetivo no es aprobar todo, sino <strong>devolver antes de descartar</strong>: «sí, tu idea es interesante y ¿qué más podrías hacer?».</p></div>
+    </details>
+    <details class="acordeon"><summary>4 · Y en una sala real, con muchos chicos y poco tiempo<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Los ratios, el currículum y los tiempos institucionales existen. La buena noticia del marco: no exige hacerlo todo a la vez. <strong>Una dimensión de Ekvall por semana</strong> — cambiar un modelo a copiar por una consigna abierta ya mueve el clima completo.</p></div>
+    </details>
+  </div>
+
+  <p class="destacado reveal" style="margin-top:18px">Estas críticas no invalidan el enfoque: lo vuelven utilizable.</p>
+
+  <div class="dos-col reveal" style="margin-top:14px">
+    <div class="col-si"><h3>✅ Uso productivo</h3><ul>
+      <li><strong>Diagnosticar con las 4P</strong> antes de intervenir</li>
+      <li><strong>Rediseñar una práctica por semana</strong>, no todas juntas</li>
+      <li>Tratar el error como <strong>información</strong>, no como falta</li>
+      <li>Preguntar <strong>«¿qué pasaría si…?»</strong> y esperar la respuesta</li>
+    </ul></div>
+    <div class="col-no"><h3>❌ Riesgos a evitar</h3><ul>
+      <li>Confundir creatividad con <strong>desorden sin criterio</strong></li>
+      <li><strong>Demonizar toda reproducción</strong>: copiar también enseña</li>
+      <li>Usar «creativo» como <strong>etiqueta-elogio</strong> («sos creativo») en vez de mirar el proceso</li>
+      <li>Esperar que el clima <strong>se arregle solo</strong></li>
+    </ul></div>
+  </div>
+  <p class="destacado reveal">Robinson abre el debate; el diagnóstico fino lo hacés vos, en TU sala.</p>
+</section>
+
+<!-- ═══════════ 8 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">8</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">1 · Según el marco de Isaksen (2000), las «cuatro pes» de la creatividad son…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Un don con el que se nace</button>
+      <button class="quiz-op">Lo mismo que las inteligencias múltiples</button>
+      <button class="quiz-op">Persona, proceso, producto y clima</button>
+      <button class="quiz-op">Cuatro técnicas de enseñanza artística</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Un marco sistémico: miradas juntas, las cuatro pes dan una comprensión mucho más amplia que cualquier definición aislada.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Las cuatro pes son <strong>persona, proceso, producto y clima (press)</strong>: cuatro ángulos para estudiar la creatividad en contexto.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · Veinte conejos idénticos recortados sobre el modelo de la maestra NO son productos creativos porque…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Faltó esfuerzo motriz</button>
+      <button class="quiz-op">Les falta novedad respecto de un modelo ajeno</button>
+      <button class="quiz-op">La creatividad solo cuenta en las artes</button>
+      <button class="quiz-op">Sobraron materiales de descarte</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Pueden ser ejecuciones hábiles, pero sin novedad ni decisión propia no hay producto creativo. Es la hinge question de la clase.</div>
+    <div class="feedback mal"><strong>✘ Ojo.</strong> El criterio es el del PRODUCTO: originalidad y novedad. Ejecutar hábilmente un modelo ajeno reproduce; no crea.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">3 · En el proceso de Wallas, la etapa donde «parece que no pasa nada» pero la mente sigue trabajando es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Preparación</button>
+      <button class="quiz-op">Iluminación</button>
+      <button class="quiz-op">Verificación</button>
+      <button class="quiz-op">Incubación</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La incubación es trabajo inconsciente: seguimos haciendo conexiones aunque parezcamos ocupados en otra cosa. Después llega el ¡eureka! (iluminación).</div>
+    <div class="feedback mal"><strong>✘ No es esa.</strong> Es la <strong>incubación</strong>: trabajo inconsciente entre la búsqueda inicial (preparación) y el hallazgo (iluminación).</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">4 · Según Ekvall, las dimensiones del clima creativo…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Dependen del país y de la cultura de cada grupo</button>
+      <button class="quiz-op">Son universales: como el aire y el agua, necesitamos lo mismo para crear</button>
+      <button class="quiz-op">Solo aplican a empresas innovadoras</button>
+      <button class="quiz-op">Se heredan genéticamente</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El hallazgo más alentador de Ekvall: sin importar cultura o país, la percepción de lo que necesitamos para crear es la misma.</div>
+    <div class="feedback mal"><strong>✘ Al revés.</strong> Ekvall encontró que los ingredientes del clima creativo son <strong>universales</strong> — y transferibles de las empresas al aula.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">5 · Una colega dice: «en mi sala no se puede ser creativo, los chicos tienen que aprender a obedecer». Desde Dabdoub le responderías que…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Es cierto: obediencia y creatividad son opuestas</button>
+      <button class="quiz-op">Basta con comprar más materiales didácticos</button>
+      <button class="quiz-op">Las conductas que entierran son decisiones adultas — y como tales, modificables</button>
+      <button class="quiz-op">La creatividad es opcional en el nivel inicial</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Los «asesinos» de la creatividad no son destinos: son prácticas cotidianas identificables. Cambiar UNA ya mueve el clima completo.</div>
+    <div class="feedback mal"><strong>✘ No exactamente.</strong> Para Dabdoub las conductas que entierran la creatividad son <strong>decisiones adultas repetidas</strong> — y por lo tanto, modificables una a una.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:11.5px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:15.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">9</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 13. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Creatividad</dt><dd>Capacidad de transformar la realidad mediante producciones originales, con habilidades cognitivas y actitudes favorables, culminando en la comunicación de la idea o producto.</dd></dl>
+    <dl class="glos-item reveal"><dt>Cuatro pes</dt><dd>Marco sistémico de Isaksen (2000): persona, producto, proceso y clima (press). Permite comprender la creatividad de manera amplia y situada.</dd></dl>
+    <dl class="glos-item reveal"><dt>Pensamiento divergente</dt><dd>Genera múltiples alternativas ante un mismo problema. Se complementa con el pensamiento convergente, que busca la respuesta única correcta.</dd></dl>
+    <dl class="glos-item reveal"><dt>Fluidez</dt><dd>Cantidad de ideas que una persona produce ante una consigna dada. Indicador clásico de producción creativa.</dd></dl>
+    <dl class="glos-item reveal"><dt>Flexibilidad</dt><dd>Capacidad de cambiar de perspectiva o categoría al producir ideas, en lugar de repetir variantes del mismo camino.</dd></dl>
+    <dl class="glos-item reveal"><dt>Originalidad</dt><dd>Rareza o singularidad de una respuesta respecto de lo habitual en su grupo. Uno de los criterios esenciales del producto creativo.</dd></dl>
+    <dl class="glos-item reveal"><dt>Incubación</dt><dd>Etapa del proceso (Wallas, 1926) de trabajo inconsciente: parece que el problema quedó de lado, pero siguen produciéndose conexiones.</dd></dl>
+    <dl class="glos-item reveal"><dt>Tolerancia a la ambigüedad</dt><dd>Disposición a sostener la incertidumbre sin cerrar prematuramente con la primera respuesta.</dd></dl>
+    <dl class="glos-item reveal"><dt>Flujo (flow)</dt><dd>Absorción total cuando desafío y habilidad están en sintonía; la percepción del tiempo se altera (Csikszentmihalyi, 1990).</dd></dl>
+    <dl class="glos-item reveal"><dt>Clima creativo</dt><dd>Conductas, actitudes y sentimientos presentes cotidianamente en un grupo. Nueve dimensiones lo caracterizan (Ekvall, 1983).</dd></dl>
+    <dl class="glos-item reveal"><dt>Asesinos de la creatividad</dt><dd>Conductas docentes que entierran la creatividad (Dabdoub): castigar el error, imponer modelos, premiar solo resultados, separar juego y trabajo, entre otras.</dd></dl>
+    <dl class="glos-item reveal"><dt>Frase asesina</dt><dd>«Sí, pero…» mata el entusiasmo de una idea nueva. Su versión generativa: «sí, tu idea es interesante y ¿qué más podrías hacer?».</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Consigna puente a la Clase 14 · Fracaso escolar y educabilidad</h3>
+    <p class="consigna">«Pensá en alguien de tu historia escolar etiquetado como "mal alumno". ¿Qué capacidades tenía que la escuela no vio? ¿Qué habría pasado si un docente hubiera mirado sus producciones con ojos creativos?»</p>
+    <p style="font-size:14px;color:#C9D2E0;margin-top:10px">Reflexión escrita · ½ carilla · Guía: quién era, qué capacidades no fueron vistas, qué habría cambiado con otra mirada docente.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Csikszentmihalyi, M. (1990). <em>Flow</em>. Harper &amp; Row. · Dabdoub Alvarado, L. La creatividad en la escuela. <em>Innovación Educativa</em>, México. · Ekvall, G. (1983). <em>Climate, structure and innovativeness of organizations</em>. Swedish Council. · Kirton, M. (1989). <em>Adaptors and Innovators</em>. Routledge. · Robinson, K. (2006). Do schools kill creativity? TED2006. · Torre, S. de la (1999). <em>Creatividad y formación</em>. Trillas. · Treffinger, Isaksen y Dorval (1996). Climate for creativity and innovation.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 13 — Aprendizaje y creatividad<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy — solo enlaces de sección (anclas #), ignora el botón de volver al menú */
+const links=[...document.querySelectorAll('#navSecs a')].filter(a=>a.getAttribute('href').startsWith('#'));
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  caja.addEventListener('pregunta-resuelta',()=>{});
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+});
+
+/* casos de clima (estructura .caso-vak reutilizada) */
+document.querySelectorAll('.caso-vak').forEach(caso=>{
+  const correcta=caso.dataset.ok;
+  const btns=[...caso.querySelectorAll('.vak-btn')];
+  const mapa={V:0,A:1,K:2};
+  const fbOk=caso.querySelector('.feedback.ok'),fbMal=caso.querySelector('.feedback.mal');
+  let resuelta=false;
+  btns.forEach((b,i)=>{
+    const letra=['V','A','K'][i];
+    b.addEventListener('click',()=>{
+      if(resuelta)return; resuelta=true;
+      const bien=letra===correcta;
+      b.classList.add(bien?'bien':'mal');
+      btns[mapa[correcta]].classList.add('bien');
+      btns.forEach(x=>x.disabled=true);
+      (bien?fbOk:fbMal).classList.add('ver');
+      registrarRespuesta(bien);
+    });
+  });
+});
+
+/* flips */
+document.querySelectorAll('.flip').forEach(f=>{
+  const go=()=>f.classList.toggle('volteada');
+  f.addEventListener('click',go);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+});
+
+/* nodos interactivos: las cuatro pes */
+const nodos={
+  ec:{t:'1 · Persona',d:'Rasgos y actitudes que se repiten en quien crea: fluidez, flexibilidad, originalidad, curiosidad, toma de riesgos, tolerancia a la ambigüedad, independencia. Nada de esto es destino fijo: se cultiva o se apaga.'},
+  or:{t:'2 · Proceso',d:'Wallas (1926): preparación (buscar ideas, con ansiedad incluida), incubación (trabajo inconsciente), iluminación (¡eureka!) y verificación-comunicación: compartir con otros es parte de la propia definición.'},
+  ca:{t:'3 · Producto',d:'Tangible o intangible —una manera nueva de dar la clase también lo es—. Criterios: originalidad, novedad, utilidad y síntesis. Kirton: quien mejora lo existente y quien rompe el esquema.'},
+  ea:{t:'4 · Clima (press)',d:'El contexto que permite o impide crear: condiciones cotidianas del grupo. Nueve dimensiones (Ekvall). Es la p más olvidada y la más poderosa en manos de un docente.'}
+};
+document.querySelectorAll('.nodo').forEach(n=>n.addEventListener('click',()=>{
+  document.querySelectorAll('.nodo').forEach(x=>x.classList.remove('sel'));
+  n.classList.add('sel');
+  const info=nodos[n.dataset.etapa];
+  document.getElementById('ndTitulo').textContent=info.t;
+  document.getElementById('ndTexto').textContent=info.d;
+}));
+
+/* dos climas por capas (sección integración) */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  crea:{t:'Clima que crea 🌱',d:'«¿Cómo querés decorarlo vos?» — cada niño decide técnica y diseño. Los veinte carteles distintos se cuelgan juntos y se comentan uno por uno. Libertad + apoyo a las ideas.'},
+  entierra:{t:'Clima que entierra 🧱',d:'Bolitas con hisopo alrededor del borde: «así queda prolijo y parejo». Veinte carteles idénticos y un mensaje implícito — tu manera no cuenta. Control + estética única.'}
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* mini-inventario de aula */
+document.getElementById('btnChaea').addEventListener('click',()=>{
+  const total=8;let resp=0,izq=0,der=0;
+  for(let i=1;i<=total;i++){
+    const r=document.querySelector(`input[name="q${i}"]:checked`);
+    if(r){resp++; r.value==='izq'?izq++:der++;}
+  }
+  const aviso=document.getElementById('chaeaAviso');
+  if(resp<total){aviso.style.display='block';return;}
+  aviso.style.display='none';
+  const out=document.getElementById('chaeaResultado');
+  const perfilIzq={t:'Tu sala cultiva creatividad 🌱',d:'Tus respuestas se inclinan hacia libertad con encuadre, error-conversación, proyectos que maduran y apoyo a las ideas. Fortalezas: clima sostenido, confianza. A cuidar: sostener criterios de calidad junto con la apertura — consigna abierta no significa todo vale.'};
+  const perfilDer={t:'Tu sala corre riesgo de enterrarla 🧱',d:'Hay prácticas que, con toda buena voluntad, levantan ladrillos: modelos únicos, corrección pública del error, juego como premio. No es condena: cada práctica es una decisión modificable. Empezá por UNA dimensión de Ekvall esta semana.'};
+  const p=izq>der?perfilIzq:perfilDer;
+  out.innerHTML=`<h4>${p.t}</h4><p>${p.d}</p><p style="margin-top:10px;font-size:13px;color:#C9D2E0">Columna cultiva: ${izq} · Columna entierra: ${der}</p><p style="margin-top:8px;font-size:12.5px;color:#8FA0B8">Recordá: es una herramienta de reflexión sobre tu futura práctica, no un diagnóstico. Basado en Dabdoub (conductas que entierran) y Ekvall (dimensiones del clima).</p>`;
+  out.classList.remove('ver');void out.offsetWidth;out.classList.add('ver');
+  out.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Manejás el marco completo: listos para discutir el fracaso escolar en la Clase 14.'
+      :aciertos>=3?'¡Muy bien! Repasá lo que fallaste usando el glosario.'
+      :'Volvé a las secciones 1, 3 y 4 e intentá de nuevo: con otra lectura atenta, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>

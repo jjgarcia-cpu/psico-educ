@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 11 · Motivación y Autoestima — Presentación para Proyectar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   RESET & VARIABLES DE COLOR
+   ========================================================================== */
+:root {
+  --bg-dark: #0b1120;
+  --bg-deck: #131d33;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-card: rgba(255, 255, 255, 0.12);
+  
+  --crema: #F9F6EE;
+  --crema-suave: #EFE7D5;
+  --marino: #1e293b;
+  --marino-deep: #070c18;
+  
+  /* Colores de alto contraste óptico para proyector */
+  --terracota: #E06D44;
+  --terracota-glow: rgba(224, 109, 68, 0.28);
+  
+  --dorado: #E5AC39;
+  --dorado-glow: rgba(229, 172, 57, 0.28);
+  
+  --oliva: #8DA85E;
+  --oliva-glow: rgba(141, 168, 94, 0.28);
+  
+  --azul-cyan: #38bdf8;
+  --verde-ok: #4ade80;
+  --rojo-err: #f87171;
+
+  --texto-principal: #F8FAFC;
+  --texto-secundario: #CBD5E1;
+  --texto-muted: #94A3B8;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --transition-speed: 0.35s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--marino-deep);
+  font-family: var(--font-sans);
+  color: var(--texto-principal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   CONTENEDOR DE PRESENTACIÓN (16:9 RESPONSIVE VIEWPORT)
+   ========================================================================== */
+#presentation-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #1e2e4a 0%, #0c1322 75%, #070a12 100%);
+  overflow: hidden;
+}
+
+.bg-ambient-glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 172, 57, 0.08) 0%, rgba(224, 109, 68, 0.04) 40%, transparent 70%);
+  top: 20%;
+  left: 20%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  transition: all 1s ease;
+}
+
+/* ESCENARIO DE DIAPOSITIVAS */
+#deck {
+  position: relative;
+  width: min(96vw, calc(96vh * 16 / 9));
+  height: min(96vh, calc(96vw * 9 / 16));
+  max-width: 1500px;
+  max-height: 843px;
+  background: linear-gradient(145deg, rgba(26, 38, 62, 0.96), rgba(16, 25, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  overflow: hidden;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER SUPERIOR DE DIAPOSITIVA */
+.slide-header {
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(11, 18, 32, 0.5);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.slide-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.fase-badge.f1 { background: linear-gradient(135deg, var(--terracota), #b85028); box-shadow: 0 0 12px var(--terracota-glow); }
+.fase-badge.f2 { background: linear-gradient(135deg, var(--dorado), #c2881a); box-shadow: 0 0 12px var(--dorado-glow); }
+.fase-badge.f3 { background: linear-gradient(135deg, var(--oliva), #698040); box-shadow: 0 0 12px var(--oliva-glow); }
+.fase-badge.f4 { background: linear-gradient(135deg, #4f46e5, #3730a3); }
+.fase-badge.f5 { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+.slide-materia-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  letter-spacing: 0.02em;
+}
+
+.slide-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--dorado);
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.25);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--texto-muted);
+}
+.slide-counter span {
+  color: var(--texto-principal);
+}
+
+/* ==========================================================================
+   SLIDES CANVAS & TRANSICIONES
+   ========================================================================== */
+.slides-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: calc(100% - 56px);
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(40px) scale(0.98);
+  pointer-events: none;
+  transition: opacity var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.slide::-webkit-scrollbar { display: none; }
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.slide.prev {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.98);
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA Y ELEMENTOS
+   ========================================================================== */
+.kicker {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.slide-title em {
+  font-style: italic;
+  color: var(--dorado);
+  background: linear-gradient(120deg, #F9D976 0%, #E5AC39 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.slide-subtitle {
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  color: var(--texto-secundario);
+  line-height: 1.45;
+  max-width: 900px;
+}
+
+/* TARJETAS Y PANELES */
+.card-glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.card-glass:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.card-glass.terracota-border { border-left: 5px solid var(--terracota); }
+.card-glass.dorado-border { border-left: 5px solid var(--dorado); }
+.card-glass.oliva-border { border-left: 5px solid var(--oliva); }
+.card-glass.cyan-border { border-left: 5px solid var(--azul-cyan); }
+
+/* GRID LAYOUTS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+
+/* LISTAS PROYECTABLES */
+.presentation-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.presentation-list li {
+  position: relative;
+  padding-left: 30px;
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.presentation-list li strong {
+  color: #fff;
+}
+.presentation-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+  color: var(--dorado);
+  font-size: 1.2rem;
+}
+.presentation-list.bullet-check li::before {
+  content: "✓";
+  color: var(--verde-ok);
+}
+.presentation-list.bullet-cross li::before {
+  content: "✕";
+  color: var(--rojo-err);
+}
+
+/* BIG CALLOUT / DESTACADOS */
+.big-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  line-height: 1.35;
+  color: #F8FAFC;
+  text-align: center;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, rgba(224, 109, 68, 0.12), rgba(229, 172, 57, 0.12));
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 18px;
+  margin: 14px 0;
+  position: relative;
+}
+.big-quote::before {
+  content: "“";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  font-size: 3.5rem;
+  color: var(--dorado);
+  opacity: 0.35;
+  font-family: var(--font-serif);
+}
+
+/* ==========================================================================
+   WIDGETS INTERACTIVOS
+   ========================================================================== */
+.slide-timer-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 17, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin-top: 14px;
+}
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  color: var(--dorado);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 15px var(--dorado-glow);
+}
+.timer-controls {
+  display: flex;
+  gap: 8px;
+}
+.btn-timer {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-timer:hover {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  border-color: var(--dorado);
+  transform: translateY(-2px);
+}
+.btn-timer.reset:hover {
+  background: var(--terracota);
+  color: #fff;
+  border-color: var(--terracota);
+}
+
+/* HINGE QUESTION INTERACTIVA */
+.hinge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.hinge-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-align: left;
+  color: #fff;
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  font-weight: 600;
+}
+.hinge-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+.hinge-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(229, 172, 57, 0.18);
+  border: 2px solid var(--dorado);
+  color: var(--dorado);
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.hinge-card.correct {
+  background: rgba(74, 222, 128, 0.18) !important;
+  border-color: var(--verde-ok) !important;
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.3) !important;
+}
+.hinge-card.correct .hinge-num {
+  background: var(--verde-ok);
+  border-color: var(--verde-ok);
+  color: #0c1a0e;
+}
+.hinge-card.wrong {
+  background: rgba(248, 113, 113, 0.15) !important;
+  border-color: var(--rojo-err) !important;
+  opacity: 0.65;
+}
+.hinge-card.wrong .hinge-num {
+  background: var(--rojo-err);
+  border-color: var(--rojo-err);
+  color: #fff;
+}
+.hinge-feedback-box {
+  margin-top: 14px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 1rem;
+  line-height: 1.45;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.hinge-feedback-box.correct {
+  display: block;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1.5px solid var(--verde-ok);
+  color: #dcfce7;
+}
+.hinge-feedback-box.wrong {
+  display: block;
+  background: rgba(248, 113, 113, 0.15);
+  border: 1.5px solid var(--rojo-err);
+  color: #fee2e2;
+}
+
+/* TARJETAS FLIP VAK */
+.vak-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+.flip-card {
+  perspective: 1200px;
+  cursor: pointer;
+  min-height: 180px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.flip-front {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+}
+.flip-front h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--dorado);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flip-front p {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.flip-hint {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+  font-style: italic;
+  text-align: right;
+}
+.flip-back {
+  transform: rotateY(180deg);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+.flip-back.vak-v { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+.flip-back.vak-a { background: linear-gradient(135deg, #78350f, #d97706); }
+.flip-back.vak-k { background: linear-gradient(135deg, #14532d, #16a34a); }
+.flip-back strong {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.flip-back span {
+  font-size: 1rem;
+  line-height: 1.35;
+  opacity: 0.95;
+}
+
+/* CICLO DE KOLB VISUAL */
+.kolb-cycle-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.kolb-step-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 18px 16px;
+  position: relative;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.kolb-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado);
+}
+.kolb-step-card .sigla {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--terracota);
+  background: rgba(224, 109, 68, 0.15);
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.kolb-step-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.kolb-step-card p {
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--texto-secundario);
+}
+.kolb-step-card::after {
+  content: "→";
+  position: absolute;
+  right: -11px;
+  top: 42%;
+  font-size: 1.3rem;
+  color: var(--dorado);
+  font-weight: 800;
+  z-index: 5;
+}
+.kolb-step-card:last-child::after {
+  content: "↺";
+  right: 10px;
+  top: -10px;
+  font-size: 1.4rem;
+}
+
+/* TABLA COMPARATIVA */
+.table-comp-pro {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 12px;
+}
+.table-comp-pro th {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dorado);
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.table-comp-pro td {
+  padding: 12px 16px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+.table-comp-pro tr:last-child td { border-bottom: none; }
+.table-comp-pro td:first-child {
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* VALENTINA LENTES SELECTOR */
+.lentes-btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.btn-lente {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-lente:hover, .btn-lente.active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.btn-lente[data-lente="kolb"].active { background: var(--terracota); border-color: var(--terracota); }
+.btn-lente[data-lente="vak"].active { background: var(--dorado); border-color: var(--dorado); color: #0c1a0e; }
+.btn-lente[data-lente="chaea"].active { background: var(--oliva); border-color: var(--oliva); }
+.lente-result-box {
+  margin-top: 18px;
+  padding: 22px 28px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px dashed var(--dorado);
+  text-align: center;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+.lente-result-box h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--dorado);
+  margin-bottom: 6px;
+}
+.lente-result-box p {
+  font-size: 1.25rem;
+  color: var(--texto-secundario);
+  max-width: 750px;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   BARRA INFERIOR DE CONTROL (FLOATING DOCK)
+   ========================================================================== */
+#control-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dock-btn {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: scale(1.1);
+}
+.dock-btn.primary {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  font-weight: 800;
+}
+.dock-btn.primary:hover {
+  background: #fcd34d;
+  box-shadow: 0 0 15px var(--dorado-glow);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+
+.progress-track {
+  width: 140px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--terracota), var(--dorado));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ==========================================================================
+   MODALES (GRID OVERVIEW, NOTAS, SHORTCUTS)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: #131c2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  width: min(90vw, 1100px);
+  max-height: 85vh;
+  padding: 32px;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+}
+.modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--dorado);
+}
+.modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* CUADRÍCULA DE TODAS LAS DIAPOSITIVAS */
+.grid-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.thumb-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
+}
+.thumb-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+}
+.thumb-card.current {
+  border-color: var(--dorado);
+  box-shadow: 0 0 15px var(--dorado-glow);
+  background: rgba(229, 172, 57, 0.12);
+}
+.thumb-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--dorado);
+  font-weight: 700;
+}
+.thumb-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.thumb-phase {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+}
+
+/* NOTAS DOCENTES (DRAWER / OVERLAY) */
+#notes-drawer {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  background: rgba(12, 19, 34, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 28px;
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 50;
+  overflow-y: auto;
+}
+#notes-drawer.open {
+  transform: translateX(0);
+}
+#notes-drawer h4 {
+  font-family: var(--font-serif);
+  color: var(--dorado);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#notes-drawer p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+  margin-bottom: 16px;
+}
+#notes-drawer .tip-box {
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.98rem;
+  color: #fef08a;
+}
+
+/* SHORTCUTS HELP BOX */
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.key-badge {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.98rem;
+  color: var(--dorado);
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE SMART PROJECTOR ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .slide { padding: 24px 28px; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .vak-container { grid-template-columns: 1fr 1fr; }
+  .kolb-cycle-grid { grid-template-columns: 1fr 1fr; }
+  .kolb-step-card::after { display: none; }
+}
+
+/* ==========================================================================
+   ADICIONES CLASE 11 (widgets propios de esta clase)
+   ========================================================================== */
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+.chip-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+.chip-cat {
+  background: rgba(229,172,57,.14); border: 1.5px solid var(--dorado); color: #FDF0D5;
+  padding: 9px 22px; border-radius: 999px; font-weight: 800;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+}
+
+.formula-card { text-align: center; padding: 26px 28px; }
+.formula-big { font-family: var(--font-serif); font-size: clamp(2rem, 3.4vw, 2.9rem); color: #fff; }
+.formula-big .op { color: var(--terracota); font-weight: 800; margin: 0 14px; }
+
+.reveal-story { cursor: pointer; }
+.reveal-hidden { display: none; margin-top: 14px; animation: fadeIn 0.3s ease; }
+.reveal-hidden.ver { display: block; }
+
+.atri-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+.atri-node {
+  cursor: pointer; text-align: center; padding: 18px 12px; border-radius: 16px;
+  background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.15);
+  transition: all .25s cubic-bezier(.2,.8,.2,1); font-weight: 800; font-size: 1.2rem; color: #fff;
+}
+.atri-node:hover { transform: translateY(-3px); border-color: var(--dorado); }
+.atri-node.sel { border-color: var(--dorado); background: rgba(229,172,57,.15); box-shadow: 0 0 22px var(--dorado-glow); }
+.atri-detail {
+  margin-top: 14px; padding: 18px 26px; border-radius: 14px; background: rgba(255,255,255,.06);
+  border: 1.5px dashed var(--dorado); min-height: 100px; display: flex; flex-direction: column;
+  justify-content: center; gap: 8px; animation: fadeIn .3s ease;
+}
+.atri-detail h4 { font-family: var(--font-serif); font-size: 1.3rem; color: var(--dorado); }
+.atri-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.atri-chip { font-family: var(--font-mono); font-size: .74rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); color: var(--texto-secundario); }
+
+.frase-proy {
+  cursor: pointer; background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.14);
+  border-radius: 14px; padding: 13px 20px; margin-top: 10px; transition: all .25s;
+}
+.frase-proy:hover { border-color: var(--dorado); background: rgba(255,255,255,.09); transform: translateY(-2px); }
+.frase-proy .f-txt { font-size: 1.25rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.frase-proy .f-res { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.22); font-size: .95rem; line-height: 1.45; color: var(--texto-secundario); animation: fadeIn .3s ease; }
+.frase-proy.abierta .f-res { display: block; }
+.frase-tag { font-family: var(--font-mono); font-size: .72rem; font-weight: 800; padding: 3px 11px; border-radius: 999px; letter-spacing: .05em; flex-shrink: 0; white-space: nowrap; }
+.tag-ef { background: rgba(141,168,94,.25); color: #DCE8BC; border: 1px solid var(--oliva); }
+.tag-ae { background: rgba(224,109,68,.25); color: #FFD9C4; border: 1px solid var(--terracota); }
+.tag-ev { background: rgba(248,113,113,.2); color: #FECACA; border: 1px solid var(--rojo-err); }
+.leyenda-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0 4px; }
+
+.ciclo-steps { display: flex; flex-direction: column; gap: 3px; margin-top: 10px; }
+.ciclo-step {
+  display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.05);
+  border-left: 5px solid var(--nodo-color, #8DA85E); padding: 8px 20px; border-radius: 12px;
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem); font-weight: 600; color: #fff; animation: fadeIn .35s ease both;
+}
+.ciclo-num { width: 32px; height: 32px; border-radius: 50%; background: var(--nodo-color, #8DA85E); color: #10192a; font-family: var(--font-serif); font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ciclo-flecha { text-align: center; color: var(--texto-muted); font-size: 1rem; line-height: 1; margin: 2px 0; }
+
+.canal-card { text-align: center; padding: 18px 12px; }
+.canal-card .icono { font-size: 2rem; display: block; margin-bottom: 10px; }
+.canal-card h4 { font-family: var(--font-serif); font-size: 1.08rem; color: #fff; margin-bottom: 6px; }
+.canal-card p { font-size: .85rem; line-height: 1.4; color: var(--texto-secundario); }
+
+.sit-tabs { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+.btn-sit {
+  background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.2); color: #fff;
+  padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: .95rem; cursor: pointer;
+  transition: all .25s ease;
+}
+.btn-sit:hover { transform: translateY(-2px); }
+.btn-sit.active { background: var(--oliva); border-color: var(--oliva); }
+.sit-panel { display: none; margin-top: 14px; animation: fadeIn .3s ease; }
+.sit-panel.active { display: block; }
+.btn-analisis {
+  margin-top: 12px; background: rgba(229,172,57,.15); border: 1.5px solid var(--dorado);
+  color: var(--dorado); font-weight: 700; font-size: 1.05rem; padding: 9px 20px; border-radius: 10px;
+  cursor: pointer; transition: all .2s;
+}
+.btn-analisis:hover { background: var(--dorado); color: #131c2e; }
+
+body.blackout { background: #000 !important; }
+body.blackout #presentation-wrapper { opacity: 0; pointer-events: none; }
+</style><style>
+  /* ESCALA PROYECTOR · LETRA GRANDE +20% (una sola regla: todo el texto esta en rem).
+     Ajuste fino: 16px original - 18px suave - 19.2px +20% - 20.8px +30%. */
+  .frases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+             width: 100%; align-content: flex-start; }
+  .frases-grid .frase-proy { margin-top: 0; }
+  html { font-size: 22px; }
+</style>
+</head>
+<body>
+
+<div id="presentation-wrapper">
+  <div class="bg-ambient-glow" id="ambientGlow"></div>
+
+  <!-- ESCENARIO DE PRESENTACIÓN -->
+  <main id="deck">
+
+    <!-- HEADER SUPERIOR -->
+    <header class="slide-header">
+      <div class="slide-header-left">
+        <span class="fase-badge f1" id="badgeFase">Intro</span>
+        <span class="slide-materia-title">Psicología Educacional · Clase 11</span>
+      </div>
+      <div class="slide-header-right">
+        <div class="time-pill" id="timePill">⏱ 80 min</div>
+        <div class="slide-counter"><span id="currSlideNum">01</span> / <span id="totalSlidesNum">19</span></div>
+      </div>
+    </header>
+
+    <!-- CONTENEDOR DE DIAPOSITIVAS -->
+    <div class="slides-container" id="slidesContainer">
+
+      <!-- SLIDE 01: PORTADA -->
+      <section class="slide active" data-fase="Intro" data-time="0–80 min" data-notes="Bienvenida y encuadre: hoy vemos qué mueve a aprender (motivación), cómo se construyen el «puedo» y el «valgo» (autoeficacia y autoestima), y el poder de las expectativas docentes (efecto Pygmalión). Sesión interactiva de 80 minutos con trabajo en mesas y en parejas.">
+        <div style="text-align: center; max-width: 980px; margin: 0 auto;">
+          <svg viewBox="0 0 240 150" style="width: 200px; margin-bottom: 10px;" fill="none">
+            <path d="M 30 125 A 90 90 0 0 1 210 125" stroke="#E5AC39" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+            <path d="M 48 125 A 72 72 0 0 1 192 125" stroke="rgba(229,172,57,.18)" stroke-width="12"/>
+            <circle cx="42" cy="98" r="6" fill="#E06D44"/>
+            <circle cx="120" cy="35" r="6" fill="#E5AC39"/>
+            <circle cx="198" cy="98" r="6" fill="#8DA85E"/>
+            <line x1="20" y1="125" x2="220" y2="125" stroke="#F8FAFC" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+            <g>
+              <line x1="120" y1="125" x2="120" y2="52" stroke="#E06D44" stroke-width="4.5" stroke-linecap="round"/>
+              <circle cx="120" cy="125" r="8" fill="#F8FAFC"/>
+              <animateTransform attributeName="transform" type="rotate"
+                values="-38 120 125; 24 120 125; -30 120 125; 10 120 125; -38 120 125"
+                dur="7s" repeatCount="indefinite"/>
+            </g>
+          </svg>
+          <p class="kicker" style="justify-content: center;">Profesorado de Educación Inicial · 2° Año</p>
+          <h1 class="slide-title" style="font-size: clamp(2.4rem, 4.5vw, 3.8rem); margin-bottom: 16px;">
+            Motivación y <em>Autoestima</em>: los motores del aprendizaje
+          </h1>
+          <p class="slide-subtitle" style="margin: 0 auto 28px;">
+            Qué mueve a aprender · Cómo se construyen el «yo puedo» y el «yo valgo» · El poder de las expectativas docentes.
+          </p>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 1.05rem;">⏱ 80 Minutos</span>
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 1.05rem;">🧭 4 Fases</span>
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 1.05rem;">💡 Diapositivas Interactivas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 02: HOJA DE RUTA -->
+      <section class="slide" data-fase="Agenda" data-time="0–80 min" data-notes="Presentar el mapa para dar previsibilidad. Destacar los tres momentos activos: juego de frases docentes (Fase 2), análisis de situaciones en parejas (Fase 3) y votación de la hinge question (Fase 4).">
+        <p class="kicker">Estructura de la Clase</p>
+        <h2 class="slide-title">Hoja de Ruta de los <em>80 Minutos</em></h2>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card-glass terracota-border">
+            <span class="fase-badge f1" style="margin-bottom: 10px;">Fase 1 · Min 0–12</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Apertura: La motivación que (no) tuvimos</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Do Now sobre una actividad escolar que nos motivó + sistematización inductiva en el pizarrón.</p>
+          </div>
+          <div class="card-glass dorado-border">
+            <span class="fase-badge f2" style="margin-bottom: 10px;">Fase 2 · Min 12–40</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Exploración guiada: Los lentes de la motivación</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Intrínseca/extrínseca, sobrejustificación, autoeficacia, atribuciones, autoestima + juego de frases docentes.</p>
+          </div>
+          <div class="card-glass oliva-border">
+            <span class="fase-badge f3" style="margin-bottom: 10px;">Fase 3 · Min 40–65</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Profundización: El efecto Pygmalión</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">El experimento de Rosenthal y Jacobson + análisis de tres situaciones de sala en parejas.</p>
+          </div>
+          <div class="card-glass cyan-border">
+            <span class="fase-badge f4" style="margin-bottom: 10px;">Fase 4 · Min 65–80</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Cierre y proyección hacia la resiliencia</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Hinge question del caso Valentín, síntesis co-construida y consigna puente a la Clase 12.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 03: FASE 1 · DO NOW -->
+      <section class="slide" data-fase="Fase 1" data-time="Min 0–4" data-notes="Escritura individual en silencio. Lanzar el temporizador de 4 minutos. Mientras escriben, preparar el pizarrón para la sistematización. IMPORTANTE: las categorías deben EMERGER del material de las estudiantes, no imponerse.">
+        <p class="kicker">Fase 1 · Apertura y Activación</p>
+        <h2 class="slide-title">Do Now: <em>Respondé en tu cuaderno</em></h2>
+        <div class="card-glass terracota-border" style="margin-top: 10px;">
+          <p style="font-size: 1.05rem; color: var(--dorado); font-weight: 700; margin-bottom: 14px;">✍️ En silencio e individualmente (4 minutos):</p>
+          <ul class="presentation-list">
+            <li>Pensá en una <strong>actividad que te motivó mucho</strong> en tu historia escolar.</li>
+            <li>¿Qué tenía esa actividad que te hacía <strong>querer participar</strong>?</li>
+            <li>Escribí tu respuesta: la vamos a usar <strong>toda la clase</strong>.</li>
+          </ul>
+        </div>
+        <!-- TEMPORIZADOR DO NOW (4 MIN) -->
+        <div class="slide-timer-box">
+          <div>
+            <span style="font-size: 0.98rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Actividad</span>
+            <div class="timer-display" id="timerDoNow">04:00</div>
+          </div>
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startTimer('timerDoNow', 240)">▶ Iniciar</button>
+            <button class="btn-timer" onclick="pauseTimer('timerDoNow')">⏸ Pausar</button>
+            <button class="btn-timer reset" onclick="resetTimer('timerDoNow', 240)">↺ Reiniciar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 04: FASE 1 · SISTEMATIZACIÓN Y GRAN PREGUNTA -->
+      <section class="slide" data-fase="Fase 1" data-time="Min 4–12" data-notes="Compartir voces (3 o 4 estudiantes) e ir agrupando en el pizarrón. Las categorías emergen inductivamente: la docente facilita, no deposita. Cerrar conectando con la Clase 10 y lanzando la gran pregunta de la clase.">
+        <p class="kicker">Fase 1 · Puesta en Común</p>
+        <h2 class="slide-title">Del Recuerdo Personal a las <em>Categorías</em></h2>
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card-glass">
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--dorado); margin-bottom: 12px;">🗣 Sistematizamos en el pizarrón</h3>
+            <p style="font-size: 1.05rem; line-height: 1.5; color: var(--texto-secundario);">
+              Compartimos algunas respuestas y las agrupo por familias que <strong style="color:#fff">emergen del propio material escrito</strong>. Nadie impone las categorías: aparecen de lo que ustedes trajeron.
+            </p>
+          </div>
+          <div class="card-glass">
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; color: var(--terracota); margin-bottom: 12px;">🔗 Conexión desde la Clase 10</h3>
+            <p style="font-size: 1.05rem; line-height: 1.5; color: var(--texto-secundario);">
+              Ya sabemos que cada uno aprende de manera distinta. Hoy miramos qué dice la psicología cuando <strong style="color:#fff">el motor no acompaña</strong> al aprendizaje.
+            </p>
+          </div>
+        </div>
+        <div class="chip-row">
+          <span class="chip-cat">🎲 Variedad</span>
+          <span class="chip-cat">🧗 Desafío</span>
+          <span class="chip-cat">🤝 Vínculo</span>
+          <span class="chip-cat">🎮 Juego</span>
+          <span class="chip-cat">🕊 Autonomía</span>
+        </div>
+        <div class="big-quote" style="margin-top: 22px;">
+          «¿Por qué hay cosas que queremos hacer…<br>y otras que nos cuestan arrancar, <strong>aunque sepamos que podemos?</strong>»
+        </div>
+      </section>
+
+      <!-- SLIDE 05: FASE 2 · INTRÍNSECA VS EXTRÍNSECA -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 12–17" data-notes="Paso 1 (9 min con la siguiente slide). Exposición dialogada breve: conectar cada motor con ejemplos aportados en el Do Now. Cierre del paso: el juego libre como espacio por excelencia de motivación intrínseca en el nivel inicial.">
+        <p class="kicker">Fase 2 · Paso 1 · Los Lentes de la Motivación</p>
+        <h2 class="slide-title">Dos Motores: <em>Intrínseca y Extrínseca</em></h2>
+        <p class="slide-subtitle" style="margin-bottom: 16px;">Deci y Ryan (1985): la distinción clásica de la psicología de la motivación.</p>
+        <div class="grid-2">
+          <div class="card-glass oliva-border" style="padding: 26px;">
+            <h3 style="color: var(--verde-ok); font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Motor interno · INTRÍNSECA</h3>
+            <ul class="presentation-list bullet-check">
+              <li>Se hace por el <strong>placer o interés</strong> que la propia actividad genera.</li>
+              <li>Ej.: armar rompecabezas porque el desafío engancha.</li>
+              <li>Asociada a aprendizajes <strong>más profundos y persistentes</strong>.</li>
+            </ul>
+          </div>
+          <div class="card-glass terracota-border" style="padding: 26px;">
+            <h3 style="color: var(--terracota); font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Motor externo · EXTRÍNSECA</h3>
+            <ul class="presentation-list bullet-cross">
+              <li>Se hace para <strong>obtener una recompensa</strong> o evitar un castigo.</li>
+              <li>Ej.: ordenar la sala para conseguir la estrella del cartel.</li>
+              <li>Puede funcionar… pero el motor queda <strong>afuera de la persona</strong>.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-glass dorado-border" style="margin-top: 16px; padding: 14px 20px; font-size: 0.98rem; background: rgba(229,172,57,0.08); border-color: rgba(229,172,57,0.3);">
+          🌱 <strong>En el jardín:</strong> el juego libre es el espacio por excelencia de motivación intrínseca. Nadie premia al niño por jugar: juega porque jugar vale en sí mismo.
+        </div>
+      </section>
+
+      <!-- SLIDE 06: FASE 2 · SOBREJUSTIFICACIÓN (INTERACTIVA) -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 17–21" data-notes="Lanzar primero la pregunta bisagra («¿recibiste un premio por algo que ya te gustaba hacer y después lo hiciste menos?») y recoger 2-3 voces. Recién entonces tocar para revelar el concepto. El caso de Teo funciona como ancla memorable.">
+        <p class="kicker">Fase 2 · Paso 1 · Cuando el Premio Apaga el Motor</p>
+        <h2 class="slide-title">La Paradoja de la <em>Sobrejustificación</em></h2>
+        <div class="card-glass dorado-border reveal-story" style="margin-top: 12px;" onclick="teoReveal(this)">
+          <p style="font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.55; color: #fff;">
+            👦 <strong>Teo (4 años)</strong> le encantaba dibujar: elegía la mesa de plastilina y los lápices todos los días.
+            La sala empieza a darle <strong style="color:var(--dorado)">una figurita por cada dibujo</strong>.
+            Un mes después, Teo dibuja <strong style="color:var(--rojo-err)">menos que antes</strong>.
+          </p>
+          <div style="text-align:center; margin-top: 12px;">
+            <button class="btn-analisis" type="button">🔍 Tocá para revelar qué pasó</button>
+          </div>
+          <div class="reveal-hidden" id="teoConcepto">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;">
+              <strong style="color:var(--dorado)">SOBREJUSTIFICACIÓN</strong> (Deci, Koestner y Ryan): cuando introducimos una recompensa externa por algo ya motivante,
+              el interés interno <strong>disminuye</strong>. Lo que era juego pasó a ser transacción.
+            </p>
+          </div>
+        </div>
+        <div class="big-quote" style="margin-top: 20px; font-size: clamp(1.1rem, 1.7vw, 1.45rem);">
+          «¿Alguna vez recibiste un premio por algo que ya te gustaba hacer…<br><strong>y después lo hiciste menos?</strong>»
+        </div>
+      </section>
+
+      <!-- SLIDE 07: FASE 2 · AUTOEFICACIA -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 21–26" data-notes="Paso 2 (9 min con la siguiente slide). Definir autoeficacia y anticipar que NO es lo mismo que autoestima (distinción formal más adelante). Recorrer las 4 fuentes enfatizando las experiencias de logro como la más potente: tareas alcanzables con esfuerzo real.">
+        <p class="kicker">Fase 2 · Paso 2 · Autoeficacia y Atribuciones</p>
+        <h2 class="slide-title">Autoeficacia: «¿<em>Puedo yo</em> con esta tarea?»</h2>
+        <div class="card-glass dorado-border" style="padding: 24px 28px; margin-top: 12px;">
+          <p style="font-family: var(--font-serif); font-size: clamp(1.2rem, 1.9vw, 1.55rem); line-height: 1.45; color: #fff;">
+            Bandura (1977): juicio sobre la <strong style="color:var(--dorado)">propia capacidad</strong> para una tarea específica.
+            Predice esfuerzo, persistencia y recuperación tras el error.
+          </p>
+        </div>
+        <div class="grid-4" style="margin-top: 16px;">
+          <div class="card-glass terracota-border">
+            <h4 style="color: var(--terracota); font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">1 · Logros propios</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Experiencias de éxito reales: <strong>la fuente más potente</strong>.</p>
+          </div>
+          <div class="card-glass oliva-border">
+            <h4 style="color: var(--oliva); font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">2 · Modelado</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Vicaria: «si ella pudo, yo también puedo».</p>
+          </div>
+          <div class="card-glass dorado-border">
+            <h4 style="color: var(--dorado); font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">3 · Persuasión</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Verbal, realista y específica: no elogio vacío.</p>
+          </div>
+          <div class="card-glass cyan-border">
+            <h4 style="color: var(--azul-cyan); font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">4 · Estados físicos</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Cómo interpreto mi activación: nervios ≠ incapacidad.</p>
+          </div>
+        </div>
+        <div class="card-glass" style="margin-top: 16px; padding: 13px 20px; font-size: 1.1rem; background: rgba(141,168,94,0.08); border-color: rgba(141,168,94,0.35);">
+          🌱 <strong>En la sala:</strong> ofrecer tareas alcanzables con esfuerzo = experiencias de logro en serie. Así se construye el «yo puedo», un logro por vez.
+        </div>
+      </section>
+
+      <!-- SLIDE 08: FASE 2 · ATRIBUCIONES CAUSALES (INTERACTIVA) -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 26–30" data-notes="Pregunta bisagra del plan: «Si un niño falla repetidamente, ¿qué le decimos: 'sos muy inteligente' o 'te esforzaste mucho'?». Votar a mano alzada y usar el diagrama interactivo para justificar: el esfuerzo es interno E inestable (modificable), por eso sostiene la motivación ante el fracaso.">
+        <p class="kicker">Fase 2 · Paso 2 · Atribuciones Causales</p>
+        <h2 class="slide-title">Weiner: ¿Cómo Explicamos el <em>Éxito y el Fracaso</em>?</h2>
+        <p style="font-size: 1rem; color: var(--texto-secundario); margin-top: 6px;">
+          Si un niño falla repetidamente en una actividad, la explicación que recibe moldea su motivación futura. <strong style="color:#fff">Tocá cada causa:</strong>
+        </p>
+        <div class="atri-grid">
+          <div class="atri-node" onclick="showAtri('capacidad', this)">🧠 Capacidad<br><small style="opacity:.7;font-weight:600">«no sirvo»</small></div>
+          <div class="atri-node" onclick="showAtri('esfuerzo', this)">💪 Esfuerzo<br><small style="opacity:.7;font-weight:600">«no insistí»</small></div>
+          <div class="atri-node" onclick="showAtri('suerte', this)">🍀 Suerte<br><small style="opacity:.7;font-weight:600">«me tocó mal»</small></div>
+          <div class="atri-node" onclick="showAtri('dificultad', this)">⛰ Dificultad<br><small style="opacity:.7;font-weight:600">«es imposible»</small></div>
+        </div>
+        <div class="atri-detail" id="atriDetalle">
+          <h4 id="atrTitulo">Tocá una causa</h4>
+          <div class="atri-chips"><span class="atri-chip" id="atrLocus">Locus: —</span><span class="atri-chip" id="atrEstab">Estabilidad: —</span></div>
+          <p id="atrTexto" style="font-size: 1rem; line-height: 1.45; color: var(--texto-secundario);">Cada explicación tiene dos propiedades clave (locus y estabilidad) y produce efectos distintos en la motivación.</p>
+          <p id="atrPista" style="display:none"></p>
+        </div>
+        <div class="card-glass dorado-border" style="margin-top: 14px; padding: 13px 20px; font-size: 0.97rem; background: rgba(229,172,57,0.08); border-color: rgba(229,172,57,0.3);">
+          💡 Las atribuciones al <strong>ESFUERZO</strong> son internas <em>y</em> modificables: las únicas que sostienen la motivación ante el fracaso. Por eso «te esforzaste» motiva más que «sos muy inteligente».
+        </div>
+      </section>
+
+      <!-- SLIDE 09: FASE 2 · AUTOESTIMA -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 30–34" data-notes="Paso 3 (10 min con las próximas tres slides). Presentar James con la fórmula: bajar pretensiones o subir éxitos elevan la autoestima. Rosenberg: global vs específica; el niño puede sentirse querido y aun así creer que 'en la escuela no sirve'. Aterrizar en la vida cotidiana de la sala antes de pasar a la distinción conceptual.">
+        <p class="kicker">Fase 2 · Paso 3 · La Autoestima de Quien Aprende</p>
+        <h2 class="slide-title">¿De Qué Está Hecho el <em>«Valgo»</em>?</h2>
+        <div class="card-glass dorado-border formula-card" style="margin-top: 12px;">
+          <p style="font-size: 0.8rem; letter-spacing: .15em; text-transform: uppercase; color: var(--texto-muted); font-weight: 800; margin-bottom: 8px;">William James (1890)</p>
+          <p class="formula-big">Autoestima <span class="op">=</span> Éxito <span class="op">÷</span> Pretensiones</p>
+          <p style="font-size: 0.98rem; color: var(--texto-secundario); margin-top: 10px;">No depende solo de cuánto lográs, sino de la distancia entre lo que pretendés y lo que creés lograr.</p>
+        </div>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card-glass oliva-border">
+            <h4 style="color: var(--verde-ok); font-weight: 800; margin-bottom: 6px;">Rosenberg (1965) · Global</h4>
+            <p style="font-size: 1.1rem; color: var(--texto-secundario);">La valoración positiva o negativa de uno mismo: «valgo como persona». Incluye lo afectivo-relacional.</p>
+          </div>
+          <div class="card-glass terracota-border">
+            <h4 style="color: var(--terracota); font-weight: 800; margin-bottom: 6px;">Específica · Académica, social, física…</h4>
+            <p style="font-size: 1.1rem; color: var(--texto-secundario);">Un niño puede sentirse muy querido y aun así creer que «en la escuela no sirve para nada».</p>
+          </div>
+        </div>
+        <div class="big-quote" style="margin-top: 16px; font-size: clamp(1.05rem, 1.55vw, 1.35rem); padding: 14px 24px;">
+          En la escuela, la <strong>autoestima académica</strong> se juega todos los días: quién es elegido, cuyos trabajos se cuelgan en la pared, a quién se le espera la respuesta.
+        </div>
+      </section>
+
+      <!-- SLIDE 10: FASE 2 · AUTOEFICACIA ≠ AUTOESTIMA -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 34–36" data-notes="Distinción conceptual clave del plan. Dos preguntas distintas: ¿puedo? (capacidad, específica, situacional) vs ¿valgo? (valor, global). Cerrar con el problema del elogio vacío y anticipar el juego de frases.">
+        <p class="kicker">Fase 2 · Paso 3 · Distinción Clave</p>
+        <h2 class="slide-title">Dos Conceptos que <em>No Son lo Mismo</em></h2>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card-glass dorado-border" style="padding: 26px;">
+            <div style="font-size: 2rem; margin-bottom: 8px;">💪 «PUEDO»</div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #fff; margin-bottom: 10px;">Autoeficacia</h3>
+            <ul class="presentation-list">
+              <li>Juicio sobre la <strong>capacidad</strong>: «puedo hacer esta tarea».</li>
+              <li>Específica y situacional (para dibujar, contar, hablar en grupo).</li>
+              <li>Se construye con <strong>logros reales</strong>.</li>
+            </ul>
+          </div>
+          <div class="card-glass terracota-border" style="padding: 26px;">
+            <div style="font-size: 2rem; margin-bottom: 8px;">💛 «VALGO»</div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; color: #fff; margin-bottom: 10px;">Autoestima</h3>
+            <ul class="presentation-list">
+              <li>Juicio sobre el <strong>valor</strong>: «valgo como persona».</li>
+              <li>Global, incluye lo afectivo-relacional.</li>
+              <li>Se construye en <strong>vínculos que reconocen</strong>.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-glass cyan-border" style="margin-top: 16px; padding: 15px 22px; background: rgba(56,189,248,0.07); border-color: rgba(56,189,248,0.35);">
+          ⚠️ <strong>El problema del elogio vacío:</strong> «Sos genial», sin información, sube la autoestima un momento pero no construye autoeficacia: cuando llega el error, cae todo junto. El <strong style="color:#fff">feedback procesual</strong> — describir qué hizo bien, qué estrategia usó — alimenta las dos a la vez.
+        </div>
+      </section>
+
+      <!-- SLIDE 11: FASE 2 · JUEGO DE FRASES DOCENTES -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 36–40" data-notes="Actividad de mesas (5 min): clasifican cada frase en las tres categorías. Después se toca cada tarjeta para revelar la clave y debatir discrepancias. Evidencia de aprendizaje: clasificación argumentada. La pregunta guía para cualquier frase: ¿habla de lo que HIZO (autoeficacia), de lo que VALE (autoestima) o de nada en particular (elogio vacío)?">
+        <p class="kicker">Fase 2 · Paso 3 · Mini-Análisis en Mesas</p>
+        <h2 class="slide-title">Juego de Frases Docentes 🎴</h2>
+        <div class="leyenda-tags">
+          <span class="frase-tag tag-ef">Construye AUTOEFICACIA</span>
+          <span class="frase-tag tag-ae">Construye AUTOESTIMA</span>
+          <span class="frase-tag tag-ev">ELOGIO VACÍO</span>
+        </div>
+        <div class="frases-grid">
+          <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">1 · «¡Sos genial! Quedó hermoso.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ev">ELOGIO VACÍO</span><br>Premia a la persona («sos genial») sin decir qué hizo bien ni cómo lo hizo. Sube el ánimo un momento; no deja información para el próximo intento.</div>
+        </div>
+        <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">2 · «Probaste otra estrategia y esta vez funcionó.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ef">AUTOEFICACIA</span><br>Nombra la estrategia («probaste otra») y el logro («funcionó»). Le enseña que puede resolver probando caminos: feedback procesual puro.</div>
+        </div>
+        <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">3 · «Me encanta tenerte en la sala: cuando faltás, te extrañamos.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ae">AUTOESTIMA</span><br>Reconoce su valor dentro del grupo («te extrañamos»). No habla de una habilidad: habla de lo que vale su presencia.</div>
+        </div>
+        <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">4 · «Lo lograste porque insististe tres veces.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ef">AUTOEFICACIA</span><br>Atribuye el logro al esfuerzo sostenido: la única atribución —recordando a Weiner— que motiva a volver a intentar.</div>
+        </div>
+        <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">5 · «Qué buena chica sos, siempre tan calladita.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ev">ELOGIO VACÍO</span><br>Premia obediencia y silencio, no aprendizaje. La «buena chica» aprende a complacer, no a pensar. Nada dice de estrategias ni reconoce un valor concreto.</div>
+        </div>
+        <div class="frase-proy" onclick="toggleFrase(this)">
+          <p class="f-txt">6 · «Tu trabajo está en el cartel de la pared: valía la pena mostrarlo.» <button class="btn-analisis" type="button">Ver clave</button></p>
+          <div class="f-res"><span class="frase-tag tag-ae">AUTOESTIMA</span><br>Mostrar el trabajo públicamente comunica «esto vale». Matiz fino: si dijera «usaste una estrategia genial», pasaría a alimentar la autoeficacia.</div>
+        </div>
+        <!-- TEMPORIZADOR FRASES (5 MIN) -->
+        </div>
+        <div class="slide-timer-box" style="margin-top: 14px;">
+          <div><span style="font-size: 0.75rem; color: var(--texto-muted);">Tiempo de análisis en mesa</span><div class="timer-display" id="timerFrases">05:00</div></div>
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startTimer('timerFrases', 300)">▶ Iniciar</button>
+            <button class="btn-timer" onclick="pauseTimer('timerFrases')">⏸ Pausar</button>
+            <button class="btn-timer reset" onclick="resetTimer('timerFrases', 300)">↺</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: FASE 2 · EL CÍRCULO (TOGGLE INTERACTIVO) -->
+      <section class="slide" data-fase="Fase 2" data-time="Cierre Paso 3" data-notes="Presentación esquemática del círculo motivación-logro-reconocimiento-autoestima. Alternar entre virtuoso y vicioso con los botones y leer paso a paso. Lanzar la pregunta incómoda: ¿dónde entra la escuela en ese círculo? Se retoma en la síntesis co-construida de la Fase 4.">
+        <p class="kicker">Fase 2 · Paso 3 · Síntesis Esquemática</p>
+        <h2 class="slide-title">El Círculo Motivación–Logro–<em>Autoestima</em></h2>
+        <div class="sit-tabs">
+          <button class="btn-sit active" style="background: var(--oliva); border-color: var(--oliva);" onclick="setCiclo('virtuoso', this)">↻ Círculo virtuoso</button>
+          <button class="btn-sit" onclick="setCiclo('vicioso', this)" style="background: transparent;">↺ Círculo vicioso</button>
+        </div>
+        <div id="cicloSteps"></div>
+        <div class="big-quote" style="margin-top: 18px; font-size: clamp(1.05rem, 1.5vw, 1.3rem); padding: 14px 24px;">
+          La pregunta incómoda: ¿dónde entra la escuela en ese círculo?<br><strong>¿Lo corta, lo sostiene, lo fabrica?</strong>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: FASE 3 · EXPERIMENTO ROSENTHAL Y JACOBSON -->
+      <section class="slide" data-fase="Fase 3" data-time="Min 40–47" data-notes="Paso 1 (7 min). Narrar el experimento con ritmo de historia: etiquetados al azar como 'florecimientos', mejoras reales meses después. Subrayar AL AZAR: lo único que cambió fueron las expectativas docentes. Cerrar listando los canales en el pizarrón antes de pasar a la siguiente slide.">
+        <p class="kicker">Fase 3 · Paso 1 · El Efecto Pygmalión</p>
+        <h2 class="slide-title">El Experimento: <em>Rosenthal y Jacobson (1968)</em></h2>
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="card-glass terracota-border">
+            <span class="fase-badge f1" style="margin-bottom: 8px;">Momento 1</span>
+            <p style="font-size: 0.98rem; line-height: 1.45; color: var(--texto-secundario);">En una escuela primaria, investigadores dicen a los docentes que ciertos alumnos mostrarán un salto intelectual ese año. Fueron elegidos <strong style="color:#fff">al azar</strong>.</p>
+          </div>
+          <div class="card-glass dorado-border">
+            <span class="fase-badge f2" style="margin-bottom: 8px;">Momento 2</span>
+            <p style="font-size: 0.98rem; line-height: 1.45; color: var(--texto-secundario);">Meses después, esos alumnos — los «florecimientos» — habían mejorado <strong style="color:#fff">realmente</strong> sus resultados en pruebas de inteligencia.</p>
+          </div>
+          <div class="card-glass oliva-border">
+            <span class="fase-badge f3" style="margin-bottom: 8px;">Momento 3</span>
+            <p style="font-size: 0.98rem; line-height: 1.45; color: var(--texto-secundario);">Lo que cambió no eran los niños: eran las <strong style="color:#fff">expectativas</strong> de sus docentes.</p>
+          </div>
+        </div>
+        <div class="card-glass cyan-border" style="margin-top: 16px; padding: 15px 22px; background: rgba(56,189,248,0.06);">
+          🎭 <strong>Profecía autocumplida</strong> — El nombre viene de la obra de Shaw (<em>Pygmalión</em>): quien crea la ilusión termina siendo parte de su realización. Lo que esperamos organiza, sin notarlo, lo que ofrecemos — y lo que ofrecemos construye lo que el niño cree poder hacer.
+        </div>
+        <div class="big-quote" style="margin-top: 16px; font-size: clamp(1.1rem, 1.65vw, 1.4rem); padding: 14px 24px;">
+          «¿Cómo se transmite una expectativa… <strong>sin decir nada?</strong>»
+        </div>
+      </section>
+
+      <!-- SLIDE 14: FASE 3 · LOS CINCO CANALES -->
+      <section class="slide" data-fase="Fase 3" data-time="Min ~47" data-notes="Comparar este listado con el que las estudiantes armaron en el pizarrón: suelen aparecer todos. Enfatizar que son microinteracciones cotidianas, casi invisibles, y por eso tan poderosas. Puente directo al análisis de situaciones.">
+        <p class="kicker">Fase 3 · Paso 1 · Transmisión de Expectativas</p>
+        <h2 class="slide-title">Los Cinco Canales de <em>Transmisión</em></h2>
+        <div class="grid-5" style="margin-top: 20px;">
+          <div class="card-glass canal-card terracota-border">
+            <span class="icono">⏱</span>
+            <h4>Tiempo de espera</h4>
+            <p>Cuántos segundos esperamos la respuesta antes de pasar a otro.</p>
+          </div>
+          <div class="card-glass canal-card dorado-border">
+            <span class="icono">❓</span>
+            <h4>Complejidad de preguntas</h4>
+            <p>A quiénes les hacemos preguntas que exigen pensar.</p>
+          </div>
+          <div class="card-glass canal-card oliva-border">
+            <span class="icono">🆘</span>
+            <h4>Tipo de ayuda</h4>
+            <p>Pistas para intentar, o respuesta directa para terminar rápido.</p>
+          </div>
+          <div class="card-glass canal-card cyan-border">
+            <span class="icono">💬</span>
+            <h4>Comentarios evaluativos</h4>
+            <p>Qué elogiamos, qué corregimos, ante quién.</p>
+          </div>
+          <div class="card-glass canal-card terracota-border">
+            <span class="icono">👀</span>
+            <h4>Lenguaje no verbal</h4>
+            <p>Miradas, tono, proximidad física, quién ocupa el centro de la ronda.</p>
+          </div>
+        </div>
+        <div class="card-glass" style="margin-top: 18px; text-align: center; padding: 14px; font-size: 1rem;">
+          💡 Ningún canal requiere decir «no espero nada de vos». Todos operan <strong>todos los días</strong>, en cada consigna y en cada ronda.
+        </div>
+      </section>
+
+      <!-- SLIDE 15: FASE 3 · ANÁLISIS DE SITUACIONES EN PAREJAS -->
+      <section class="slide" data-fase="Fase 3" data-time="Min 47–60" data-notes="Paso 2 (13 min). Cada pareja analiza UNA situación y luego rota o se comparten las tres en puesta en común (5 min, próxima slide). Las cuatro preguntas guía están en pantalla. Revelar el análisis orientativo recién después de que cada pareja produjo el propio. Material impreso adjunto: situaciones Pygmalion, una tanda por pareja.">
+        <p class="kicker">Fase 3 · Paso 2 · Análisis en Parejas</p>
+        <h2 class="slide-title">Tres Situaciones de <em>Sala</em></h2>
+        <div class="sit-tabs">
+          <button class="btn-sit active" onclick="showSit('a', this)">(a) El que siempre sabe</button>
+          <button class="btn-sit" onclick="showSit('b', this)">(b) El que necesita ayuda</button>
+          <button class="btn-sit" onclick="showSit('c', this)">(c) El que falló tres veces</button>
+        </div>
+
+        <div class="sit-panel active" id="sitA">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(a)</strong> Bruno levanta la mano antes de que termines la pregunta. Cuando no la levanta, igual lo llamás: sabés que va a responder bien. Con él esperás los diez segundos completos y, si duda, le das tiempo extra.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>¿Qué <strong>expectativa</strong> transmite la docente?</li>
+            <li>¿A través de qué <strong>canales</strong> se transmite?</li>
+            <li>¿Qué <strong>efecto</strong> puede tener en Bruno… y en los demás niños?</li>
+            <li>¿Cómo podría <strong>modificarse</strong> esa interacción?</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 1.1rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Expectativa alta</strong> transmitida por tiempo de espera largo, preguntas complejas y elogio frecuente. En Bruno refuerza autoeficacia; en el resto funciona como espejo inverso: «yo no soy de los que saben». <strong style="color:#fff">Modificación:</strong> rotar deliberadamente las preguntas exigentes — la complejidad intelectual no puede ser privilegio de pocos.</p>
+          </div>
+        </div>
+
+        <div class="sit-panel" id="sitB">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(b)</strong> Antes de que Mora empiece, la docente ya está a su lado. Le repite la consigna palabra por palabra y, si demora, le señala la respuesta: «¿no es esta?». Al final le dice «muy bien», aunque casi no hizo nada solo/a.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>¿Qué le enseña esta ayuda a Mora <strong>sobre sí misma</strong>?</li>
+            <li>¿Qué canales están operando aquí?</li>
+            <li>¿Cuándo la ayuda <strong>sostiene</strong> y cuándo <strong>descalifica</strong>?</li>
+            <li>¿Cómo podría modificarse?</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 1.1rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Expectativa baja</strong> transmitida con tono protector. La ayuda anticipada niega el derecho a intentar: construye dependencia y baja autoeficacia («no puedo sola»). El «muy bien» final es elogio vacío. <strong style="color:#fff">Modificación:</strong> esperar antes de acercarse, ofrecer pistas en lugar de respuestas, proponerle una parte alcanzable que complete sola y celebrarla específicamente.</p>
+          </div>
+        </div>
+
+        <div class="sit-panel" id="sitC">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(c)</strong> Teo intentó tres veces armar el rompecabezas de 24 piezas y en las tres se quedó a mitad. Desde entonces no volvé a ofrecérselo: «para no frustrarlo». Cuando llega el momento de rompecabezas, lo derivás siempre al encastre simple.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>¿Qué mensaje recibe Teo al ser <strong>excluido «para protegerlo»</strong>?</li>
+            <li>¿Qué atribución sobre sí mismo se confirma?</li>
+            <li>¿Qué efecto tiene en su motivación y autoestima?</li>
+            <li>¿Qué alternativa habría <strong>protegido realmente</strong> su autoestima y autoeficacia?</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 1.1rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Exclusión implícita:</strong> Teo lee que le retiraron la oportunidad porque «no va a poder». Se confirma su atribución de incapacidad estable — justo lo que la protección quería evitar. <strong style="color:#fff">Modificación:</strong> partir la tarea (empezar por 12 piezas), acompañar los primeros pasos, celebrar avances parciales y devolverle la causalidad al esfuerzo: «con menos piezas ya pudiste más que ayer».</p>
+          </div>
+        </div>
+
+        <!-- TEMPORIZADOR PAREJAS (13 MIN) -->
+        <div class="slide-timer-box" style="margin-top: 14px;">
+          <div><span style="font-size: 0.75rem; color: var(--texto-muted);">Tiempo de trabajo en parejas</span><div class="timer-display" id="timerSituaciones">13:00</div></div>
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startTimer('timerSituaciones', 780)">▶ Iniciar</button>
+            <button class="btn-timer" onclick="pauseTimer('timerSituaciones')">⏸ Pausar</button>
+            <button class="btn-timer reset" onclick="resetTimer('timerSituaciones', 780)">↺</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: FASE 3 · PUESTA EN COMÚN -->
+      <section class="slide" data-fase="Fase 3" data-time="Min 60–65" data-notes="Paso 3 (5 min). Cada pareja comparte su análisis; sistematizar en el pizarrón conectando cada estrategia con la situación que la motivó. Cerrar la fase nombrando el patrón común: las expectativas se transmiten en microinteracciones modificables.">
+        <p class="kicker">Fase 3 · Paso 3 · Puesta en Común</p>
+        <h2 class="slide-title">Sistematizamos: Canales y <em>Estrategias</em></h2>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card-glass terracota-border">
+            <h3 style="color: var(--terracota); font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 10px;">Los canales en acción</h3>
+            <ul class="presentation-list" style="font-size: 1.1rem;">
+              <li><strong>⏱ Tiempo de espera:</strong> los diez segundos completos para Bruno.</li>
+              <li><strong>❓ Complejidad:</strong> las preguntas exigentes concentradas en pocos.</li>
+              <li><strong>🆘 Tipo de ayuda:</strong> pistas para Mora… o la respuesta directa.</li>
+              <li><strong>💬 Comentarios:</strong> qué se elogia, ante quién.</li>
+              <li><strong>👀 No verbal:</strong> proximidad física, centro de la ronda.</li>
+            </ul>
+          </div>
+          <div class="card-glass oliva-border">
+            <h3 style="color: var(--verde-ok); font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 10px;">Estrategias de modificación</h3>
+            <ul class="presentation-list bullet-check" style="font-size: 1.1rem;">
+              <li><strong>Esperar</strong> antes de acercarse a ayudar.</li>
+              <li><strong>Rotar</strong> las preguntas exigentes por todo el grupo.</li>
+              <li>Ofrecer <strong>pistas</strong>, no respuestas.</li>
+              <li><strong>Devolver la causalidad al esfuerzo</strong>: «insististe tres veces».</li>
+              <li><strong>Partir la tarea</strong> en pasos alcanzables (24 → 12 piezas).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="big-quote" style="margin-top: 18px; font-size: clamp(1.05rem, 1.5vw, 1.3rem); padding: 14px 24px;">
+          Ninguna de estas estrategias exige más tiempo ni recursos:<br>exige <strong>mirar los propios canales</strong>.
+        </div>
+      </section>
+
+      <!-- SLIDE 17: FASE 4 · HINGE QUESTION -->
+      <section class="slide" data-fase="Fase 4" data-time="Min 65–70" data-notes="Votación individual con dedos (A-D) ANTES de tocar cualquier opción en pantalla. Respuesta correcta: B. Si más del 80% acierta, avanzar; si no, pausa de 2 minutos volviendo al diagrama de atribuciones (slide 8). Discutir brevemente por qué las otras opciones no explican este caso.">
+        <p class="kicker">Fase 4 · Evaluación Formativa</p>
+        <h2 class="slide-title">Hinge Question: <em>Caso Valentín</em></h2>
+        <div class="card-glass dorado-border" style="margin-top: 10px; padding: 18px 24px;">
+          <p style="font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.5; color: #fff;">
+            🧱 <strong>Valentín (5 años)</strong> intenta armar una torre, se cae tres veces y dice:
+            <em style="color:var(--dorado)">«Yo no sirvo para esto.»</em>
+          </p>
+        </div>
+        <p style="font-size: 0.98rem; color: var(--texto-muted); margin-top: 12px;">¿Qué concepto explica mejor lo que está pasando? Pensalo en silencio y señalá con los dedos (<strong>A, B, C o D</strong>):</p>
+        <div class="hinge-grid">
+          <div class="hinge-card" onclick="checkHinge(1, this)">
+            <span class="hinge-num">A</span>
+            <span>Motivación extrínseca: necesita un premio para insistir.</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(2, this)">
+            <span class="hinge-num">B</span>
+            <span>Atribución a capacidad estable: falló → «no sirvo» → indefensión.</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(3, this)">
+            <span class="hinge-num">C</span>
+            <span>Sobrejustificación: alguien le paga por jugar.</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(4, this)">
+            <span class="hinge-num">D</span>
+            <span>Alta autoestima global con baja autoeficacia puntual.</span>
+          </div>
+        </div>
+        <div class="hinge-feedback-box" id="hingeFeedback"></div>
+      </section>
+
+      <!-- SLIDE 18: FASE 4 · SÍNTESIS CO-CONSTRUIDA -->
+      <section class="slide" data-fase="Fase 4" data-time="Min 70–75" data-notes="Reconstruir el círculo motivación-logro-reconocimiento-autoestima en el pizarrón con ejemplos aportados POR LAS ESTUDIANTES (no leer la lista tal cual: usarla como guía de cierre). La cita final es el mensaje de salida de la clase.">
+        <p class="kicker">Fase 4 · Síntesis Co-Construida</p>
+        <h2 class="slide-title">Ideas para <em>Llevarse</em></h2>
+        <ul class="presentation-list" style="margin-top: 14px;">
+          <li>La <strong>motivación intrínseca</strong> es el motor más duradero; los premios pueden convertirla en transacción.</li>
+          <li><strong>Autoeficacia («¿puedo?»)</strong> y <strong>autoestima («¿valgo?»)</strong> son distintas: la escuela sana alimenta las dos.</li>
+          <li>El <strong>feedback procesual</strong> supera siempre al elogio vacío.</li>
+          <li>Las <strong>atribuciones al esfuerzo</strong> sostienen la motivación ante el fracaso; las fijas la apagan.</li>
+          <li>Las <strong>expectativas docentes</strong> se transmiten en microinteracciones cotidianas y terminan cumpliéndose.</li>
+        </ul>
+        <div class="big-quote" style="margin-top: 22px;">
+          «Lo que creemos sobre nuestros alumnos<br>se convierte, muchas veces, en <strong>lo que ellos creen sobre sí mismos</strong>.»
+        </div>
+      </section>
+
+      <!-- SLIDE 19: CIERRE · CONSIGNA PUENTE CLASE 12 -->
+      <section class="slide" data-fase="Cierre" data-time="Min 75–80" data-notes="Consigna puente hacia la Clase 12 (Resiliencia y autoestima). Empezarla en clase si queda tiempo; termina de escribirse como tarea. Esta reflexión funciona como material de apertura de la próxima clase. Recordar que el material de lectura de esta clase está publicado en Classroom.">
+        <p class="kicker">Cierre & Consigna Puente</p>
+        <h2 class="slide-title">Próxima Clase: <em>Resiliencia y Autoestima</em></h2>
+        <div class="card-glass dorado-border" style="padding: 32px; margin-top: 16px; text-align: center;">
+          <span class="fase-badge f2" style="margin-bottom: 14px;">Clase 12 · Actividad Individual</span>
+          <p style="font-family: var(--font-serif); font-style: italic; font-size: clamp(1.25rem, 2vw, 1.65rem); color: var(--dorado); line-height: 1.45; margin: 12px 0 18px;">
+            «Pensá en alguien que atravesó una época difícil y aun así siguió aprendiendo.»
+          </p>
+          <div style="display:flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 1.05rem;">¿Quién era?</span>
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 1.05rem;">¿Qué dificultad atravesaba?</span>
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 1.05rem;">¿Qué o quién lo sostuvo?</span>
+          </div>
+          <p style="font-size: 1.05rem; color: var(--texto-secundario);">
+            📝 <strong>Formato:</strong> reflexión escrita de ½ carilla en cuaderno. Abre la próxima clase.
+          </p>
+        </div>
+        <footer style="margin-top: 22px; text-align: center; font-size: 1rem; color: var(--texto-muted);">
+          <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b> · Instituto Superior Terciario Fátima Soldati
+        </footer>
+      </section>
+
+    </div>
+
+    <!-- DRAWER DE NOTAS DOCENTES -->
+    <aside id="notes-drawer">
+      <h4>🎓 Notas del Docente</h4>
+      <div id="notesContent">
+        <p>Notas para la diapositiva actual...</p>
+      </div>
+      <div class="tip-box">
+        💡 <b>Atajo:</b> Presioná la tecla <kbd class="key-badge">N</kbd> para abrir/cerrar estas notas en cualquier momento.
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- BARRA FLOTANTE DE CONTROL -->
+  <nav id="control-bar">
+    <button class="dock-btn" onclick="prevSlide()" title="Diapositiva Anterior (← / RePág)">◀</button>
+    <button class="dock-btn primary" onclick="nextSlide()" title="Siguiente Diapositiva (Espacio / →)">▶</button>
+
+    <div class="dock-divider"></div>
+
+    <div class="progress-track" id="progressTrack" onclick="seekSlide(event)" title="Progreso de la clase">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <button class="dock-btn" onclick="openModal('gridModal')" title="Ver todas las diapositivas (G)">⊞</button>
+    <button class="dock-btn" onclick="toggleNotes()" title="Notas del docente (N)">📝</button>
+    <button class="dock-btn" onclick="toggleFullscreen()" title="Pantalla Completa (F)">⛶</button>
+    <button class="dock-btn" onclick="openModal('helpModal')" title="Atajos de teclado (?)">?</button>
+  </nav>
+
+</div>
+
+<!-- MODAL: CUADRÍCULA DE DIAPOSITIVAS -->
+<div class="modal-overlay" id="gridModal" onclick="closeModalOnBackdrop(event, 'gridModal')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Navegador de Diapositivas (19)</h3>
+      <button class="modal-close" onclick="closeModal('gridModal')">✕</button>
+    </div>
+    <div class="grid-thumbnails" id="thumbnailsContainer"></div>
+  </div>
+</div>
+
+<!-- MODAL: AYUDA DE ATAJOS -->
+<div class="modal-overlay" id="helpModal" onclick="closeModalOnBackdrop(event, 'helpModal')">
+  <div class="modal-content" style="max-width: 550px;">
+    <div class="modal-header">
+      <h3>Atajos de Teclado</h3>
+      <button class="modal-close" onclick="closeModal('helpModal')">✕</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="shortcut-row"><span>Siguiente diapositiva</span><div><span class="key-badge">→</span> <span class="key-badge">Espacio</span> <span class="key-badge">AvPág</span></div></div>
+      <div class="shortcut-row"><span>Diapositiva anterior</span><div><span class="key-badge">←</span> <span class="key-badge">RePág</span> <span class="key-badge">Retroceso</span></div></div>
+      <div class="shortcut-row"><span>Pantalla completa</span><span class="key-badge">F</span></div>
+      <div class="shortcut-row"><span>Cuadrícula de diapositivas</span><span class="key-badge">G</span></div>
+      <div class="shortcut-row"><span>Notas del docente</span><span class="key-badge">N</span></div>
+      <div class="shortcut-row"><span>Pantalla en negro (debate)</span><span class="key-badge">B</span></div>
+      <div class="shortcut-row"><span>Cerrar modales / salir</span><span class="key-badge">Esc</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==========================================
+     LÓGICA JAVASCRIPT DE PRESENTACIÓN INTERACTIVA
+     ========================================== -->
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const currSlideNum = document.getElementById('currSlideNum');
+const totalSlidesNum = document.getElementById('totalSlidesNum');
+const progressFill = document.getElementById('progressFill');
+const badgeFase = document.getElementById('badgeFase');
+const timePill = document.getElementById('timePill');
+const notesDrawer = document.getElementById('notes-drawer');
+const notesContent = document.getElementById('notesContent');
+const ambientGlow = document.getElementById('ambientGlow');
+
+totalSlidesNum.textContent = String(totalSlides).padStart(2, '0');
+
+// Colores de badge por fase (Clase 11: 4 fases + intro/cierre)
+const faseStyles = {
+  'Intro':   { class: 'f1', text: 'Intro' },
+  'Agenda':  { class: 'f1', text: 'Hoja de Ruta' },
+  'Fase 1':  { class: 'f1', text: 'Fase 1 · Apertura' },
+  'Fase 2':  { class: 'f2', text: 'Fase 2 · Conceptos' },
+  'Fase 3':  { class: 'f3', text: 'Fase 3 · Pygmalión' },
+  'Fase 4':  { class: 'f4', text: 'Fase 4 · Cierre' },
+  'Cierre':  { class: 'f5', text: 'Consigna Puente' }
+};
+
+function updateSlide(index) {
+  if (index < 0) index = 0;
+  if (index >= totalSlides) index = totalSlides - 1;
+
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active', 'prev');
+    if (i === index) slide.classList.add('active');
+    else if (i < index) slide.classList.add('prev');
+  });
+
+  currentSlide = index;
+  currSlideNum.textContent = String(currentSlide + 1).padStart(2, '0');
+  progressFill.style.width = (((currentSlide + 1) / totalSlides) * 100) + '%';
+
+  const activeSlide = slides[currentSlide];
+  const fase = activeSlide.dataset.fase || 'Clase 11';
+  const time = activeSlide.dataset.time || '80 min';
+  const notes = activeSlide.dataset.notes || 'Sin notas adicionales para esta diapositiva.';
+  const styleConfig = faseStyles[fase] || { class: 'f1', text: fase };
+
+  badgeFase.className = 'fase-badge ' + styleConfig.class;
+  badgeFase.textContent = styleConfig.text;
+  timePill.textContent = '⏱ ' + time;
+  notesContent.innerHTML = '<p>' + notes + '</p>';
+
+  const posX = 15 + (index * 4) % 65;
+  const posY = 15 + (index * 5) % 60;
+  ambientGlow.style.left = posX + '%';
+  ambientGlow.style.top = posY + '%';
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+function goToSlide(idx) { updateSlide(idx); closeModal('gridModal'); }
+
+function seekSlide(e) {
+  const rect = document.getElementById('progressTrack').getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  updateSlide(Math.floor(percent * totalSlides));
+}
+
+// CONTROL DE TECLADO
+document.addEventListener('keydown', (e) => {
+  if (document.querySelector('.modal-overlay.open') && e.key !== 'Escape') return;
+  switch(e.key) {
+    case 'ArrowRight': case ' ': case 'PageDown':
+      e.preventDefault(); nextSlide(); break;
+    case 'ArrowLeft': case 'PageUp': case 'Backspace':
+      e.preventDefault(); prevSlide(); break;
+    case 'f': case 'F':
+      e.preventDefault(); toggleFullscreen(); break;
+    case 'g': case 'G':
+      e.preventDefault(); toggleModal('gridModal'); break;
+    case 'n': case 'N':
+      e.preventDefault(); toggleNotes(); break;
+    case 'b': case 'B':
+      document.body.classList.toggle('blackout'); break;
+    case '?':
+      toggleModal('helpModal'); break;
+    case 'Escape':
+      closeAllModales(); break;
+  }
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => console.log('Fullscreen no disponible'));
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+function toggleNotes() { notesDrawer.classList.toggle('open'); }
+
+function openModal(id) {
+  if (id === 'gridModal') renderThumbnails();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function toggleModal(id) {
+  const m = document.getElementById(id);
+  m.classList.contains('open') ? closeModal(id) : openModal(id);
+}
+function closeModalOnBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
+function closeAllModales() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  notesDrawer.classList.remove('open');
+}
+
+function renderThumbnails() {
+  const container = document.getElementById('thumbnailsContainer');
+  container.innerHTML = '';
+  slides.forEach((slide, idx) => {
+    const titleEl = slide.querySelector('.slide-title');
+    const titleText = titleEl ? titleEl.innerText.replace(/\n/g, ' ') : ('Diapositiva ' + (idx + 1));
+    const card = document.createElement('div');
+    card.className = 'thumb-card ' + (idx === currentSlide ? 'current' : '');
+    card.onclick = () => goToSlide(idx);
+    card.innerHTML = '<div><div class="thumb-num">' + String(idx + 1).padStart(2, '0') + '</div><div class="thumb-title">' + titleText + '</div></div><div class="thumb-phase">' + (slide.dataset.fase || '') + '</div>';
+    container.appendChild(card);
+  });
+}
+
+// ==========================================
+// TEMPORIZADORES EN VIVO
+// ==========================================
+const timerState = {};
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function startTimer(elementId, defaultSecs) {
+  if (!timerState[elementId]) {
+    timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  }
+  const state = timerState[elementId];
+  if (state.running) return;
+  state.running = true;
+  state.interval = setInterval(() => {
+    if (state.remaining > 0) {
+      state.remaining--;
+      document.getElementById(elementId).textContent = formatTime(state.remaining);
+    } else {
+      clearInterval(state.interval);
+      state.running = false;
+      document.getElementById(elementId).textContent = '¡TIEMPO!';
+      document.getElementById(elementId).style.color = 'var(--rojo-err)';
+    }
+  }, 1000);
+}
+
+function pauseTimer(elementId) {
+  if (timerState[elementId] && timerState[elementId].running) {
+    clearInterval(timerState[elementId].interval);
+    timerState[elementId].running = false;
+  }
+}
+
+function resetTimer(elementId, defaultSecs) {
+  pauseTimer(elementId);
+  timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  const el = document.getElementById(elementId);
+  el.textContent = formatTime(defaultSecs);
+  el.style.color = 'var(--dorado)';
+}
+
+// ==========================================
+// SLIDE 6 · SOBREJUSTIFICACIÓN (REVELAR)
+// ==========================================
+function teoReveal(card) {
+  const hidden = card.querySelector('.reveal-hidden');
+  if (!hidden || hidden.classList.contains('ver')) return;
+  hidden.classList.add('ver');
+  const btn = card.querySelector('.btn-analisis');
+  if (btn) btn.style.display = 'none';
+}
+
+// ==========================================
+// SLIDE 8 · ATRIBUCIONES DE WEINER
+// ==========================================
+const atribsData = {
+  capacidad: {
+    t: 'Capacidad',
+    l: 'Locus: interno', e: 'Estabilidad: estable',
+    x: '«No sirvo para esto»: causa interna y estable. Es el motor de la indefensión aprendida.',
+    p: 'Docente: devolver la causalidad al esfuerzo y partir la tarea en pasos alcanzables.'
+  },
+  esfuerzo: {
+    t: 'Esfuerzo',
+    l: 'Locus: interno', e: 'Estabilidad: inestable',
+    x: '«No insistí lo suficiente»: interna y modificable. La única atribución que sostiene la motivación ante el fracaso.',
+    p: 'Docente: nombrar el esfuerzo concreto cuando aparece («insististe tres veces»).'
+  },
+  suerte: {
+    t: 'Suerte',
+    l: 'Locus: externo', e: 'Estabilidad: inestable',
+    x: 'Neutraliza la culpa pero no enseña nada: no deja palancas para el próximo intento.',
+    p: 'Docente: ayudarlo a encontrar causas sobre las que sí tenga control.'
+  },
+  dificultad: {
+    t: 'Dificultad de la tarea',
+    l: 'Locus: externo', e: 'Estabilidad: estable',
+    x: '«Es imposible»: desmotivante, porque desde afuera no hay nada que hacer.',
+    p: 'Docente: ajustar la consigna — dificultad real pero superable.'
+  }
+};
+
+function showAtri(key, node) {
+  document.querySelectorAll('.atri-node').forEach(n => n.classList.remove('sel'));
+  node.classList.add('sel');
+  const a = atribsData[key];
+  document.getElementById('atrTitulo').textContent = a.t;
+  document.getElementById('atrLocus').textContent = a.l;
+  document.getElementById('atrEstab').textContent = a.e;
+  document.getElementById('atrTexto').textContent = a.x;
+  const pista = document.getElementById('atrPista');
+  pista.style.display = 'block';
+  pista.textContent = a.p;
+}
+
+// ==========================================
+// SLIDE 11 · JUEGO DE FRASES DOCENTES
+// ==========================================
+function toggleFrase(el) { el.classList.toggle('abierta'); }
+
+// ==========================================
+// SLIDE 12 · CÍRCULO VIRTUOSO / VICIOSO
+// ==========================================
+const ciclosData = {
+  virtuoso: { color: '#8DA85E', steps: ['Expectativas positivas del docente', 'Oportunidades reales de participar', 'Logros alcanzables', 'Reconocimiento específico', 'Autoestima académica y autoeficacia ↑'] },
+  vicioso:  { color: '#E06D44', steps: ['Expectativas bajas', 'Pocas oportunidades', 'Fracaso repetido', 'Silencio o corrección pública', 'Baja autoestima y evitación ↓'] }
+};
+
+function renderCiclo(modo) {
+  const data = ciclosData[modo];
+  let html = '<div class="ciclo-steps">';
+  data.steps.forEach((paso, i) => {
+    html += '<div class="ciclo-step" style="--nodo-color:' + data.color + '; animation-delay:' + (i * 0.06) + 's">'
+         +  '<span class="ciclo-num" style="background:' + data.color + '">' + (i + 1) + '</span>'
+         +  '<span>' + paso + '</span></div>';
+    if (i < data.steps.length - 1) html += '<div class="ciclo-flecha">↓</div>';
+  });
+  html += '</div>';
+  document.getElementById('cicloSteps').innerHTML = html;
+}
+
+function setCiclo(modo, btn) {
+  renderCiclo(modo);
+  const botones = btn.parentElement.querySelectorAll('.btn-sit');
+  botones.forEach(b => {
+    b.classList.remove('active');
+    b.style.background = 'transparent';
+    b.style.borderColor = 'rgba(255,255,255,.25)';
+    b.style.color = '#fff';
+  });
+  const activoColor = modo === 'virtuoso' ? 'var(--oliva)' : 'var(--terracota)';
+  btn.classList.add('active');
+  btn.style.background = activoColor;
+  btn.style.borderColor = activoColor;
+}
+
+// ==========================================
+// SLIDE 15 · SITUACIONES PYGMALIÓN (TABS)
+// ==========================================
+function showSit(id, btn) {
+  document.querySelectorAll('.sit-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('sit' + id.toUpperCase()).classList.add('active');
+  btn.parentElement.querySelectorAll('.btn-sit').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleAnalisis(btn) {
+  const box = btn.nextElementSibling;
+  const abierto = box.classList.toggle('ver');
+  btn.textContent = abierto ? '🙈 Ocultar análisis' : '🔍 Mostrar análisis orientativo (después de discutir)';
+}
+
+// ==========================================
+// SLIDE 17 · HINGE QUESTION (VALENTÍN)
+// ==========================================
+let hingeAnswered = false;
+function checkHinge(opNumber, element) {
+  if (hingeAnswered) return;
+  hingeAnswered = true;
+
+  const cards = document.querySelectorAll('.hinge-card');
+  const feedback = document.getElementById('hingeFeedback');
+
+  if (opNumber === 2) {
+    element.classList.add('correct');
+    feedback.className = 'hinge-feedback-box correct';
+    feedback.innerHTML = '✅ <strong>¡Exacto: B!</strong> Valentín explica su fracaso con una <strong>causa interna y estable</strong> («no sirvo»): esa atribución apaga el esfuerzo futuro — indefensión aprendida. La intervención docente no es un premio: es devolverle la causalidad al esfuerzo y partir la tarea en pasos alcanzables.<br><span style="font-size:0.88rem;opacity:.9;">Decisión docente: si más del 80% votó B → avanzar. Si no → volver a la diapositiva de atribuciones (8).</span>';
+  } else {
+    element.classList.add('wrong');
+    cards[1].classList.add('correct');
+    feedback.className = 'hinge-feedback-box wrong';
+    feedback.innerHTML = '❌ <strong>La mejor respuesta es B:</strong> Valentín atribuye su fracaso a una causa interna y estable («no sirvo») → indefensión aprendida. Ni un premio ni un elogio global: corresponde devolver la causalidad al esfuerzo y partir la torre en pasos alcanzables.<br><span style="font-size:0.88rem;opacity:.9;">Decisión docente: pausar 2 minutos y re-explicar las atribuciones con el diagrama interactivo.</span>';
+  }
+}
+
+// INICIALIZACIÓN
+updateSlide(0);
+renderCiclo('virtuoso');
+</script>
+</body>
+</html>

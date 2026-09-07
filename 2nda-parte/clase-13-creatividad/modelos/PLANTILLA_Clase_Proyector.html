@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════════════════════
+ PLANTILLA DE PRESENTACIÓN PARA PROYECTAR — Psicología Educacional
+ Motor completo: navegación, temporizadores, notas docentes, hinge
+ question, tabs, reveals y grilla de diapositivas. Todo funciona solo.
+
+ CÓMO ARMAR UNA CLASE NUEVA (5 pasos):
+ 1. Copiá este archivo y renombralo: ClaseN_Presentacion_Proyector.html
+ 2. Buscá los marcadores __ASÍ__ y reemplazalos:
+    __NUM_CLASE__ · __TEMA__ · __SUBTEMA__ · __SUBTITULO__
+ 3. Al final del archivo, en el bloque ⚙️ CONFIG: materia y número.
+    El encabezado superior se llena solo desde ahí.
+ 4. Reemplazá las diapositivas de ejemplo por tu contenido. Cada tipo
+    recurrente ya viene de muestra: portada, hoja de ruta, Do Now,
+    concepto central, comparativa, hinge question, actividad en parejas,
+    síntesis y consigna puente. Duplicá/borrá secciones <section>.
+    IMPORTANTE: la primera slide debe llevar la clase "active".
+ 5. NO TOCAR el motor (todo el CSS y el bloque JS "MOTOR").
+    Lo único editable en JS es ⚙️ CONFIG y 🗺️ FASES.
+
+ ATAJOS EN CLASE: → / Espacio avanza · ← retrocede · F pantalla completa
+                  G grilla de diapositivas · N notas del docente
+                  B pantalla en negro (para debates) · Esc cierra todo
+
+ WIDGETS LISTOS PARA COPIAR: al final del contenedor de slides está la
+ "BIBLIOTECA DE COMPONENTES" comentada (flip cards VAK, ciclo Kolb,
+ tabla comparativa, chips, juego de frases, círculo virtuoso/vicioso).
+═══════════════════════════════════════════════════════════════════════
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase __NUM_CLASE__ · __TEMA__ — Presentación para Proyectar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════════
+   MOTOR VISUAL — NO EDITAR
+   (idéntico en Clase 10 y Clase 11; incluye todos los widgets)
+   ════════════════════════════════════════════════════════════════════ */
+:root {
+  --bg-dark: #0b1120;
+  --bg-deck: #131d33;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-card: rgba(255, 255, 255, 0.12);
+
+  --crema: #F9F6EE;
+  --crema-suave: #EFE7D5;
+  --marino: #1e293b;
+  --marino-deep: #070c18;
+
+  /* Colores de alto contraste óptico para proyector */
+  --terracota: #E06D44;
+  --terracota-glow: rgba(224, 109, 68, 0.28);
+
+  --dorado: #E5AC39;
+  --dorado-glow: rgba(229, 172, 57, 0.28);
+
+  --oliva: #8DA85E;
+  --oliva-glow: rgba(141, 168, 94, 0.28);
+
+  --azul-cyan: #38bdf8;
+  --verde-ok: #4ade80;
+  --rojo-err: #f87171;
+
+  --texto-principal: #F8FAFC;
+  --texto-secundario: #CBD5E1;
+  --texto-muted: #94A3B8;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --transition-speed: 0.35s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--marino-deep);
+  font-family: var(--font-sans);
+  color: var(--texto-principal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CONTENEDOR DE PRESENTACIÓN (16:9 RESPONSIVE VIEWPORT) */
+#presentation-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #1e2e4a 0%, #0c1322 75%, #070a12 100%);
+  overflow: hidden;
+}
+
+.bg-ambient-glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 172, 57, 0.08) 0%, rgba(224, 109, 68, 0.04) 40%, transparent 70%);
+  top: 20%;
+  left: 20%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  transition: all 1s ease;
+}
+
+/* ESCENARIO DE DIAPOSITIVAS */
+#deck {
+  position: relative;
+  width: min(96vw, calc(96vh * 16 / 9));
+  height: min(96vh, calc(96vw * 9 / 16));
+  max-width: 1500px;
+  max-height: 843px;
+  background: linear-gradient(145deg, rgba(26, 38, 62, 0.96), rgba(16, 25, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  overflow: hidden;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER SUPERIOR DE DIAPOSITIVA */
+.slide-header {
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(11, 18, 32, 0.5);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.slide-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.fase-badge.f1 { background: linear-gradient(135deg, var(--terracota), #b85028); box-shadow: 0 0 12px var(--terracota-glow); }
+.fase-badge.f2 { background: linear-gradient(135deg, var(--dorado), #c2881a); box-shadow: 0 0 12px var(--dorado-glow); }
+.fase-badge.f3 { background: linear-gradient(135deg, var(--oliva), #698040); box-shadow: 0 0 12px var(--oliva-glow); }
+.fase-badge.f4 { background: linear-gradient(135deg, #4f46e5, #3730a3); }
+.fase-badge.f5 { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+.slide-materia-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  letter-spacing: 0.02em;
+}
+
+.slide-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--dorado);
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.25);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texto-muted);
+}
+.slide-counter span {
+  color: var(--texto-principal);
+}
+
+/* SLIDES CANVAS & TRANSICIONES */
+.slides-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: calc(100% - 56px);
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(40px) scale(0.98);
+  pointer-events: none;
+  transition: opacity var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.slide::-webkit-scrollbar { display: none; }
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.slide.prev {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.98);
+}
+
+/* TIPOGRAFÍA Y ELEMENTOS */
+.kicker {
+  font-size: clamp(0.78rem, 1.1vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.slide-title em {
+  font-style: italic;
+  color: var(--dorado);
+  background: linear-gradient(120deg, #F9D976 0%, #E5AC39 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.slide-subtitle {
+  font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+  color: var(--texto-secundario);
+  line-height: 1.45;
+  max-width: 900px;
+}
+
+/* TARJETAS Y PANELES */
+.card-glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.card-glass:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.card-glass.terracota-border { border-left: 5px solid var(--terracota); }
+.card-glass.dorado-border { border-left: 5px solid var(--dorado); }
+.card-glass.oliva-border { border-left: 5px solid var(--oliva); }
+.card-glass.cyan-border { border-left: 5px solid var(--azul-cyan); }
+
+/* GRID LAYOUTS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+/* LISTAS PROYECTABLES */
+.presentation-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.presentation-list li {
+  position: relative;
+  padding-left: 30px;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.presentation-list li strong {
+  color: #fff;
+}
+.presentation-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+  color: var(--dorado);
+  font-size: 1.2rem;
+}
+.presentation-list.bullet-check li::before {
+  content: "✓";
+  color: var(--verde-ok);
+}
+.presentation-list.bullet-cross li::before {
+  content: "✕";
+  color: var(--rojo-err);
+}
+
+/* BIG CALLOUT / DESTACADOS */
+.big-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.35;
+  color: #F8FAFC;
+  text-align: center;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, rgba(224, 109, 68, 0.12), rgba(229, 172, 57, 0.12));
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 18px;
+  margin: 14px 0;
+  position: relative;
+}
+.big-quote::before {
+  content: "“";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  font-size: 3.5rem;
+  color: var(--dorado);
+  opacity: 0.35;
+  font-family: var(--font-serif);
+}
+
+/* TEMPORIZADORES */
+.slide-timer-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 17, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin-top: 14px;
+}
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 800;
+  color: var(--dorado);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 15px var(--dorado-glow);
+}
+.timer-controls {
+  display: flex;
+  gap: 8px;
+}
+.btn-timer {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-timer:hover {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  border-color: var(--dorado);
+  transform: translateY(-2px);
+}
+.btn-timer.reset:hover {
+  background: var(--terracota);
+  color: #fff;
+  border-color: var(--terracota);
+}
+
+/* HINGE QUESTION INTERACTIVA (autocontenida por slide, sin tocar JS) */
+.hinge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.hinge-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-align: left;
+  color: #fff;
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
+  font-weight: 600;
+}
+.hinge-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+.hinge-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(229, 172, 57, 0.18);
+  border: 2px solid var(--dorado);
+  color: var(--dorado);
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.hinge-card.correct {
+  background: rgba(74, 222, 128, 0.18) !important;
+  border-color: var(--verde-ok) !important;
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.3) !important;
+}
+.hinge-card.correct .hinge-num {
+  background: var(--verde-ok);
+  border-color: var(--verde-ok);
+  color: #0c1a0e;
+}
+.hinge-card.wrong {
+  background: rgba(248, 113, 113, 0.15) !important;
+  border-color: var(--rojo-err) !important;
+  opacity: 0.65;
+}
+.hinge-card.wrong .hinge-num {
+  background: var(--rojo-err);
+  border-color: var(--rojo-err);
+  color: #fff;
+}
+.hinge-feedback-box {
+  margin-top: 14px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 1rem;
+  line-height: 1.45;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.hinge-feedback-box.correct {
+  display: block;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1.5px solid var(--verde-ok);
+  color: #dcfce7;
+}
+.hinge-feedback-box.wrong {
+  display: block;
+  background: rgba(248, 113, 113, 0.15);
+  border: 1.5px solid var(--rojo-err);
+  color: #fee2e2;
+}
+
+/* TARJETAS FLIP (VAK o cualquier revelado 3D) */
+.vak-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+.flip-card {
+  perspective: 1200px;
+  cursor: pointer;
+  min-height: 180px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.flip-front {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+}
+.flip-front h4 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--dorado);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flip-front p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.flip-hint {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+  font-style: italic;
+  text-align: right;
+}
+.flip-back {
+  transform: rotateY(180deg);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+.flip-back.vak-v { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+.flip-back.vak-a { background: linear-gradient(135deg, #78350f, #d97706); }
+.flip-back.vak-k { background: linear-gradient(135deg, #14532d, #16a34a); }
+.flip-back strong {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.flip-back span {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  opacity: 0.95;
+}
+
+/* CICLO DE PASOS VISUAL (estilo Kolb) */
+.kolb-cycle-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.kolb-step-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 18px 16px;
+  position: relative;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.kolb-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado);
+}
+.kolb-step-card .sigla {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--terracota);
+  background: rgba(224, 109, 68, 0.15);
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.kolb-step-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.kolb-step-card p {
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--texto-secundario);
+}
+.kolb-step-card::after {
+  content: "→";
+  position: absolute;
+  right: -11px;
+  top: 42%;
+  font-size: 1.3rem;
+  color: var(--dorado);
+  font-weight: 800;
+  z-index: 5;
+}
+.kolb-step-card:last-child::after {
+  content: "↺";
+  right: 10px;
+  top: -10px;
+  font-size: 1.4rem;
+}
+
+/* TABLA COMPARATIVA */
+.table-comp-pro {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 12px;
+}
+.table-comp-pro th {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dorado);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.table-comp-pro td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+.table-comp-pro tr:last-child td { border-bottom: none; }
+.table-comp-pro td:first-child {
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* SELECTOR DE "LENTES" TEÓRICOS */
+.lentes-btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.btn-lente {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-lente:hover, .btn-lente.active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.btn-lente[data-lente].active { background: var(--dorado); border-color: var(--dorado); color: #0c1a0e; }
+.lente-result-box {
+  margin-top: 18px;
+  padding: 22px 28px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px dashed var(--dorado);
+  text-align: center;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+.lente-result-box h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--dorado);
+  margin-bottom: 6px;
+}
+.lente-result-box p {
+  font-size: 1.1rem;
+  color: var(--texto-secundario);
+  max-width: 750px;
+  line-height: 1.45;
+}
+
+/* BARRA INFERIOR DE CONTROL (FLOATING DOCK) */
+#control-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dock-btn {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: scale(1.1);
+}
+.dock-btn.primary {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  font-weight: 800;
+}
+.dock-btn.primary:hover {
+  background: #fcd34d;
+  box-shadow: 0 0 15px var(--dorado-glow);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+
+.progress-track {
+  width: 140px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--terracota), var(--dorado));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* MODALES (GRID OVERVIEW, NOTAS, SHORTCUTS) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: #131c2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  width: min(90vw, 1100px);
+  max-height: 85vh;
+  padding: 32px;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+}
+.modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--dorado);
+}
+.modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* CUADRÍCULA DE TODAS LAS DIAPOSITIVAS */
+.grid-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.thumb-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
+}
+.thumb-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+}
+.thumb-card.current {
+  border-color: var(--dorado);
+  box-shadow: 0 0 15px var(--dorado-glow);
+  background: rgba(229, 172, 57, 0.12);
+}
+.thumb-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--dorado);
+  font-weight: 700;
+}
+.thumb-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.thumb-phase {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+}
+
+/* NOTAS DOCENTES (DRAWER) */
+#notes-drawer {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  background: rgba(12, 19, 34, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 28px;
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 50;
+  overflow-y: auto;
+}
+#notes-drawer.open {
+  transform: translateX(0);
+}
+#notes-drawer h4 {
+  font-family: var(--font-serif);
+  color: var(--dorado);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#notes-drawer p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+  margin-bottom: 16px;
+}
+#notes-drawer .tip-box {
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: #fef08a;
+}
+
+/* SHORTCUTS HELP BOX */
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.key-badge {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--dorado);
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE SMART PROJECTOR ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .slide { padding: 24px 28px; }
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+  .vak-container { grid-template-columns: 1fr 1fr; }
+  .kolb-cycle-grid { grid-template-columns: 1fr 1fr; }
+  .kolb-step-card::after { display: none; }
+}
+
+/* COMPONENTES EXTRA (promovidos de clases anteriores, disponibles siempre) */
+
+.chip-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+.chip-cat {
+  background: rgba(229,172,57,.14); border: 1.5px solid var(--dorado); color: #FDF0D5;
+  padding: 9px 22px; border-radius: 999px; font-weight: 800;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+}
+
+.formula-card { text-align: center; padding: 26px 28px; }
+.formula-big { font-family: var(--font-serif); font-size: clamp(1.7rem, 2.8vw, 2.4rem); color: #fff; }
+.formula-big .op { color: var(--terracota); font-weight: 800; margin: 0 14px; }
+
+.reveal-story { cursor: pointer; }
+.reveal-hidden { display: none; margin-top: 14px; animation: fadeIn 0.3s ease; }
+.reveal-hidden.ver { display: block; }
+
+.canal-card { text-align: center; padding: 18px 12px; }
+.canal-card .icono { font-size: 2rem; display: block; margin-bottom: 10px; }
+.canal-card h4 { font-family: var(--font-serif); font-size: 1.08rem; color: #fff; margin-bottom: 6px; }
+.canal-card p { font-size: .85rem; line-height: 1.4; color: var(--texto-secundario); }
+
+/* TABS DE ACTIVIDADES / PANELES */
+.sit-tabs { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+.btn-sit {
+  background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.2); color: #fff;
+  padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: .95rem; cursor: pointer;
+  transition: all .25s ease;
+}
+.btn-sit:hover { transform: translateY(-2px); }
+.btn-sit.active { background: var(--oliva); border-color: var(--oliva); }
+.sit-panel { display: none; margin-top: 14px; animation: fadeIn .3s ease; }
+.sit-panel.active { display: block; }
+.btn-analisis {
+  margin-top: 12px; background: rgba(229,172,57,.15); border: 1.5px solid var(--dorado);
+  color: var(--dorado); font-weight: 700; font-size: .92rem; padding: 9px 20px; border-radius: 10px;
+  cursor: pointer; transition: all .2s;
+}
+.btn-analisis:hover { background: var(--dorado); color: #131c2e; }
+
+/* JUEGO DE FRASES / TARJETAS DESPLEGABLES */
+.frase-proy {
+  cursor: pointer; background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.14);
+  border-radius: 14px; padding: 13px 20px; margin-top: 10px; transition: all .25s;
+}
+.frase-proy:hover { border-color: var(--dorado); background: rgba(255,255,255,.09); transform: translateY(-2px); }
+.frase-proy .f-txt { font-size: 1.06rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.frase-proy .f-res { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.22); font-size: .95rem; line-height: 1.45; color: var(--texto-secundario); animation: fadeIn .3s ease; }
+.frase-proy.abierta .f-res { display: block; }
+.frase-tag { font-family: var(--font-mono); font-size: .72rem; font-weight: 800; padding: 3px 11px; border-radius: 999px; letter-spacing: .05em; flex-shrink: 0; white-space: nowrap; }
+.tag-a { background: rgba(141,168,94,.25); color: #DCE8BC; border: 1px solid var(--oliva); }
+.tag-b { background: rgba(224,109,68,.25); color: #FFD9C4; border: 1px solid var(--terracota); }
+.tag-c { background: rgba(248,113,113,.2); color: #FECACA; border: 1px solid var(--rojo-err); }
+.leyenda-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0 4px; }
+
+/* SECUENCIA DE PASOS (círculo virtuoso/vicioso u otras cadenas) */
+.ciclo-steps { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
+.ciclo-step {
+  display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.05);
+  border-left: 5px solid var(--nodo-color, #8DA85E); padding: 11px 20px; border-radius: 12px;
+  font-size: clamp(1rem, 1.35vw, 1.2rem); font-weight: 600; color: #fff; animation: fadeIn .35s ease both;
+}
+.ciclo-num { width: 32px; height: 32px; border-radius: 50%; background: var(--nodo-color, #8DA85E); color: #10192a; font-family: var(--font-serif); font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ciclo-flecha { text-align: center; color: var(--texto-muted); font-size: 1rem; line-height: 1; margin: 2px 0; }
+
+/* PANTALLA EN NEGRO (tecla B) */
+body.blackout { background: #000 !important; }
+body.blackout #presentation-wrapper { opacity: 0; pointer-events: none; }
+</style>
+<style>
+  /* ═══ ESCALA PROYECTOR · LETRA GRANDE +20% ═══
+     Una sola regla: todo el texto está en rem y escala desde la raíz.
+     Para ajustar: 16px = original · 18px = suave · 19.2px = +20% · 20.8px = +30%. */
+  html { font-size: 19.2px; }
+</style>
+</head>
+<body>
+
+<div id="presentation-wrapper">
+  <div class="bg-ambient-glow" id="ambientGlow"></div>
+
+  <!-- ESCENARIO DE PRESENTACIÓN -->
+  <main id="deck">
+
+    <!-- HEADER SUPERIOR — se autocompleta desde ⚙️ CONFIG al final del archivo -->
+    <header class="slide-header">
+      <div class="slide-header-left">
+        <span class="fase-badge f1" id="badgeFase">Intro</span>
+        <span class="slide-materia-title" id="materiaTitle">Psicología Educacional · Clase __NUM_CLASE__</span>
+      </div>
+      <div class="slide-header-right">
+        <div class="time-pill" id="timePill">⏱ 80 min</div>
+        <div class="slide-counter"><span id="currSlideNum">01</span> / <span id="totalSlidesNum">09</span></div>
+      </div>
+    </header>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         ZONA DE CONTENIDO — SOLO AQUÍ SE EDITA
+         Cada <section class="slide"> es una diapositiva.
+         Atributos obligatorios:
+           data-fase  → clave del mapa 🗺️ FASES (pinta el badge superior)
+           data-time  → texto que muestra el reloj del encabezado
+           data-notes → notas privadas del docente (tecla N)
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slides-container" id="slidesContainer">
+
+      <!-- ─────────────── SLIDE 01 · PORTADA ───────────────
+           Editar: tema, em (palabra destacada en dorado), subtítulo
+           y los tres sellos inferiores. El recuadro punteado marca el
+           lugar del dibujo alusivo: reemplazarlo por un SVG o imagen propia. -->
+      <section class="slide active" data-fase="Intro" data-time="0–80 min" data-notes="Bienvenida y encuadre: presentar el tema del día, conectar con la clase anterior y anticipar que habrá momentos de trabajo activo (Do Now, análisis en parejas y hinge question).">
+        <div style="text-align: center; max-width: 980px; margin: 0 auto;">
+          <div aria-hidden="false" style="width: 230px; min-height: 136px; margin: 0 auto 10px;
+                    display: flex; flex-direction: column; align-items: center; justify-content: center;
+                    gap: 7px; border: 2px dashed rgba(229,172,57,.55); border-radius: 18px;
+                    padding: 14px 20px; text-align: center;">
+            <span style="font-size: 1.7rem; line-height: 1;">🎨</span>
+            <strong style="color: var(--dorado); font-size: .95rem; letter-spacing: .01em;">Elegir dibujo alusivo a la clase</strong>
+            <span style="color: var(--texto-muted); font-size: .76rem;">reemplazá este recuadro por un<br>SVG o imagen propio</span>
+          </div>
+          <p class="kicker" style="justify-content: center;">Profesorado de Educación Inicial · 2° Año</p>
+          <h1 class="slide-title" style="font-size: clamp(2.4rem, 4.5vw, 3.8rem); margin-bottom: 16px;">
+            __TEMA__: <em>__SUBTEMA__</em>
+          </h1>
+          <p class="slide-subtitle" style="margin: 0 auto 28px;">
+            __SUBTITULO__ (qué vamos a mirar hoy, en una línea).
+          </p>
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 0.9rem;">⏱ 80 Minutos</span>
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 0.9rem;">🧭 4 Fases</span>
+            <span class="card-glass" style="padding: 8px 18px; border-radius: 999px; font-size: 0.9rem;">💡 Diapositivas Interactivas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 02 · HOJA DE RUTA ───────────────
+           Una tarjeta por fase (grid-2 = 4 tarjetas; usar grid-3 si
+           son 3 fases). Copiar tarjeta, cambiar badge/h3/texto. -->
+      <section class="slide" data-fase="Agenda" data-time="0–80 min" data-notes="Presentar el mapa de la clase para dar previsibilidad. Destacar los momentos activos: Do Now, actividad en parejas y votación de la hinge question.">
+        <p class="kicker">Estructura de la Clase</p>
+        <h2 class="slide-title">Hoja de Ruta de los <em>80 Minutos</em></h2>
+        <div class="grid-2" style="margin-top: 16px;">
+          <div class="card-glass terracota-border">
+            <span class="fase-badge f1" style="margin-bottom: 10px;">Fase 1 · Min 0–12</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Apertura: __ACTIVIDAD_APERTURA__</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Do Now individual + sistematización en el pizarrón.</p>
+          </div>
+          <div class="card-glass dorado-border">
+            <span class="fase-badge f2" style="margin-bottom: 10px;">Fase 2 · Min 12–40</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Desarrollo: __CONCEPTOS_PRINCIPALES__</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Marco conceptual dialogado con ejemplos aportados por las estudiantes.</p>
+          </div>
+          <div class="card-glass oliva-border">
+            <span class="fase-badge f3" style="margin-bottom: 10px;">Fase 3 · Min 40–65</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Profundización: __ACTIVIDAD_CENTRAL__</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Análisis de situaciones de sala en parejas + puesta en común.</p>
+          </div>
+          <div class="card-glass cyan-border">
+            <span class="fase-badge f4" style="margin-bottom: 10px;">Fase 4 · Min 65–80</span>
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; margin-bottom: 6px;">Cierre: síntesis y consigna puente</h3>
+            <p style="font-size: 0.92rem; color: var(--texto-secundario);">Hinge question, ideas clave y puente hacia la próxima clase.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 03 · DO NOW + TEMPORIZADOR ───────────────
+           Cambiar preguntas y minutos. El temporizador necesita:
+           un id único (ej. timerDoNow) repetido en el botón Iniciar/Pausar/
+           Reiniciar, y los segundos en cada llamada (240 = 4 min). -->
+      <section class="slide" data-fase="Fase 1" data-time="Min 0–4" data-notes="Escritura individual en silencio. Lanzar el temporizador. Mientras escriben, preparar el pizarrón. IMPORTANTE: las categorías deben EMERGER del material de las estudiantes, no imponerse.">
+        <p class="kicker">Fase 1 · Apertura y Activación</p>
+        <h2 class="slide-title">Do Now: <em>Respondé en tu cuaderno</em></h2>
+        <div class="card-glass terracota-border" style="margin-top: 10px;">
+          <p style="font-size: 1.05rem; color: var(--dorado); font-weight: 700; margin-bottom: 14px;">✍️ En silencio e individualmente (__MINUTOS__ minutos):</p>
+          <ul class="presentation-list">
+            <li>__PREGUNTA_1__</li>
+            <li>__PREGUNTA_2__</li>
+            <li>Escribí tus respuestas: las vamos a usar <strong>toda la clase</strong>.</li>
+          </ul>
+        </div>
+        <div class="slide-timer-box">
+          <div>
+            <span style="font-size: 0.85rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Actividad</span>
+            <div class="timer-display" id="timerDoNow">04:00</div>
+          </div>
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startTimer('timerDoNow', 240)">▶ Iniciar</button>
+            <button class="btn-timer" onclick="pauseTimer('timerDoNow')">⏸ Pausar</button>
+            <button class="btn-timer reset" onclick="resetTimer('timerDoNow', 240)">↺ Reiniciar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 04 · CONCEPTO CENTRAL ───────────────
+           Definición destacada + dos tarjetas de apoyo (origen /
+           conexiones). Patrón ideal para abrir un marco teórico. -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 12–17" data-notes="Exposición dialogada breve. Conectar la definición con los ejemplos que surgieron en el Do Now antes de avanzar.">
+        <p class="kicker">Fase 2 · Marco Conceptual</p>
+        <h2 class="slide-title">¿Qué es <em>__CONCEPTO__</em>?</h2>
+        <div class="card-glass" style="padding: 28px; margin-top: 12px;">
+          <p style="font-family: var(--font-serif); font-size: clamp(1.3rem, 2.1vw, 1.75rem); line-height: 1.45; color: #fff;">
+            «Definición de __CONCEPTO__ con las palabras clave en <strong style="color: var(--dorado);">dorado</strong> y <strong style="color: var(--terracota);">terracota</strong>.»
+          </p>
+        </div>
+        <div class="grid-2" style="margin-top: 20px;">
+          <div class="card-glass">
+            <h4 style="color: var(--dorado); margin-bottom: 6px; font-weight: 700;">🏛️ Origen Teórico:</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Autor 1 (año) · Autor 2 (año) · Autor 3 (año).</p>
+          </div>
+          <div class="card-glass">
+            <h4 style="color: var(--oliva); margin-bottom: 6px; font-weight: 700;">🔗 Conexiones:</h4>
+            <p style="font-size: 1rem; color: var(--texto-secundario);">Vínculo con conceptos de clases anteriores.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 05 · COMPARATIVA DOS COLUMNAS ───────────────
+             ✓ verde = columna favorable · ✕ rojo = contracara. -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 17–21" data-notes="Contrastar los dos pollos del par conceptual. Pedir un ejemplo de sala para cada columna antes de pasar a la siguiente slide.">
+        <p class="kicker">Fase 2 · Distinción Clave</p>
+        <h2 class="slide-title">Dos Lados de <em>__EL_PAR__</em></h2>
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="card-glass oliva-border" style="padding: 26px;">
+            <h3 style="color: var(--verde-ok); font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Lado A · __NOMBRE_A__</h3>
+            <ul class="presentation-list bullet-check">
+              <li>Rasgo <strong>central</strong> del lado A.</li>
+              <li>Ejemplo cotidiano de sala.</li>
+              <li>Efecto en el aprendizaje.</li>
+            </ul>
+          </div>
+          <div class="card-glass terracota-border" style="padding: 26px;">
+            <h3 style="color: var(--terracota); font-family: var(--font-serif); font-size: 1.35rem; margin-bottom: 12px;">Lado B · __NOMBRE_B__</h3>
+            <ul class="presentation-list bullet-cross">
+              <li>Rasgo <strong>central</strong> del lado B.</li>
+              <li>Ejemplo cotidiano de sala.</li>
+              <li>Efecto en el aprendizaje.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-glass dorado-border" style="margin-top: 16px; padding: 14px 20px; font-size: 0.98rem; background: rgba(229,172,57,0.08); border-color: rgba(229,172,57,0.3);">
+          🌱 <strong>En el jardín:</strong> una observación breve que aterrice el par conceptual en la vida real del nivel inicial.
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 06 · HINGE QUESTION (GENÉRICA) ───────────────
+           SIN JAVASCRIPT QUE TOCAR: la respuesta correcta va en
+           data-correct del contenedor (número de opción) y las devoluciones
+           en data-ok / data-no (HTML permitido). Funciona con varias
+           hinges por clase porque cada una vive dentro de su propia slide. -->
+      <section class="slide" data-fase="Fase 2" data-time="Min 21–24" data-notes="Votación individual con dedos ANTES de tocar la pantalla. Si más del 80% acierta, avanzar; si no, volver dos slides atrás y re-explicar.">
+        <p class="kicker">Fase 2 · Evaluación Formativa</p>
+        <h2 class="slide-title">Hinge Question: <em>__PREGUNTA_BISAGRA__</em></h2>
+        <p style="font-size: 1rem; color: var(--texto-muted);">Pensá en silencio y señalá con los dedos (1, 2, 3 o 4):</p>
+
+        <div class="hinge-grid" data-correct="2"
+             data-ok="__JUSTIFICACION_CORRECTA__ (breve, refuerza el criterio)."
+             data-no="__CORRECCION_BREVE__ + decisión docente: qué revisar si fallaron.">
+          <div class="hinge-card" onclick="checkHinge(1, this)">
+            <span class="hinge-num">1</span>
+            <span>Distractor plausible 1 (error conceptual típico)</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(2, this)">
+            <span class="hinge-num">2</span>
+            <span>Opción CORRECTA — cambiar este texto</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(3, this)">
+            <span class="hinge-num">3</span>
+            <span>Distractor plausible 2</span>
+          </div>
+          <div class="hinge-card" onclick="checkHinge(4, this)">
+            <span class="hinge-num">4</span>
+            <span>Distractor plausible 3</span>
+          </div>
+        </div>
+
+        <div class="hinge-feedback-box"></div>
+      </section>
+
+      <!-- ─────────────── SLIDE 07 · ACTIVIDAD CON TABS + ANÁLISIS ───────────────
+           Tabs: cada botón apunta a un panel por id (showTab('casoA', this)).
+           El botón 🔍 revela su hermano siguiente (.reveal-hidden).
+           Los ids de paneles deben ser únicos en todo el archivo. -->
+      <section class="slide" data-fase="Fase 3" data-time="Min 47–60" data-notes="Cada pareja analiza UNA situación. Revelar el análisis orientativo recién después de que produzcan el propio. Lanzar temporizador y circular por las mesas.">
+        <p class="kicker">Fase 3 · Análisis en Parejas</p>
+        <h2 class="slide-title">__TITULO_ACTIVIDAD__</h2>
+        <div class="sit-tabs">
+          <button class="btn-sit active" onclick="showTab('casoA', this)">Situación (a)</button>
+          <button class="btn-sit" onclick="showTab('casoB', this)">Situación (b)</button>
+          <button class="btn-sit" onclick="showTab('casoC', this)">Situación (c)</button>
+        </div>
+
+        <div class="sit-panel active" id="casoA">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(a)</strong> Descripción de la situación de sala __CASO_A__.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>Pregunta guía <strong>1</strong> sobre el caso.</li>
+            <li>Pregunta guía <strong>2</strong>.</li>
+            <li>Pregunta guía <strong>3</strong>.</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 0.95rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Análisis:</strong> lectura esperada del caso __ANALISIS_A__.</p>
+          </div>
+        </div>
+
+        <div class="sit-panel" id="casoB">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(b)</strong> Descripción de la situación de sala __CASO_B__.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>Pregunta guía <strong>1</strong>.</li>
+            <li>Pregunta guía <strong>2</strong>.</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 0.95rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Análisis:</strong> __ANALISIS_B__.</p>
+          </div>
+        </div>
+
+        <div class="sit-panel" id="casoC">
+          <div class="card-glass oliva-border" style="padding: 18px 24px;">
+            <p style="font-size: 1.08rem; line-height: 1.5; color: #fff;"><strong>(c)</strong> Descripción de la situación de sala __CASO_C__.</p>
+          </div>
+          <ul class="presentation-list" style="margin-top: 12px; font-size: 0.98rem;">
+            <li>Pregunta guía <strong>1</strong>.</li>
+            <li>Pregunta guía <strong>2</strong>.</li>
+          </ul>
+          <button class="btn-analisis" onclick="toggleAnalisis(this)">🔍 Mostrar análisis orientativo (después de discutir)</button>
+          <div class="reveal-hidden">
+            <p style="font-size: 0.95rem; line-height: 1.45; color: var(--texto-secundario); padding: 12px 18px; border: 1.5px dashed var(--dorado); border-radius: 12px; margin-top: 10px;"><strong style="color:#fff">Análisis:</strong> __ANALISIS_C__.</p>
+          </div>
+        </div>
+
+        <div class="slide-timer-box" style="margin-top: 14px;">
+          <div><span style="font-size: 0.75rem; color: var(--texto-muted);">Tiempo de trabajo en parejas</span><div class="timer-display" id="timerActividad">13:00</div></div>
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startTimer('timerActividad', 780)">▶ Iniciar</button>
+            <button class="btn-timer" onclick="pauseTimer('timerActividad')">⏸ Pausar</button>
+            <button class="btn-timer reset" onclick="resetTimer('timerActividad', 780)">↺</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 08 · SÍNTESIS CO-CONSTRUIDA ─────────────── -->
+      <section class="slide" data-fase="Fase 4" data-time="Min 70–75" data-notes="Reconstruir las ideas clave en el pizarrón con aportes de las estudiantes; la lista en pantalla funciona como guía de cierre, no para leerla tal cual. La cita final es el mensaje de salida.">
+        <p class="kicker">Fase 4 · Síntesis Co-Construida</p>
+        <h2 class="slide-title">Ideas para <em>Llevarse</em></h2>
+        <ul class="presentation-list" style="margin-top: 14px;">
+          <li><strong>Idea fuerza 1</strong> del día.</li>
+          <li><strong>Idea fuerza 2</strong> del día.</li>
+          <li><strong>Idea fuerza 3</strong> del día.</li>
+          <li><strong>Idea fuerza 4</strong> del día.</li>
+        </ul>
+        <div class="big-quote" style="margin-top: 22px;">
+          «__CITA_DE_CIERRE__<br><strong>segunda línea de la cita</strong>.»
+        </div>
+      </section>
+
+      <!-- ─────────────── SLIDE 09 · CONSIGNA PUENTE / CIERRE ─────────────── -->
+      <section class="slide" data-fase="Cierre" data-time="Min 75–80" data-notes="Leer la consigna juntos y empezar en clase si queda tiempo. La reflexión abre la próxima clase. Recordar dónde está publicado el material (Classroom).">
+        <p class="kicker">Cierre & Consigna Puente</p>
+        <h2 class="slide-title">Próxima Clase: <em>__TEMA_PROXIMA__</em></h2>
+        <div class="card-glass dorado-border" style="padding: 32px; margin-top: 16px; text-align: center;">
+          <span class="fase-badge f2" style="margin-bottom: 14px;">Clase __NUM_PROXIMA__ · Actividad Individual</span>
+          <p style="font-family: var(--font-serif); font-style: italic; font-size: clamp(1.25rem, 2vw, 1.65rem); color: var(--dorado); line-height: 1.45; margin: 12px 0 18px;">
+            «__CONSIGNA_DISPARADORA__»
+          </p>
+          <div style="display:flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px;">
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 0.9rem;">__PUNTO_1__</span>
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 0.9rem;">__PUNTO_2__</span>
+            <span class="card-glass" style="padding: 7px 16px; border-radius: 999px; font-size: 0.9rem;">__PUNTO_3__</span>
+          </div>
+          <p style="font-size: 1.05rem; color: var(--texto-secundario);">
+            📝 <strong>Formato:</strong> reflexión escrita de ½ carilla en cuaderno. Abre la próxima clase.
+          </p>
+        </div>
+        <footer style="margin-top: 22px; text-align: center; font-size: 0.88rem; color: var(--texto-muted);">
+          <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b> · Instituto Superior Terciario Fátima Soldati
+        </footer>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════
+           BIBLIOTECA DE COMPONENTES — copiar adentro de una slide
+           cuando se necesiten. Todo el CSS ya está incluido arriba.
+
+           ▸ TARJETAS FLIP (revelado 3D, estilo VAK):
+           <div class="vak-container">
+             <div class="flip-card" onclick="this.classList.toggle('flipped')">
+               <div class="flip-card-inner">
+                 <div class="flip-front">
+                   <h4>👦 Nombre</h4>
+                   <p>Descripción del caso…</p>
+                   <span class="flip-hint">Tocá para revelar</span>
+                 </div>
+                 <div class="flip-back vak-v">
+                   <strong>VISUAL</strong>
+                   <span>Explicación breve.</span>
+                 </div>
+               </div>
+             </div>
+           </div>
+
+           ▸ CICLO DE 4 PASOS (estilo Kolb):
+           <div class="kolb-cycle-grid">
+             <div class="kolb-step-card"><span class="sigla">1 · EC</span><h4>Título paso</h4><p>Descripción breve.</p></div>
+             (repetir 4 veces; la flecha ↺ del último sale sola)
+
+           ▸ TABLA COMPARATIVA:
+           <table class="table-comp-pro">
+             <tr><th>Criterio</th><th>A</th><th>B</th></tr>
+             <tr><td>Fila 1</td><td>…</td><td>…</td></tr>
+           </table>
+
+           ▸ CHIPS DE CATEGORÍAS:
+           <div class="chip-row">
+             <span class="chip-cat">🎲 Categoría 1</span>
+             <span class="chip-cat">🧗 Categoría 2</span>
+           </div>
+
+           ▸ FORMULA DESTACADA:
+           <div class="card-glass dorado-border formula-card">
+             <p class="formula-big">Concepto <span class="op">=</span> Numerador <span class="op">÷</span> Denominador</p>
+           </div>
+
+           ▸ GRILLA DE 5 CANALES/CARACTERÍSTICAS:
+           <div class="grid-5">
+             <div class="card-glass canal-card terracota-border"><span class="icono">⏱</span><h4>Nombre</h4><p>Breve.</p></div>
+             (repetir 5 veces alternando bordes)
+
+           ▸ JUEGO DE FRASES (tocar para abrir la clave):
+           <div class="leyenda-tags">
+             <span class="frase-tag tag-a">Etiqueta A</span>
+             <span class="frase-tag tag-b">Etiqueta B</span>
+           </div>
+           <div class="frase-proy" onclick="this.classList.toggle('abierta')">
+             <p class="f-txt">1 · «La frase…» <button class="btn-analisis" type="button">Ver clave</button></p>
+             <div class="f-res"><span class="frase-tag tag-a">ETIQUETA A</span><br>Justificación breve.</div>
+           </div>
+
+           ▸ CÍRCULO VIRTUOSO/VICIOSO: requiere completar ciclosData en
+             el bloque OPCIONAL del script (ya trae ejemplo funcional).
+           ══════════════════════════════════════════════════════════ -->
+
+    </div>
+
+    <!-- DRAWER DE NOTAS DOCENTES -->
+    <aside id="notes-drawer">
+      <h4>🎓 Notas del Docente</h4>
+      <div id="notesContent">
+        <p>Notas para la diapositiva actual...</p>
+      </div>
+      <div class="tip-box">
+        💡 <b>Atajo:</b> Presioná la tecla <kbd class="key-badge">N</kbd> para abrir/cerrar estas notas en cualquier momento.
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- BARRA FLOTANTE DE CONTROL -->
+  <nav id="control-bar">
+    <button class="dock-btn" onclick="prevSlide()" title="Diapositiva Anterior (← / RePág)">◀</button>
+    <button class="dock-btn primary" onclick="nextSlide()" title="Siguiente Diapositiva (Espacio / →)">▶</button>
+
+    <div class="dock-divider"></div>
+
+    <div class="progress-track" id="progressTrack" onclick="seekSlide(event)" title="Progreso de la clase">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <button class="dock-btn" onclick="openModal('gridModal')" title="Ver todas las diapositivas (G)">⊞</button>
+    <button class="dock-btn" onclick="toggleNotes()" title="Notas del docente (N)">📝</button>
+    <button class="dock-btn" onclick="toggleFullscreen()" title="Pantalla Completa (F)">⛶</button>
+    <button class="dock-btn" onclick="openModal('helpModal')" title="Atajos de teclado (?)">?</button>
+  </nav>
+
+</div>
+
+<!-- MODAL: CUADRÍCULA DE DIAPOSITIVAS -->
+<div class="modal-overlay" id="gridModal" onclick="closeModalOnBackdrop(event, 'gridModal')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalSlideCount">Navegador de Diapositivas</h3>
+      <button class="modal-close" onclick="closeModal('gridModal')">✕</button>
+    </div>
+    <div class="grid-thumbnails" id="thumbnailsContainer"></div>
+  </div>
+</div>
+
+<!-- MODAL: AYUDA DE ATAJOS -->
+<div class="modal-overlay" id="helpModal" onclick="closeModalOnBackdrop(event, 'helpModal')">
+  <div class="modal-content" style="max-width: 550px;">
+    <div class="modal-header">
+      <h3>Atajos de Teclado</h3>
+      <button class="modal-close" onclick="closeModal('helpModal')">✕</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="shortcut-row"><span>Siguiente diapositiva</span><div><span class="key-badge">→</span> <span class="key-badge">Espacio</span> <span class="key-badge">AvPág</span></div></div>
+      <div class="shortcut-row"><span>Diapositiva anterior</span><div><span class="key-badge">←</span> <span class="key-badge">RePág</span> <span class="key-badge">Retroceso</span></div></div>
+      <div class="shortcut-row"><span>Pantalla completa</span><span class="key-badge">F</span></div>
+      <div class="shortcut-row"><span>Cuadrícula de diapositivas</span><span class="key-badge">G</span></div>
+      <div class="shortcut-row"><span>Notas del docente</span><span class="key-badge">N</span></div>
+      <div class="shortcut-row"><span>Pantalla en negro (debate)</span><span class="key-badge">B</span></div>
+      <div class="shortcut-row"><span>Cerrar modales / salir</span><span class="key-badge">Esc</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   ⚙️ CONFIG — ÚNICO LUGAR DEL JS QUE SE EDITA POR CLASE
+   ════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  materia:     'Psicología Educacional',
+  claseNumero: '__NUM_CLASE__'
+};
+
+/* 🗺️ FASES — mapea cada valor de data-fase al badge del encabezado.
+   Agregar/quitar entradas según las fases de TU clase.
+   Clases de badge disponibles: f1 (terracota) f2 (dorado) f3 (oliva)
+   f4 (violeta) f5 (celeste). Las fases no listadas caen a f1. */
+const FASES = {
+  'Intro':   { class: 'f1', text: 'Intro' },
+  'Agenda':  { class: 'f1', text: 'Hoja de Ruta' },
+  'Fase 1':  { class: 'f1', text: 'Fase 1 · Apertura' },
+  'Fase 2':  { class: 'f2', text: 'Fase 2 · Desarrollo' },
+  'Fase 3':  { class: 'f3', text: 'Fase 3 · Producción' },
+  'Fase 4':  { class: 'f4', text: 'Fase 4 · Cierre' },
+  'Cierre':  { class: 'f5', text: 'Consigna Puente' }
+};
+
+/* ════════════════════════════════════════════════════════════════════
+   MOTOR — NO EDITAR DE ACÁ PARA ABAJO
+   ════════════════════════════════════════════════════════════════════ */
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slides-container > .slide');
+const totalSlides = slides.length;
+const currSlideNum = document.getElementById('currSlideNum');
+const totalSlidesNum = document.getElementById('totalSlidesNum');
+const progressFill = document.getElementById('progressFill');
+const badgeFase = document.getElementById('badgeFase');
+const timePill = document.getElementById('timePill');
+const notesDrawer = document.getElementById('notes-drawer');
+const notesContent = document.getElementById('notesContent');
+const ambientGlow = document.getElementById('ambientGlow');
+
+totalSlidesNum.textContent = String(totalSlides).padStart(2, '0');
+
+function updateSlide(index) {
+  if (index < 0) index = 0;
+  if (index >= totalSlides) index = totalSlides - 1;
+
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active', 'prev');
+    if (i === index) slide.classList.add('active');
+    else if (i < index) slide.classList.add('prev');
+  });
+
+  currentSlide = index;
+  currSlideNum.textContent = String(currentSlide + 1).padStart(2, '0');
+  progressFill.style.width = (((currentSlide + 1) / totalSlides) * 100) + '%';
+
+  const activeSlide = slides[currentSlide];
+  const fase = activeSlide.dataset.fase || 'Intro';
+  const time = activeSlide.dataset.time || '80 min';
+  const notes = activeSlide.dataset.notes || 'Sin notas adicionales para esta diapositiva.';
+  const styleConfig = FASES[fase] || { class: 'f1', text: fase };
+
+  badgeFase.className = 'fase-badge ' + styleConfig.class;
+  badgeFase.textContent = styleConfig.text;
+  timePill.textContent = '⏱ ' + time;
+  notesContent.innerHTML = '<p>' + notes + '</p>';
+
+  const posX = 15 + (index * 4) % 65;
+  const posY = 15 + (index * 5) % 60;
+  ambientGlow.style.left = posX + '%';
+  ambientGlow.style.top = posY + '%';
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+function goToSlide(idx) { updateSlide(idx); closeModal('gridModal'); }
+
+function seekSlide(e) {
+  const rect = document.getElementById('progressTrack').getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  updateSlide(Math.floor(percent * totalSlides));
+}
+
+// CONTROL DE TECLADO
+document.addEventListener('keydown', (e) => {
+  if (document.querySelector('.modal-overlay.open') && e.key !== 'Escape') return;
+  switch(e.key) {
+    case 'ArrowRight': case ' ': case 'PageDown':
+      e.preventDefault(); nextSlide(); break;
+    case 'ArrowLeft': case 'PageUp': case 'Backspace':
+      e.preventDefault(); prevSlide(); break;
+    case 'f': case 'F':
+      e.preventDefault(); toggleFullscreen(); break;
+    case 'g': case 'G':
+      e.preventDefault(); toggleModal('gridModal'); break;
+    case 'n': case 'N':
+      e.preventDefault(); toggleNotes(); break;
+    case 'b': case 'B':
+      document.body.classList.toggle('blackout'); break;
+    case '?':
+      toggleModal('helpModal'); break;
+    case 'Escape':
+      closeAllModales(); break;
+  }
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => console.log('Fullscreen no disponible'));
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+function toggleNotes() { notesDrawer.classList.toggle('open'); }
+
+function openModal(id) {
+  if (id === 'gridModal') renderThumbnails();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function toggleModal(id) {
+  const m = document.getElementById(id);
+  m.classList.contains('open') ? closeModal(id) : openModal(id);
+}
+function closeModalOnBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
+function closeAllModales() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  notesDrawer.classList.remove('open');
+}
+
+function renderThumbnails() {
+  const container = document.getElementById('thumbnailsContainer');
+  container.innerHTML = '';
+  slides.forEach((slide, idx) => {
+    const titleEl = slide.querySelector('.slide-title');
+    const titleText = titleEl ? titleEl.innerText.replace(/\n/g, ' ') : ('Diapositiva ' + (idx + 1));
+    const card = document.createElement('div');
+    card.className = 'thumb-card ' + (idx === currentSlide ? 'current' : '');
+    card.onclick = () => goToSlide(idx);
+    card.innerHTML = '<div><div class="thumb-num">' + String(idx + 1).padStart(2, '0') + '</div><div class="thumb-title">' + titleText + '</div></div><div class="thumb-phase">' + (slide.dataset.fase || '') + '</div>';
+    container.appendChild(card);
+  });
+}
+
+// ==========================================
+// TEMPORIZADORES EN VIVO
+// ==========================================
+const timerState = {};
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function startTimer(elementId, defaultSecs) {
+  if (!timerState[elementId]) {
+    timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  }
+  const state = timerState[elementId];
+  if (state.running) return;
+  state.running = true;
+  state.interval = setInterval(() => {
+    if (state.remaining > 0) {
+      state.remaining--;
+      document.getElementById(elementId).textContent = formatTime(state.remaining);
+    } else {
+      clearInterval(state.interval);
+      state.running = false;
+      document.getElementById(elementId).textContent = '¡TIEMPO!';
+      document.getElementById(elementId).style.color = 'var(--rojo-err)';
+    }
+  }, 1000);
+}
+
+function pauseTimer(elementId) {
+  if (timerState[elementId] && timerState[elementId].running) {
+    clearInterval(timerState[elementId].interval);
+    timerState[elementId].running = false;
+  }
+}
+
+function resetTimer(elementId, defaultSecs) {
+  pauseTimer(elementId);
+  timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  const el = document.getElementById(elementId);
+  el.textContent = formatTime(defaultSecs);
+  el.style.color = 'var(--dorado)';
+}
+
+// ==========================================
+// HINGE QUESTION GENÉRICA (sin editar JS)
+// Lee data-correct / data-ok / data-no del contenedor .hinge-grid.
+// Admite varias hinges por clase: cada una vive en su propia slide.
+// ==========================================
+function checkHinge(opNumber, element) {
+  const grid = element.closest('.hinge-grid');
+  const slide = element.closest('.slide');
+  const feedback = slide ? slide.querySelector('.hinge-feedback-box') : null;
+  if (!grid || !feedback || grid.dataset.done === 'true') return;
+  grid.dataset.done = 'true';
+
+  const correct = parseInt(grid.dataset.correct, 10) || 1;
+  const okText = grid.dataset.ok || '';
+  const noText = grid.dataset.no || '';
+  const cards = grid.querySelectorAll('.hinge-card');
+
+  if (opNumber === correct) {
+    element.classList.add('correct');
+    feedback.className = 'hinge-feedback-box correct';
+    feedback.innerHTML = '✅ <strong>¡Correcto!</strong> ' + okText;
+  } else {
+    element.classList.add('wrong');
+    if (cards[correct - 1]) cards[correct - 1].classList.add('correct');
+    feedback.className = 'hinge-feedback-box wrong';
+    feedback.innerHTML = '❌ <strong>La mejor respuesta es la opción ' + correct + '.</strong> ' + noText;
+  }
+}
+
+// ==========================================
+// HELPERS DE CONTENIDO (todos genéricos)
+// ==========================================
+
+// Tabs de actividad: activa el panel indicado dentro de la MISMA slide.
+function showTab(panelId, btn) {
+  const slide = btn.closest('.slide');
+  if (slide) {
+    slide.querySelectorAll('.sit-panel').forEach(p => p.classList.remove('active'));
+    slide.querySelectorAll('.btn-sit').forEach(b => b.classList.remove('active'));
+  }
+  const panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('active');
+  btn.classList.add('active');
+}
+
+// Revela una vez (tarjetas .reveal-story): oculta el botón al abrirse.
+function revealCard(card) {
+  const hidden = card.querySelector('.reveal-hidden');
+  if (!hidden || hidden.classList.contains('ver')) return;
+  hidden.classList.add('ver');
+  const btn = card.querySelector('.btn-analisis');
+  if (btn) btn.style.display = 'none';
+}
+
+// Alterna el análisis orientativo (botón + hermano siguiente).
+function toggleAnalisis(btn) {
+  const box = btn.nextElementSibling;
+  if (!box) return;
+  const abierto = box.classList.toggle('ver');
+  btn.textContent = abierto ? '🙈 Ocultar análisis' : '🔍 Mostrar análisis orientativo (después de discutir)';
+}
+
+// ==========================================
+// OPCIONAL · CÍRCULO VIRTUOSO/VICIOSO
+// Solo si usás ese widget: editar los pasos acá y llamar
+// setCiclo('virtuoso', boton) desde la slide.
+// ==========================================
+const ciclosData = {
+  virtuoso: { color: '#8DA85E', steps: ['__PASO_1__', '__PASO_2__', '__PASO_3__', '__PASO_4__', '__RESULTADO_POSITIVO__'] },
+  vicioso:  { color: '#E06D44', steps: ['__PASO_1__', '__PASO_2__', '__PASO_3__', '__PASO_4__', '__RESULTADO_NEGATIVO__'] }
+};
+
+function renderCiclo(modo) {
+  const data = ciclosData[modo];
+  let html = '<div class="ciclo-steps">';
+  data.steps.forEach((paso, i) => {
+    html += '<div class="ciclo-step" style="--nodo-color:' + data.color + '; animation-delay:' + (i * 0.06) + 's">'
+         +  '<span class="ciclo-num" style="background:' + data.color + '">' + (i + 1) + '</span>'
+         +  '<span>' + paso + '</span></div>';
+    if (i < data.steps.length - 1) html += '<div class="ciclo-flecha">↓</div>';
+  });
+  html += '</div>';
+  const target = document.getElementById('cicloSteps');
+  if (target) target.innerHTML = html;
+}
+
+function setCiclo(modo, btn) {
+  renderCiclo(modo);
+  const botones = btn.parentElement.querySelectorAll('.btn-sit');
+  botones.forEach(b => {
+    b.classList.remove('active');
+    b.style.background = 'transparent';
+    b.style.borderColor = 'rgba(255,255,255,.25)';
+    b.style.color = '#fff';
+  });
+  const activoColor = modo === 'virtuoso' ? 'var(--oliva)' : 'var(--terracota)';
+  btn.classList.add('active');
+  btn.style.background = activoColor;
+  btn.style.borderColor = activoColor;
+}
+
+// INICIALIZACIÓN
+document.getElementById('materiaTitle').textContent = CONFIG.materia + ' · Clase ' + CONFIG.claseNumero;
+document.title = 'Clase ' + CONFIG.claseNumero + ' — Presentación para Proyectar';
+const modalSlideCount = document.getElementById('modalSlideCount');
+if (modalSlideCount) modalSlideCount.textContent = 'Navegador de Diapositivas (' + totalSlides + ')';
+updateSlide(0);
+</script>
+</body>
+</html>

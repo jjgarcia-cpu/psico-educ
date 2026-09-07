@@ -1,0 +1,674 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 5 · Teorías del aprendizaje II: Piaget y Vygotski — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:19px;line-height:1.15;display:block}
+.marca small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:15px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:14.5px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(41px,6.6vw,74.5px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(18px,2.2vw,23px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:29px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(27.5px,3.8vw,43px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:18px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(20.5px,2.4vw,26.5px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(20.5px,2.5vw,27.5px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:15.5px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:17px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:18px;color:var(--marino)}
+.tl-item p{font-size:15px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:15.5px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:17.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:17.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:16px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:17px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:13px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:23px;color:var(--marino)}
+.flip-frontal p{font-size:15px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:13px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:20.5px}
+.flip-dorso span{font-size:14.5px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:18.5px;display:block}
+.nodo small{color:var(--gris);font-size:14.5px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:6px}
+.nodo-detalle p{font-size:17.5px}
+
+/* ===== VAK TABLA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:15.5px}
+table.comp td{padding:10px 14px;font-size:16px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:20px;margin-bottom:4px}
+.caso-vak p{font-size:17px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:16px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== CHAEA INVENTARIO ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:16px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:25px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:18px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="comprender"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="disenar"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="mejorar"]{background:var(--oliva);color:#fff}
+.capa-btn[data-lente="aplicacion"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="transferencia"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="coconstruccion"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:53px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:17.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:18.5px}
+.glos-item dd{font-size:16px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:24px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:24px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:17.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(23px,2.9vw,32.5px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.4vw,26.5px);color:var(--dorado)}
+.refs{font-size:15.5px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:15.5px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 220 170" fill="none"><polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="8"/><line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="10"/><line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="10"/><line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="10"/></svg>
+      <span><small>Material de estudio · Clase 5</small><b>Teorías del aprendizaje II: Piaget y Vygotski</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#giro">Giro</a>
+      <a href="#piaget">Piaget</a>
+      <a href="#estadios">Estadios</a>
+      <a href="#vygotski">Vygotski</a>
+      <a href="#zdp">ZDP</a>
+      <a href="#integracion">Integración</a>
+      <a href="#tensiones">Tensiones</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 220 170" fill="none" role="img" aria-label="Piaget: el niño construye conocimiento solo, accionando sobre los objetos. Vygotski: el conocimiento se construye en interacción social">
+    <ellipse cx="110" cy="88" rx="96" ry="74" fill="rgba(217,164,65,.10)"/>
+    <text x="110" y="16" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2.5px" fill="#D9A441">PIAGET ⟷ VYGOTSKI</text>
+    <line x1="110" y1="26" x2="110" y2="150" stroke="rgba(247,241,229,.38)" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <!-- IZQ · Piaget: engranaje de esquemas -->
+    <circle cx="52" cy="58" r="17" fill="rgba(217,164,65,.25)" stroke="#D9A441" stroke-width="2.5"/>
+    <circle cx="52" cy="58" r="6" fill="rgba(196,99,62,.8)"/>
+    <path d="M52 36 V30 M52 80 V86 M30 58 H24 M74 58 H80 M34 40 L29.5 35.5 M70 76 L74.5 80.5 M70 40 L74.5 35.5 M34 76 L29.5 80.5" stroke="#D9A441" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M58 28 q9 6 0 12 M78 52 q8 8 0 16 M40 84 q-10 -4 -4 -14" stroke="rgba(247,241,229,.4)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <text x="52" y="132" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">el niño construye</text>
+    <text x="52" y="144" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">con su acción</text>
+    <!-- DER · Vygotski: dos personas en diálogo -->
+    <circle cx="158" cy="52" r="10" fill="rgba(125,134,85,.85)"/>
+    <path d="M158 62 v18 M158 80 l-9 11 M158 80 l9 11 M146 66 h24" stroke="#7D8655" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="161" cy="94" r="7" fill="rgba(217,164,65,.7)"/>
+    <path d="M161 101 v10 M161 111 l-6 8 M161 111 l6 8" stroke="#D9A441" stroke-width="3" stroke-linecap="round"/>
+    <rect x="128" y="20" width="58" height="15" rx="7.5" fill="rgba(247,241,229,.14)" stroke="#C9D2E0" stroke-width="1.5"/>
+    <path d="M150 35 l-4 7 M164 35 l4 7" stroke="#C9D2E0" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="113" y="31" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:7px;font-weight:700;letter-spacing:1.5px" fill="#C9D2E0">LENGUAJE</text>
+    <text x="158" y="132" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">con otros</text>
+    <text x="158" y="144" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">y con la cultura</text>
+  </svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>Teorías del aprendizaje II:<br><em>Piaget y Vygotski</em></h1>
+  <p class="sub">La construcción del conocimiento: entre lo individual y lo social.<br>Material interactivo con situaciones de sala y quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · EL GIRO CONSTRUCTIVISTA ═══════════ -->
+<section class="bloque" id="giro">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>El giro constructivista</h2></div>
+  <p class="sec-intro reveal">El conductismo y el cognitivismo pensaban al sujeto que aprende de manera bastante pasiva: para uno, el ambiente moldea la conducta; para el otro, la mente procesa información que llega desde afuera. En ambos casos, el conocimiento es algo que se recibe, se registra, se almacena. Las teorías constructivistas cambian radicalmente esta imagen.</p>
+
+  <div class="grid2 reveal">
+    <div class="tarjeta marino">
+      <h3>Visión anterior · Conductismo y cognitivismo</h3>
+      <ul style="margin:8px 0 0 18px;font-size:16.5px;line-height:1.7">
+        <li>El sujeto <strong>recibe, registra y almacena</strong> el conocimiento</li>
+        <li>El ambiente moldea la conducta; la mente procesa</li>
+        <li>La mente es un espejo que refleja la realidad</li>
+      </ul>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>El giro copernicano · Constructivismo (Piaget y Vygotski)</h3>
+      <ul style="margin:8px 0 0 18px;font-size:16.5px;line-height:1.7">
+        <li>El sujeto <strong>construye activamente</strong> el conocimiento</li>
+        <li>No hay transferencia: <strong>hay construcción</strong></li>
+        <li>La mente es una estructura activa que interpreta, organiza y transforma la experiencia</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="destacado reveal">El sujeto no recibe el conocimiento: lo construye. Piaget y Vygotski son los dos referentes fundamentales de esta perspectiva, aunque parten de supuestos diferentes y llegan a énfasis distintos.</p>
+</section>
+
+<!-- ═══════════ 2 · PIAGET ═══════════ -->
+<section class="bloque" id="piaget">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">2</span><h2>Lente 1 · Piaget: el niño como constructor activo</h2></div>
+  <p class="sec-intro reveal">Jean Piaget (1896-1980), biólogo y epistemólogo suizo. Su pregunta no era pedagógica sino epistémica: <strong>¿cómo se construye el conocimiento?</strong> La respondió estudiando durante décadas cómo piensan y razonan los niños.</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«La inteligencia es la capacidad de adaptación a situaciones nuevas.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Jean Piaget</span></p>
+  </div>
+
+  <div class="grid3 reveal" style="margin-top:6px">
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>1 · Asimilación</h3>
+      <p>Incorporar lo nuevo interpretándolo desde los <strong>esquemas existentes</strong>. El niño llama «guau-guau» a todos los animales de cuatro patas. <em>Lo nuevo entra en lo conocido.</em></p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>2 · Acomodación</h3>
+      <p><strong>Modificar los esquemas cuando la realidad los resiste</strong>. El mismo niño aprende a distinguir perro de gato. <em>Lo conocido se transforma.</em></p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>3 · Equilibración</h3>
+      <p>Regula la interacción entre asimilación y acomodación. El <strong>desequilibrio</strong> —cuando la realidad resiste— es el motor del aprendizaje. <em>El conflicto cognitivo impulsa.</em></p>
+    </div>
+  </div>
+
+  <p class="destacado reveal">Para Piaget, el conocimiento no se acumula linealmente: se organiza en esquemas que se construyen y transforman. El conflicto cognitivo no es un obstáculo: es una oportunidad — el motor del aprendizaje.</p>
+</section>
+
+<!-- ═══════════ 3 · ESTADIOS ═══════════ -->
+<section class="bloque" id="estadios">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">3</span><h2>Los estadios y el período preoperatorio</h2></div>
+  <p class="sec-intro reveal">Piaget postuló que el desarrollo cognitivo atraviesa estadios cualitativamente diferentes, en un orden invariable aunque con ritmos individuales variables. Para el nivel inicial hay uno central.</p>
+
+  <div class="tarjeta reveal">
+    <table class="comp">
+      <tr><th>Estadio</th><th>Edad aprox.</th><th>Características centrales</th></tr>
+      <tr><td>Sensoriomotor</td><td>0–2 años</td><td>Conocimiento a través de la acción y los sentidos. Permanencia del objeto.</td></tr>
+      <tr><td><strong>Preoperatorio</strong></td><td><strong>2–7 años</strong> · 🎯 NI</td><td><strong>Pensamiento simbólico y lenguaje. Egocentrismo. Centración. Irreversibilidad. Juego simbólico.</strong></td></tr>
+      <tr><td>Operatorio concreto</td><td>7–11 años</td><td>Operaciones lógicas sobre objetos concretos. Conservación. Reversibilidad.</td></tr>
+      <tr><td>Operatorio formal</td><td>11+ años</td><td>Pensamiento hipotético-deductivo. Razonamiento abstracto.</td></tr>
+    </table>
+  </div>
+
+  <div class="tarjeta oliva reveal">
+    <h3>El preoperatorio en la sala</h3>
+    <p>Un niño de 5 años insiste en que su vaso tiene más jugo que el de su compañero porque es más alto, aunque se le demuestre que tienen la misma cantidad. Está manifestando la <strong>centración preoperatoria</strong>: se centra en una sola dimensión (la altura) y no puede coordinarla con otra (el ancho).</p>
+    <p><strong>No es terquedad: es una característica propia de su momento de desarrollo.</strong> La docente que comprende esto diseña actividades que provocan el conflicto cognitivo en lugar de simplemente corregir.</p>
+  </div>
+
+  <p class="destacado reveal">El período preoperatorio (2–7 años) es el estadio central para las docentes del nivel inicial: es el tiempo del juego simbólico y del pensamiento en imágenes.</p>
+</section>
+
+<!-- ═══════════ 4 · VYGOTSKI ═══════════ -->
+<section class="bloque" id="vygotski">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">4</span><h2>Lente 2 · Vygotski: el conocimiento nace en la interacción</h2></div>
+  <p class="sec-intro reveal">Lev Vygotski (1896-1934), psicólogo bielorruso. Si Piaget pone el énfasis en el sujeto individual frente al ambiente físico, Vygotski desplaza el foco hacia la dimensión social e histórica: <strong>los procesos psicológicos superiores surgen primero en el plano de las relaciones sociales y luego se internalizan</strong>.</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Todo lo que el niño puede hacer hoy con ayuda, podrá hacerlo mañana de manera autónoma.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Vygotski, 1978</span></p>
+  </div>
+
+  <div class="grid3 reveal" style="margin-top:6px">
+    <div class="tarjeta marino">
+      <h3>Zona de desarrollo real</h3>
+      <p>Lo que el niño puede hacer <strong>de manera autónoma e independiente</strong>.</p>
+    </div>
+    <div class="tarjeta dorado">
+      <h3>Zona de Desarrollo Próximo (ZDP)</h3>
+      <p>La <strong>distancia</strong> entre lo que hace solo y lo que hace con ayuda. <strong>Aquí opera la enseñanza genuina.</strong></p>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>Zona de desarrollo potencial</h3>
+      <p>Lo que el niño puede lograr con la <strong>guía de un adulto</strong> o en colaboración con un par más capaz.</p>
+    </div>
+  </div>
+
+  <p class="destacado reveal">La enseñanza que solo trabaja con lo que el niño ya puede hacer solo no enseña: confirma. La enseñanza genuina opera en la ZDP y jalona el desarrollo.</p>
+
+  <div class="grid2 reveal" style="margin-top:6px">
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>Andamiaje (Bruner / Vygotski)</h3>
+      <p>Ayuda temporaria, ajustada y progresivamente retirada:</p>
+      <ul style="margin:8px 0 0 18px;font-size:16.5px;line-height:1.6">
+        <li><strong>Temporario:</strong> se retira cuando ya no es necesario</li>
+        <li><strong>Ajustado:</strong> calibrado al nivel de dificultad del niño</li>
+        <li><strong>Progresivo:</strong> va cediendo autonomía gradualmente</li>
+      </ul>
+      <p style="margin-top:10px"><em>En el jardín:</em> la docente acompaña a Valentina a trazar la V y luego la M, y va retirando su mano a medida que la niña gana confianza.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--oliva)">
+      <h3>Mediación (Vygotski)</h3>
+      <p>El aprendizaje humano <strong>siempre está mediado</strong>:</p>
+      <ul style="margin:8px 0 0 18px;font-size:16.5px;line-height:1.6">
+        <li>Herramientas <strong>físicas</strong>: un lápiz, una regla, un ábaco</li>
+        <li>Herramientas <strong>psicológicas</strong>: el lenguaje, los signos, los números</li>
+        <li><strong>Otras personas</strong>: docentes, pares, familiares</li>
+      </ul>
+      <p style="margin-top:10px"><em>El lenguaje:</em> primero comunicación social, luego pensamiento internalizado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · ZDP EN LA SALA ═══════════ -->
+<section class="bloque" id="zdp">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">5</span><h2>La ZDP en sala de 4 años</h2></div>
+  <p class="sec-intro reveal">Un ejemplo concreto de la ficha de lectura: el trabajo en la ZDP es un equilibrio fino entre no hacer la tarea por el niño y no abandonarlo a que la logre solo.</p>
+
+  <div class="tarjeta oliva reveal">
+    <h3>Valentina y su nombre</h3>
+    <p>Valentina todavía no puede escribir su nombre sola, pero si la docente le muestra cómo se traza la V y la acompaña en los primeros intentos, Valentina logra hacerlo. Esa tarea —<strong>que no puede hacer sola pero sí con ayuda</strong>— está en su ZDP.</p>
+    <p>La docente que trabaja en la ZDP no hace la tarea por Valentina ni espera que la logre sola: <strong>interviene con el nivel exacto de apoyo necesario y lo retira progresivamente</strong> a medida que Valentina construye autonomía.</p>
+  </div>
+
+  <p class="destacado reveal">La pregunta vertebradora de la clase: ¿cómo diseña su intervención una maestra jardinera desde la perspectiva vygotskiana? Respuesta: interviniendo en la ZDP, con andamiaje ajustado que se retira.</p>
+</section>
+
+<!-- ═══════════ 6 · INTEGRACIÓN ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">6</span><h2>Un mismo caso, dos lentes</h2></div>
+  <p class="sec-intro reveal">La escena del rompecabezas en la sala de 4, leída desde cada teoría. Tocá cada lente:</p>
+
+  <div class="tarjeta marino reveal" style="text-align:center">
+    <h3>El rompecabezas en parejas</h3>
+    <p>En la sala de 4 años, la docente propone armar rompecabezas por parejas. Tomás intenta solo y se frustra. La docente se sienta junto a él, le da pistas y un modelo, y a medida que él avanza va retirando su ayuda. Al final, Tomás logra terminarlo casi solo.</p>
+    <div class="capas">
+      <button class="capa-btn" data-lente="piaget">🧩 Piaget</button>
+      <button class="capa-btn" data-lente="vygotski">🪜 Vygotski</button>
+      <button class="capa-btn" data-lente="integradora">🔗 Mirada integradora</button>
+    </div>
+    <div class="capa-out" id="capaOut"></div>
+    <p class="mini" style="margin-top:14px">Piaget y Vygotski no compiten: son lentes complementarios. La misma escena se puede fundamentar desde las dos teorías a la vez.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CONVERGENCIAS Y TENSIONES ═══════════ -->
+<section class="bloque" id="tensiones">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">7</span><h2>Convergencias y tensiones</h2></div>
+  <p class="sec-intro reveal">Ambos son constructivistas: el conocimiento no se recibe pasivamente, se construye. Pero difieren en puntos fundamentales. El cuadro comparativo de la cátedra:</p>
+
+  <div class="tarjeta reveal">
+    <table class="comp">
+      <tr><th>Dimensión</th><th>PIAGET</th><th>VYGOTSKI</th></tr>
+      <tr><td>Motor del desarrollo</td><td>El conflicto cognitivo interno</td><td>La interacción social y cultural</td></tr>
+      <tr><td>Rol del otro</td><td>Secundario (el niño construye solo)</td><td>Central (aprendizaje co-construido)</td></tr>
+      <tr><td>Rol del lenguaje</td><td>Refleja el desarrollo cognitivo</td><td>Constituye y jalona el desarrollo</td></tr>
+      <tr><td>Enseñanza / desarrollo</td><td>La enseñanza sigue al desarrollo</td><td>La enseñanza jala y produce desarrollo</td></tr>
+      <tr><td>Implicancia docente</td><td>Provocar conflicto cognitivo</td><td>Intervenir en la ZDP con andamiaje</td></tr>
+    </table>
+  </div>
+
+  <div class="tarjeta dorado reveal">
+    <h3>Una diferencia de énfasis, no un enfrentamiento</h3>
+    <p>Esta diferencia no implica que una teoría sea «mejor» que la otra: <strong>son complementarias</strong>. Un diseño de enseñanza en el nivel inicial puede simultáneamente generar conflictos cognitivos (Piaget) y organizarse en torno a la colaboración entre pares y la intervención docente en la ZDP (Vygotski).</p>
+  </div>
+
+  <p class="destacado reveal">Convergencia central: en ambas, el niño construye activamente. Tensión central: el papel del otro y del contexto social.</p>
+</section>
+
+<!-- ═══════════ 8 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">8</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">1 · El niño que llama «guau-guau» a todos los animales de cuatro patas está…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Asimilando: aplica un esquema existente a situaciones nuevas</button>
+      <button class="quiz-op">Acomodando: modifica sus esquemas cognitivos</button>
+      <button class="quiz-op">Equilibrando su desarrollo biológico</button>
+      <button class="quiz-op">Trabajando en su Zona de Desarrollo Próximo</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El niño incorpora lo nuevo interpretándolo desde los esquemas que ya posee: aplica el esquema «guau-guau» a todos los animales de cuatro patas. Eso es asimilación.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Asimilar es incorporar lo nuevo desde los esquemas existentes. La acomodación sería modificar los esquemas cuando la realidad los resiste —como cuando aprende a distinguir perro de gato.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · El estadio del desarrollo central para el nivel inicial es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Sensoriomotor (0–2 años)</button>
+      <button class="quiz-op">Preoperatorio (2–7 años)</button>
+      <button class="quiz-op">Operatorio concreto (7–11 años)</button>
+      <button class="quiz-op">Operatorio formal (11+ años)</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El preoperatorio (2-7 años) es el estadio central para las docentes del nivel inicial: pensamiento simbólico, egocentrismo, centración y juego simbólico.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Las salas de 3, 4 y 5 años transcurren en el período preoperatorio (2-7 años). El sensoriomotor (0-2) es el estadio del bebé.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">3 · La Zona de Desarrollo Próximo es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Lo que el niño ya sabe hacer de manera autónoma</button>
+      <button class="quiz-op">Lo que el niño nunca va a poder aprender</button>
+      <button class="quiz-op">La distancia entre lo que el niño hace solo y lo que hace con ayuda</button>
+      <button class="quiz-op">El conjunto de premios y castigos del aula</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La ZDP es la distancia entre el nivel de desarrollo real y el potencial. Ahí —y solo ahí— opera la enseñanza genuina.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> La ZDP no es lo que el niño ya hace solo (eso es el desarrollo real) ni lo inalcanzable: es la distancia entre lo que hace solo y lo que hace con ayuda.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">4 · El andamiaje es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Una ayuda permanente que sostiene al niño siempre</button>
+      <button class="quiz-op">Hacer la tarea por el niño para que no se frustre</button>
+      <button class="quiz-op">Una ayuda temporaria, ajustada y retirada progresivamente</button>
+      <button class="quiz-op">Un refuerzo positivo de la conducta</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Como el andamio de una construcción, la ayuda es temporaria, se ajusta a las necesidades del momento y se retira a medida que el aprendiz construye autonomía (Bruner, retomando a Vygotski).</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> El andamiaje no es ayuda permanente ni reemplazo de la tarea: es temporario, ajustado al nivel de dificultad y progresivamente retirado.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">5 · Para Vygotski, el lenguaje…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Refleja el desarrollo cognitivo del niño</button>
+      <button class="quiz-op">Es solo un instrumento de comunicación social</button>
+      <button class="quiz-op">No tiene relación con el pensamiento</button>
+      <button class="quiz-op">Primero es comunicación social y luego se internaliza como pensamiento</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Para Vygotski el lenguaje es la herramienta cultural principal: primero instrumento de comunicación y luego pensamiento internalizado. Constituye y jalona el desarrollo.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Que el lenguaje «refleja» el desarrollo es la posición de Piaget. Para Vygotski, el lenguaje es el mediador por excelencia: primero social, luego interno.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:18.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">9</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 5, tomados del material de lectura de la cátedra. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Constructivismo</dt><dd>Perspectiva compartida por Piaget y Vygotski según la cual el conocimiento no se recibe pasivamente sino que se construye activamente. Difieren en el énfasis: Piaget subraya la construcción individual; Vygotski, la construcción social e histórica.</dd></dl>
+    <dl class="glos-item reveal"><dt>Esquema (Piaget)</dt><dd>Estructura cognitiva que permite interpretar y organizar la experiencia. Los esquemas se construyen y transforman a través de la asimilación y la acomodación. Son la unidad básica del conocimiento en la teoría piagetiana.</dd></dl>
+    <dl class="glos-item reveal"><dt>Asimilación</dt><dd>Proceso por el cual el sujeto incorpora nueva información interpretándola desde los esquemas que ya posee. Se integra lo nuevo en lo conocido. Ejemplo: llamar «guau-guau» a todos los animales de cuatro patas.</dd></dl>
+    <dl class="glos-item reveal"><dt>Acomodación</dt><dd>Proceso por el cual el sujeto modifica sus esquemas para incorporar experiencias que no pueden ser asimiladas. Es la respuesta cognitiva al desequilibrio. Ejemplo: distinguir perro de gato.</dd></dl>
+    <dl class="glos-item reveal"><dt>Equilibración</dt><dd>Proceso que regula la interacción entre asimilación y acomodación. El organismo tiende al equilibrio, pero es siempre provisional: el desequilibrio es el motor del aprendizaje.</dd></dl>
+    <dl class="glos-item reveal"><dt>Conflicto cognitivo</dt><dd>Desequilibrio que se produce cuando la realidad resiste ser incorporada a los esquemas existentes. Es el motor del aprendizaje en Piaget. Generar conflictos cognitivos es una estrategia pedagógica deliberada.</dd></dl>
+    <dl class="glos-item reveal"><dt>Período preoperatorio</dt><dd>Estadio del desarrollo (aprox. 2-7 años) en el que el niño desarrolla el pensamiento simbólico y el lenguaje pero aún no domina las operaciones lógicas. Se caracteriza por el egocentrismo, la centración y la irreversibilidad. Es el estadio central del nivel inicial.</dd></dl>
+    <dl class="glos-item reveal"><dt>Centración</dt><dd>Característica del pensamiento preoperatorio: el niño se centra en una sola dimensión de un objeto o situación (por ejemplo, la altura del vaso) y no puede coordinarla con otra (el ancho). No es un error: es su momento de desarrollo.</dd></dl>
+    <dl class="glos-item reveal"><dt>Zona de Desarrollo Próximo (ZDP)</dt><dd>Concepto central de Vygotski: distancia entre el nivel de desarrollo real (lo que el niño puede hacer solo) y el potencial (lo que puede hacer con ayuda). La enseñanza genuina opera en la ZDP.</dd></dl>
+    <dl class="glos-item reveal"><dt>Andamiaje</dt><dd>Concepto de Bruner retomando a Vygotski: la ayuda que un adulto más experto presta a un aprendiz en la ZDP. Es temporario, ajustado a las necesidades del momento y se retira progresivamente a medida que el aprendiz construye autonomía.</dd></dl>
+    <dl class="glos-item reveal"><dt>Mediación</dt><dd>En Vygotski, el aprendizaje humano siempre está mediado por herramientas físicas, herramientas psicológicas (especialmente el lenguaje) u otras personas. El lenguaje es el mediador por excelencia: primero comunicación, luego pensamiento.</dd></dl>
+    <dl class="glos-item reveal"><dt>Lenguaje (Vygotski)</dt><dd>Herramienta cultural principal: primero instrumento de comunicación social, luego se internaliza y se convierte en pensamiento. Constituye y jalona el desarrollo; no lo refleja (a diferencia de Piaget).</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14.5px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Consigna puente a la Clase 6 · Neurociencias</h3>
+    <p class="consigna">«Leé el material de cátedra de la Clase 6 (Mora e Immordino-Yang). Anotá: ¿qué te sorprende de pensar el aprendizaje "desde el cerebro"?»</p>
+
+    <div class="tarjeta" style="margin-top:14px;text-align:left;background:rgba(34,51,77,.75)">
+      <h3 style="color:var(--dorado)">📋 Tarea integradora · para la próxima clase</h3>
+      <p style="color:var(--crema)">Diseñar una actividad para sala de 4 años que pueda analizarse desde <strong>Piaget</strong> Y desde <strong>Vygotski</strong>. Explicar qué rol tendría la docente en cada caso. Extensión: una carilla máximo.</p>
+    </div>
+
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Bruner, J. (1986). <em>El habla del niño</em>. Barcelona: Paidós. · Piaget, J. (1954). <em>The construction of reality in the child</em>. New York: Basic Books. · Piaget, J. (1972). <em>Psicología de la inteligencia</em>. Buenos Aires: Psique. · Vygotski, L. (1978). <em>Mind in society</em>. Cambridge: Harvard University Press. · Vygotski, L. (1979). <em>El desarrollo de los procesos psicológicos superiores</em>. Barcelona: Crítica.</p>
+  </div>
+</section>
+
+</main></main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 5 — Teorías del aprendizaje II: Piaget y Vygotski<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+  }));
+});
+
+/* caso por capas */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  piaget:{t:'Lente Piaget · Conflicto cognitivo',d:'El intento solo y la frustración son un desequilibrio: el esquema de Tomás no alcanza para la tarea. Y ese desequilibrio es justamente el motor del aprendizaje. En lugar de hacerle la tarea, la docente ofrece materiales que desafíen su nivel actual y deja que explore por ensayo y error.'},
+  vygotski:{t:'Lente Vygotski · ZDP y andamiaje',d:'El rompecabezas está en la ZDP de Tomás: no lo logra solo, pero sí con ayuda. La docente interviene con andamiaje —pistas y modelo— y lo retira progresivamente a medida que Tomás gana autonomía. La colaboración con un par más capaz habría cumplido el mismo rol.'},
+  integradora:{t:'Mirada integradora · Piaget Y Vygotski',d:'Las dos lentes se complementan: generar el conflicto cognitivo (no evitar la frustración) y, a la vez, intervenir en la ZDP con andamiaje. Un diseño de enseñanza puede provocar conflictos cognitivos (Piaget) y organizar la colaboración y la intervención docente (Vygotski).'}
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Distinguís los mecanismos de Piaget, la ZDP de Vygotski y su articulación. Lista/o para la Clase 6 (neurociencias).'
+      :aciertos>=3?'¡Muy bien! Repasá las secciones 2, 4 y 7 (Piaget, Vygotski y la tabla comparativa).'
+      :'Volvé a las secciones 2, 4 y 5 y volvé a intentar. Con leer con atención, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>

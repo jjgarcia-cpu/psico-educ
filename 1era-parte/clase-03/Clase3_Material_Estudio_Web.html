@@ -1,0 +1,704 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 3 · La especificidad del aprendizaje escolar — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:19px;line-height:1.15;display:block}
+.marca small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:15px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:14.5px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(41px,6.6vw,74.5px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(18px,2.2vw,23px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:29px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(27.5px,3.8vw,43px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:18px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(20.5px,2.4vw,26.5px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(20.5px,2.5vw,27.5px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:15.5px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:17px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:18px;color:var(--marino)}
+.tl-item p{font-size:15px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:15.5px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:17.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(17.5px,1.9vw,20.5px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:17.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:16px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:17px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:13px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:23px;color:var(--marino)}
+.flip-frontal p{font-size:15px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:13px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:20.5px}
+.flip-dorso span{font-size:14.5px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:18.5px;display:block}
+.nodo small{color:var(--gris);font-size:14.5px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:6px}
+.nodo-detalle p{font-size:17.5px}
+
+/* ===== VAK TABLA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:15.5px}
+table.comp td{padding:10px 14px;font-size:16px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:20px;margin-bottom:4px}
+.caso-vak p{font-size:17px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:16px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== CHAEA INVENTARIO ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:16px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:25px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:18px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="comprender"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="disenar"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="mejorar"]{background:var(--oliva);color:#fff}
+.capa-btn[data-lente="aplicacion"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="transferencia"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="coconstruccion"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:23px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:53px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:17.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:18.5px}
+.glos-item dd{font-size:16px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:24px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:24px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:17.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(23px,2.9vw,32.5px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(19px,2.4vw,26.5px);color:var(--dorado)}
+.refs{font-size:15.5px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:15.5px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 220 170" fill="none"><polygon points="110,18 190,140 30,140" fill="rgba(217,164,65,.15)" stroke="#D9A441" stroke-width="8"/><line x1="128" y1="66" x2="216" y2="34" stroke="#C4633E" stroke-width="10"/><line x1="132" y1="79" x2="220" y2="79" stroke="#D9A441" stroke-width="10"/><line x1="128" y1="92" x2="216" y2="124" stroke="#7D8655" stroke-width="10"/></svg>
+      <span><small>Material de estudio · Clase 3</small><b>La especificidad del aprendizaje escolar</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#definicion">Definición</a>
+      <a href="#mitos">Mitos</a>
+      <a href="#demandas">Demandas</a>
+      <a href="#oficio">Oficio</a>
+      <a href="#oculto">Oculto</a>
+      <a href="#integracion">Integración</a>
+      <a href="#equidad">Equidad</a>
+      <a href="#autoevaluacion">Autoevaluación</a>
+      <a href="#glosario">Glosario</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 220 170" fill="none" role="img" aria-label="Aprender en la vida cotidiana y aprender en la escuela: ¿igual o diferente?">
+    <ellipse cx="110" cy="88" rx="96" ry="74" fill="rgba(217,164,65,.10)"/>
+    <text x="110" y="16" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:2.5px" fill="#D9A441">¿IGUAL O DIFERENTE?</text>
+    <line x1="110" y1="26" x2="110" y2="156" stroke="rgba(247,241,229,.38)" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <circle cx="50" cy="44" r="9" fill="rgba(217,164,65,.55)"/>
+    <path d="M50 28 V24 M68 40 H72 M32 40 H28 M63 27 L66 24 M37 27 L34 24 M63 55 L66 58 M37 55 L34 58" stroke="#D9A441" stroke-width="2" stroke-linecap="round"/>
+    <ellipse cx="80" cy="50" rx="14" ry="6" fill="rgba(247,241,229,.6)"/>
+    <circle cx="56" cy="94" r="9" fill="rgba(196,99,62,.75)"/>
+    <path d="M56 103 V126 M56 108 L44 118 M56 108 L68 118 M56 126 L44 138 M56 126 L68 138" stroke="#C4633E" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M56 116 L86 94" stroke="#FDFAF3" stroke-width="1.6"/>
+    <polygon points="86,86 96,94 86,102" fill="rgba(217,164,65,.9)"/>
+    <text x="54" y="151" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">en la vida</text>
+    <rect x="130" y="36" width="36" height="25" rx="3" fill="rgba(34,51,77,.85)" stroke="#D9A441" stroke-width="2"/>
+    <text x="148" y="53" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:9px;font-weight:700" fill="#FDFAF3">ABC</text>
+    <circle cx="162" cy="90" r="8" fill="rgba(217,164,65,.8)"/>
+    <path d="M162 98 V120 M162 102 L152 114 M162 102 L172 114" stroke="#D9A441" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M126 132 Q 170 116 196 128" stroke="rgba(247,241,229,.55)" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+    <circle cx="130" cy="126" r="5.5" fill="rgba(125,134,85,.9)"/>
+    <circle cx="152" cy="120" r="5.5" fill="rgba(196,99,62,.9)"/>
+    <circle cx="172" cy="118" r="5.5" fill="rgba(217,164,65,.9)"/>
+    <circle cx="191" cy="123" r="5.5" fill="rgba(125,134,85,.65)"/>
+    <text x="162" y="151" text-anchor="middle" style="font-family:'Source Sans 3',sans-serif;font-size:8.5px;font-weight:600" fill="#C9D2E0">en la escuela</text>
+  </svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · 2° Año</p>
+  <h1>La especificidad del<br>aprendizaje escolar</h1>
+  <p class="sub">Aprender en la escuela: ¿igual o diferente?<br>Material interactivo con casos de sala y quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · NO TODO APRENDIZAJE ES LO MISMO ═══════════ -->
+<section class="bloque" id="definicion">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>No todo aprendizaje es lo mismo</h2></div>
+  <p class="sec-intro reveal">Aprendemos todo el tiempo: a caminar, a hablar, a leer los gestos de quien nos rodea, a andar en bicicleta, a reconocer el olor de la lluvia. Si todo es aprendizaje… ¿qué tiene de particular el que ocurre en la escuela?</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Esta amplitud del fenómeno del aprendizaje es, paradójicamente, uno de los primeros desafíos de la Psicología de la Educación: si todo es aprendizaje, ¿qué tiene de particular el que ocurre en la escuela?»</p>
+  </div>
+
+  <div class="grid3 reveal">
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>1 · Aprendizaje espontáneo o cotidiano</h3>
+      <p>Ocurre en el curso de la vida diaria, <strong>sin intención instructiva explícita</strong>. Un niño aprende que el fuego quema, que ciertos tonos de voz indican enojo, que pedir «por favor» aumenta las chances de obtener lo que quiere. Es <strong>situado, implícito</strong> y generalmente no requiere esfuerzo deliberado.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>2 · Aprendizaje en situaciones de crianza</h3>
+      <p>Los adultos se proponen <strong>enseñar algo al niño</strong>: a hablar, a caminar, a controlar esfínteres. Hay cierta intencionalidad, pero el marco es la <strong>relación vincular y afectiva</strong>, no una institución con normas y curriculum.</p>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>3 · Aprendizaje escolar o pedagógico</h3>
+      <p>Ocurre en <strong>instituciones creadas con propósitos formativos</strong>, bajo un régimen organizado de tiempos, espacios, contenidos y evaluaciones. Quien aprende lo hace en un rol específico —<strong>el de alumno</strong>— con obligaciones, expectativas y formas de participación particulares.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta reveal" style="margin-top:6px">
+    <h3>Sin jerarquía, pero con especificidad</h3>
+    <p>Esta distinción <strong>no implica que un tipo de aprendizaje sea superior a otro</strong>. Lo que importa es reconocer que cada uno ocurre en condiciones diferentes, con mecanismos diferentes y con efectos diferentes sobre quienes aprenden. La Psicología de la Educación se ocupa específicamente de este último: el aprendizaje escolar.</p>
+  </div>
+
+  <div class="tarjeta dorado reveal">
+    <h3>Para pensar en el nivel inicial</h3>
+    <p>Un niño de 4 años que aprende qué hacer cuando tiene hambre lo hace en un contexto concreto, con consecuencias inmediatas y en función de una necesidad real. El mismo niño, en la sala, aprende a reconocer las letras de su nombre: está operando en un nivel de abstracción que requiere habilidades cognitivas muy distintas.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · MITOS ═══════════ -->
+<section class="bloque" id="mitos">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Mito o realidad</h2></div>
+  <p class="sec-intro reveal">Antes de avanzar, despejemos el terreno. Clasificá cada afirmación — vas a recibir feedback inmediato.</p>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Aprender en la escuela es exactamente igual que aprender en la vida cotidiana: solo cambia el lugar.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> El aprendizaje escolar tiene características específicas: ocurre en instituciones con régimen organizado, impone demandas cognitivas propias (descontextualización, simbolización, utilidad diferida) y exige aprender un rol particular: el de alumno.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> No cambia solo el lugar. Cambian las condiciones del aprendizaje: los tiempos, los espacios, el tipo de conocimiento, el rol de quien aprende y las formas de evaluar.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«El aprendizaje escolar se caracteriza por ser descontextualizado, simbólico y de utilidad diferida.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> La escuela presenta el conocimiento separado de sus usos prácticos, a partir de representaciones abstractas y con un horizonte de utilidad que no siempre es visible para quien aprende.</div>
+    <div class="feedback ok"><strong>¡Correcto, es realidad!</strong> Son las tres demandas cognitivas específicas de la escuela. Comprenderlas orienta el diseño de propuestas de enseñanza más apropiadas para el nivel inicial.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Los chicos aprenden a ser alumnos solos, sin que nadie se lo enseñe.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito (y de los peligrosos).</strong> El oficio de alumno se aprende, pero casi nunca se enseña de manera explícita. Cuando nadie lo enseña, solo lo aprenden quienes ya vienen familiarizados con los códigos de la escuela.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> El oficio de alumno (Perrenoud) se aprende de hecho en cada clase, pero rara vez se enseña con intención. Esa falta de enseñanza tiene una dimensión de inequidad.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«El curriculum oculto es todo lo que se aprende en la escuela sin estar explícitamente planificado.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> Normas implícitas, jerarquías, valores y formas legítimas de participación: todo eso se aprende sin figurar en ningún programa ni planificación.</div>
+    <div class="feedback ok"><strong>¡Correcto!</strong> El curriculum oculto (Jackson, 1968) es todo lo que se aprende sin estar planificado. Y no es neutro: tiende a reproducir las formas culturales dominantes.</div>
+  </div>
+
+  <p class="destacado reveal">La escuela no enseña solo lo que dice enseñar.</p>
+</section>
+
+<!-- ═══════════ 3 · LENTE 1 · DEMANDAS COGNITIVAS ═══════════ -->
+<section class="bloque" id="demandas">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">3</span><h2>Lente 1 · Las demandas cognitivas de la escuela</h2></div>
+  <p class="sec-intro reveal">La escuela no es simplemente un lugar donde se aprenden cosas: es un dispositivo que impone formas específicas de relacionarse con el conocimiento.</p>
+
+  <div class="grid3 reveal">
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>1 · Descontextualizado</h3>
+      <p>El conocimiento se presenta <strong>separado de sus usos prácticos inmediatos</strong>. Se aprende «para más adelante», sin la situación concreta que le da sentido en la vida cotidiana.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>2 · Simbólico</h3>
+      <p>Se aprende a partir de <strong>representaciones abstractas</strong>: textos, números, gráficos. El objeto de estudio no es la cosa, sino su representación.</p>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>3 · Diferido</h3>
+      <p>La utilidad de lo aprendido <strong>no siempre es visible para quien aprende</strong>. El sentido es proyectivo: sirve «más adelante», aunque hoy no se vea para qué.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta reveal" style="margin-top:6px">
+    <h3>Un ejemplo que lo hace visible</h3>
+    <table class="comp">
+      <tr><th></th><th>Aprender en la vida cotidiana</th><th>Aprender en la escuela</th></tr>
+      <tr><td>Qué se aprende</td><td>Qué hacer cuando tengo hambre</td><td>Reconocer las letras de mi nombre</td></tr>
+      <tr><td>Contexto</td><td>Concreto, situación real</td><td>Abstracto, representación simbólica</td></tr>
+      <tr><td>Consecuencia</td><td>Inmediata (sentido real)</td><td>Diferida (se aprende «para más adelante»)</td></tr>
+      <tr><td>Habilidades</td><td>Prácticas, situadas</td><td>Abstracción y simbolización</td></tr>
+    </table>
+  </div>
+
+  <p class="destacado reveal">Comprender estas demandas orienta el diseño de propuestas de enseñanza más apropiadas para el nivel inicial.</p>
+</section>
+
+<!-- ═══════════ 4 · LENTE 2 · EL OFICIO DE ALUMNO ═══════════ -->
+<section class="bloque" id="oficio">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">4</span><h2>Lente 2 · Aprender el oficio de alumno (Perrenoud)</h2></div>
+  <p class="sec-intro reveal">«Para tener éxito en la escuela no alcanza con aprender los contenidos del curriculum: hay que aprender a ser alumno.» Abrí cada saber del oficio.</p>
+
+  <div class="tarjeta marino reveal">
+    <p class="destacado" style="text-align:left;padding:0">«Para tener éxito en la escuela no alcanza con aprender los contenidos del curriculum: hay que aprender a ser alumno.»<br><span style="font-family:var(--sans);font-style:normal;font-size:15px;color:var(--tinta)">— Perrenoud, 1990</span></p>
+  </div>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>🗣 Saber cuándo hablar y cuándo guardar silencio<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>La clase tiene un ritmo de intercambios: hay momentos para pedir la palabra y momentos para escuchar. Ese código <strong>no está escrito en ningún programa</strong>, pero se evalúa de hecho en cada jornada.</p></div>
+    </details>
+    <details class="acordeon"><summary>🙋 Interpretar qué espera la docente<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Incluye responder preguntas <strong>cuya respuesta el docente ya conoce</strong>. En la vida cotidiana se pregunta cuando no se sabe; en la escuela se pregunta para verificar que el otro sabe. Aprender a leer esa lógica es parte del oficio.</p></div>
+    </details>
+    <details class="acordeon"><summary>⏳ Manejar el aburrimiento, la espera y la frustración<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Hay tiempos muertos, filas, esperas, tareas que no entusiasman. El alumno competente <strong>aprende a sostener la espera y a regular su propia frustración</strong> sin desbordarse ni abandonar.</p></div>
+    </details>
+    <details class="acordeon"><summary>🔁 Participar en las rutinas y rituales del aula<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>La ronda, el saludo inicial, guardar los materiales, la fila para salir al patio: cada rutina es un <strong>ritual escolar</strong> que se aprende y que organiza la vida del grupo. En el nivel inicial, esto es central.</p></div>
+    </details>
+  </div>
+
+  <div class="tarjeta dorado reveal" style="margin-top:18px">
+    <h3>En la sala de jardín de infantes</h3>
+    <p>Cuando una docente pide al grupo que se siente en ronda, la mayoría de los niños de sala de 3 que están iniciando el jardín <strong>no saben qué significa «hacer ronda»</strong>. No porque no tengan capacidad cognitiva para sentarse en círculo, sino porque aún no conocen ese ritual escolar. Aprenderlo forma parte del oficio de alumno — y la docente que lo entiende así diseña estrategias de enseñanza de ese oficio, no solo de los contenidos curriculares.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · LENTE 3 · CURRICULUM OCULTO ═══════════ -->
+<section class="bloque" id="oculto">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">5</span><h2>Lente 3 · El curriculum oculto (Jackson) y la relación con el saber (Charlot)</h2></div>
+  <p class="sec-intro reveal">Todo lo que se aprende en la escuela sin estar explícitamente planificado. Jackson identificó tres dimensiones de la vida escolar que lo configuran:</p>
+
+  <div class="grid3 reveal">
+    <div class="tarjeta" style="border-left-color:var(--terracota)">
+      <h3>👥 Las multitudes</h3>
+      <p>La escuela es <strong>convivencia masiva</strong>. Exige aprender a esperar, a compartir, a tolerar la presencia de otros, a trabajar con gente que no elegimos.</p>
+    </div>
+    <div class="tarjeta" style="border-left-color:var(--dorado)">
+      <h3>✓ Los elogios</h3>
+      <p>El docente <strong>evalúa permanentemente</strong>: con gestos, miradas y comentarios, no solo con calificaciones formales. Los niños aprenden a leer esa evaluación continua.</p>
+    </div>
+    <div class="tarjeta oliva">
+      <h3>⬆ El poder</h3>
+      <p>La escuela tiene una <strong>estructura jerárquica</strong> que el alumno aprende a reconocer y a navegar: quién decide, quién espera, quién obedece.</p>
+    </div>
+  </div>
+
+  <div class="tarjeta oliva reveal" style="margin-top:6px">
+    <h3>Charlot (2000) agrega: la relación con el saber</h3>
+    <p>Aprender en la escuela no es solo incorporar contenidos: es <strong>construir una relación particular con el conocimiento, con la institución y con uno mismo</strong> como sujeto que aprende. Esa relación se aprende —o no se aprende— en la escuela, y tiene consecuencias decisivas sobre las trayectorias educativas.</p>
+  </div>
+
+  <p class="destacado reveal">El curriculum oculto evalúa habilidades que nadie enseña de manera explícita.</p>
+</section>
+
+<!-- ═══════════ 6 · INTEGRACIÓN ═══════════ -->
+<section class="bloque" id="integracion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--marino)">6</span><h2>Un mismo caso, tres finalidades</h2></div>
+  <p class="sec-intro reveal">Una escena real de sala de 5, leída con las tres finalidades de Coll. Tocá cada lente:</p>
+
+  <div class="tarjeta marino reveal" style="text-align:center">
+    <h3>Las primeras semanas en sala de 5</h3>
+    <p>Una docente dedica las primeras semanas del año a enseñar las rutinas del jardín: cómo se guarda el material, cómo se pide la palabra, qué se hace cuando se termina una actividad. Muchos dirían que «está perdiendo tiempo». ¿Qué está haciendo, en realidad?</p>
+    <div class="capas">
+      <button class="capa-btn" data-lente="comprender">🔍 Comprender</button>
+      <button class="capa-btn" data-lente="disenar">🛠 Diseñar</button>
+      <button class="capa-btn" data-lente="mejorar">🌱 Mejorar</button>
+    </div>
+    <div class="capa-out" id="capaOut"></div>
+    <p class="mini" style="margin-top:14px">Las tres finalidades no son pasos cronológicos: se entrelazan en cada decisión de la sala. Aquí, el mismo gesto docente se lee con las tres.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CRÍTICA · EQUIDAD ═══════════ -->
+<section class="bloque" id="equidad">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">7</span><h2>Una dimensión de equidad</h2></div>
+  <p class="sec-intro reveal">Si el oficio de alumno se aprende pero no se enseña… ¿quién está en mejores condiciones de aprenderlo? Abrí cada crítica:</p>
+
+  <div class="reveal">
+    <details class="acordeon"><summary>1 · El oficio se evalúa, pero casi nunca se enseña<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Estas habilidades <strong>no están escritas en ningún programa pero son evaluadas de hecho en cada clase</strong>. El alumno es «bueno» o «problema» según cómo maneje códigos que nadie le enseñó formalmente.</p></div>
+    </details>
+    <details class="acordeon"><summary>2 · El curriculum oculto no es neutro<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Lo que se transmite sin planificar —formas de hablar, de relacionarse con la autoridad, con los textos— <strong>coincide con las formas culturales de los sectores dominantes</strong>. Por eso tiende a reproducirlas y a dejar afuera a quienes las desconocen.</p></div>
+    </details>
+    <details class="acordeon"><summary>3 · El «alumno ideal» naturalizado<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Cuando el oficio se da por sabido, quienes no lo traen de su casa <strong>no son leídos como «recién llegados a un código nuevo»</strong> sino como «problemas»: inquietos, desatentos, desordenados. La escuela interpela, pero no enseña lo que luego exige.</p></div>
+    </details>
+    <details class="acordeon"><summary>4 · Enseñar el oficio no es un prerrequisito: es tarea pedagógica<span class="chev">▾</span></summary>
+      <div class="cuerpo"><p>Reconocer el oficio de alumno <strong>no es resignarse ni es un trámite previo al aprendizaje «real»</strong>: es, en sí misma, una tarea pedagógica de primer orden. La docente que enseña las rutinas del jardín está haciendo justicia educativa.</p></div>
+    </details>
+  </div>
+
+  <div class="dos-col reveal" style="margin-top:14px">
+    <div class="col-si"><h3>✅ Con capital cultural escolar</h3><ul>
+      <li>Llegan <strong>familiarizados con los códigos institucionales</strong></li>
+      <li><strong>Reconocen la conversación académica</strong>: preguntas, respuestas, turnos</li>
+      <li><strong>Habituados al vínculo con textos escritos</strong></li>
+      <li>El oficio se aprende <strong>con menos esfuerzo</strong></li>
+    </ul></div>
+    <div class="col-no"><h3>❌ Sin ese capital previo</h3><ul>
+      <li><strong>Doble aprendizaje</strong>: el del oficio Y el de los contenidos</li>
+      <li>Los códigos institucionales <strong>les son ajenos</strong></li>
+      <li><strong>Mayor riesgo de ser leídos como «problema»</strong></li>
+      <li>La brecha se amplía <strong>si el oficio no se enseña</strong></li>
+    </ul></div>
+  </div>
+
+  <p class="destacado reveal">Enseñar el oficio de alumno no es una pérdida de tiempo: es una tarea pedagógica con dimensión de justicia educativa.</p>
+</section>
+
+<!-- ═══════════ 8 · AUTOEVALUACIÓN ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">8</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">1 · El aprendizaje escolar se distingue del aprendizaje cotidiano porque…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Ocurre siempre fuera de la casa del niño</button>
+      <button class="quiz-op">Es siempre más difícil y más importante</button>
+      <button class="quiz-op">Ocurre en instituciones con régimen organizado de tiempos, espacios, contenidos y evaluaciones</button>
+      <button class="quiz-op">Requiere necesariamente de premios y castigos</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El aprendizaje escolar ocurre en instituciones creadas con propósitos formativos, bajo un régimen organizado, y quien aprende lo hace en el rol de alumno. La distinción no implica jerarquía: cada tipo ocurre en condiciones diferentes.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Lo definitorio no es el lugar físico: es la institución con propósitos formativos, el régimen organizado de tiempos/espacios/contenidos/evaluaciones y el rol de alumno.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · Las demandas cognitivas específicas de la escuela son…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Atención, memoria y motivación</button>
+      <button class="quiz-op">Conocimiento descontextualizado, simbólico y de utilidad diferida</button>
+      <button class="quiz-op">Juego, exploración y experimentación</button>
+      <button class="quiz-op">Refuerzo, castigo y repetición</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La escuela presenta el conocimiento separado de sus usos prácticos (descontextualizado), a partir de representaciones abstractas (simbólico) y con sentido proyectivo (diferido).</div>
+    <div class="feedback mal"><strong>✘ Ojo.</strong> Las demandas son tres: descontextualizado, simbólico y diferido. Atención/memoria son procesos cognitivos; juego y refuerzo son estrategias, no demandas de la escuela.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">3 · La expresión «oficio de alumno» es de…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Philippe Perrenoud</button>
+      <button class="quiz-op">Philip Jackson</button>
+      <button class="quiz-op">Bernard Charlot</button>
+      <button class="quiz-op">David Ausubel</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Perrenoud (1990) acuñó la expresión: para tener éxito en la escuela no alcanza con aprender los contenidos del curriculum; hay que aprender a ser alumno.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> El «oficio de alumno» es de Perrenoud. Jackson aportó el «curriculum oculto»; Charlot, la «relación con el saber».</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">4 · Las tres dimensiones del curriculum oculto que identificó Jackson son…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Tiempo, espacio y contenido</button>
+      <button class="quiz-op">Familia, escuela y comunidad</button>
+      <button class="quiz-op">Leer, escribir y contar</button>
+      <button class="quiz-op">Las multitudes, los elogios y el poder</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Multitudes (convivencia masiva, esperar, compartir), elogios (evaluación permanente con gestos y miradas) y poder (estructura jerárquica que se aprende a navegar).</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Jackson identificó las multitudes, los elogios y el poder como las tres dimensiones de la vida escolar que configuran el curriculum oculto.</div>
+  </div>
+
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">5 · Enseñar el oficio de alumno en el jardín importa porque…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Así los chicos aprenden los contenidos del curriculum más rápido</button>
+      <button class="quiz-op">Es un requisito previo al aprendizaje de los contenidos</button>
+      <button class="quiz-op">Tiene una dimensión de equidad: sin esa enseñanza, el oficio solo lo aprenden quienes ya traen el capital</button>
+      <button class="quiz-op">Sirve para que la docente tenga el grupo bajo control</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Si el oficio se aprende pero no se enseña, quienes llegan familiarizados con los códigos escolares lo aprenden con menos esfuerzo y el resto hace un doble aprendizaje. Enseñarlo es justicia educativa.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> No es un trámite previo ni una cuestión de control: es una tarea pedagógica con dimensión de equidad. Los que no traen el capital cultural escolar hacen doble aprendizaje: el del oficio y el de los contenidos.</div>
+  </div>
+
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:18.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 9 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">9</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 3. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Aprendizaje espontáneo</dt><dd>Tipo de aprendizaje que ocurre en el curso de la vida diaria, sin intención instructiva explícita. Es situado, implícito y generalmente no requiere esfuerzo deliberado. Ejemplo: aprender que el fuego quema.</dd></dl>
+    <dl class="glos-item reveal"><dt>Aprendizaje en situaciones de crianza</dt><dd>Los adultos se proponen enseñar algo al niño —a hablar, a caminar— con cierta intencionalidad, pero en el marco de la relación vincular y afectiva, no de una institución con normas y curriculum.</dd></dl>
+    <dl class="glos-item reveal"><dt>Aprendizaje escolar o pedagógico</dt><dd>Tipo de aprendizaje que ocurre en instituciones creadas con propósitos formativos, bajo un régimen organizado de tiempos, espacios, contenidos y evaluaciones. Quien aprende lo hace en el rol de alumno.</dd></dl>
+    <dl class="glos-item reveal"><dt>Demandas cognitivas de la escuela</dt><dd>Formas específicas de relacionarse con el conocimiento que la escuela impone: descontextualizado (separado de los usos prácticos), simbólico (representaciones abstractas: textos, números) y diferido (utilidad proyectiva, no inmediata).</dd></dl>
+    <dl class="glos-item reveal"><dt>Oficio de alumno</dt><dd>Concepto de Perrenoud (1990): el conjunto de saberes, habilidades y disposiciones que un sujeto necesita adquirir para funcionar exitosamente en la institución escolar, más allá de los contenidos curriculares. Incluye saber cuándo hablar, interpretar expectativas, manejar esperas y frustraciones, y participar de rutinas y rituales.</dd></dl>
+    <dl class="glos-item reveal"><dt>Curriculum oculto</dt><dd>Todo lo que se aprende en la escuela sin estar explícitamente planificado: normas implícitas, jerarquías, valores, formas legítimas de participación. Jackson (1968) identificó tres dimensiones: las multitudes, los elogios y el poder. No es neutro: tiende a reproducir las formas culturales dominantes.</dd></dl>
+    <dl class="glos-item reveal"><dt>Relación con el saber</dt><dd>Aporte de Charlot (2000): aprender en la escuela es construir una relación particular con el conocimiento, con la institución y con uno mismo como sujeto que aprende. Se aprende —o no— en la escuela y tiene consecuencias decisivas sobre las trayectorias.</dd></dl>
+    <dl class="glos-item reveal"><dt>Capital cultural escolar</dt><dd>Conjunto de códigos y formas culturales que la escuela valora y que algunos niños ya traen de sus hogares: vínculo con la lectura, formas de conversación, relación con la autoridad, familiaridad con los rituales institucionales. Facilita aprender el oficio de alumno.</dd></dl>
+    <dl class="glos-item reveal"><dt>Doble aprendizaje</dt><dd>Situación de quienes provienen de contextos culturalmente distantes de la escuela: deben aprender el oficio de alumno y, además, los contenidos curriculares. Sin enseñanza explícita del oficio, la brecha se amplía.</dd></dl>
+    <dl class="glos-item reveal"><dt>Multitudes, elogios y poder</dt><dd>Las tres dimensiones de la vida escolar que configuran el curriculum oculto según Jackson (1968): la convivencia masiva que exige esperar y compartir; la evaluación permanente con gestos, miradas y comentarios; y la estructura jerárquica que el alumno aprende a navegar.</dd></dl>
+    <dl class="glos-item reveal"><dt>Equidad educativa</dt><dd>Dimensión de la enseñanza del oficio de alumno: si el oficio se aprende pero no se enseña, solo lo aprenden quienes ya vienen familiarizados con los códigos escolares. Enseñarlo explícitamente es una tarea pedagógica de primer orden y de justicia educativa.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 10 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:14.5px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Consigna puente a la Clase 4 · Teorías del aprendizaje I</h3>
+    <p class="consigna">«¿Qué saben hacer los chicos al terminar sala de 5 que no sabían al entrar? Hacé una lista dividida en dos: aprendizajes del curriculum (lo que la escuela planifica y enseña) y aprendizajes del oficio de alumno (lo que hubo que aprender sin estar en ningún programa).»</p>
+    <p style="font-size:17px;color:#C9D2E0;margin-top:10px">Lista escrita · ½ carilla · Va a ser la puerta de entrada a la Clase 4: qué pasa cuando la escuela busca enseñar deliberadamente.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Charlot, B. (2000). <em>La relación con el saber. Elementos para una teoría.</em> Buenos Aires: El Zorzal. · Jackson, P. (1968). <em>Life in classrooms</em>. New York: Holt, Rinehart and Winston [Trad. cast.: <em>La vida en las aulas</em>. Madrid: Morata, 1991]. · Perrenoud, P. (1990). <em>La construcción del éxito y del fracaso escolar</em>. Madrid: Morata.</p>
+  </div>
+</section>
+
+</main></main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>
+  Material de estudio interactivo · Clase 3 — La especificidad del aprendizaje escolar<br>
+  Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+  }));
+});
+
+/* caso por capas */
+const capaOut=document.getElementById('capaOut');
+const capas={
+  comprender:{t:'Finalidad 1 · Comprender',d:'Con la teoría del oficio de alumno (Perrenoud), lo que la docente hace no es «perder tiempo»: está enseñando de manera explícita códigos que en otras salas se transmiten por el curriculum oculto — esperar el turno, pedir la palabra, guardar el material. Es tiempo de construcción de condiciones para aprender.'},
+  disenar:{t:'Finalidad 2 · Diseñar',d:'Desde el diseño, la docente no improvisa: planifica intencionalmente el aprendizaje de las rutinas como parte del curriculum explícito, con momentos, actividades y criterios claros para el grupo de sala de 5.'},
+  mejorar:{t:'Finalidad 3 · Mejorar',d:'Con la mirada de la equidad, enseñar el oficio de alumno de manera explícita nivela el punto de partida: los códigos ya no quedan reservados a quienes los aprendieron en su casa por el capital cultural familiar.'}
+};
+document.querySelectorAll('.capa-btn').forEach(b=>b.addEventListener('click',()=>{
+  const c=capas[b.dataset.lente];
+  capaOut.innerHTML=`<h4>${c.t}</h4><p>${c.d}</p>`;
+  capaOut.classList.remove('ver');void capaOut.offsetWidth;capaOut.classList.add('ver');
+}));
+
+/* autoevaluación final con puntaje */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Distinguís el aprendizaje escolar, sus demandas y el oficio de alumno. Lista/o para la Clase 4.'
+      :aciertos>=3?'¡Muy bien! Repasá las secciones 3, 4 y 5 usando el glosario.'
+      :'Volvé a las secciones 1, 2 y 4 y volvé a intentar. Con leer con atención, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>
