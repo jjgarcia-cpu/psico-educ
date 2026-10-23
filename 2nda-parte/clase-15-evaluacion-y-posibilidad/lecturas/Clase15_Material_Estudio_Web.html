@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 15 · Evaluacion y construccion de posibilidad — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:16px;line-height:1.15;display:block}
+.marca small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:12px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5.5vw,62px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(15px,1.8vw,19px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:24px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(23px,3.2vw,36px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:15px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(17px,2vw,22px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.1vw,23px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:13px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:14px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:15px;color:var(--marino)}
+.tl-item p{font-size:12.5px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:14.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:14.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:13.5px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:11px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:19px;color:var(--marino)}
+.flip-frontal p{font-size:12.5px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:11px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:17px}
+.flip-dorso span{font-size:12px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:15.5px;display:block}
+.nodo small{color:var(--gris);font-size:12px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:6px}
+.nodo-detalle p{font-size:14.5px}
+
+/* ===== TABLA CLIMA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:13px}
+table.comp td{padding:10px 14px;font-size:13.5px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:16.5px;margin-bottom:4px}
+.caso-vak p{font-size:14px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== INVENTARIO DE AULA ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:13.5px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:21px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:15px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="kolb"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="vak"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="chaea"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:14.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:15.5px}
+.glos-item dd{font-size:13.5px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:20px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:20px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:14.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(19px,2.4vw,27px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--dorado)}
+.refs{font-size:13px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:13px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:19px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Bombilla de crayones con un brote creciendo de bloques de juego" style="width:34px;height:34px" fill="none"><defs><clipPath id="c15vidrio-m"><circle cx="120" cy="106" r="58"/></clipPath></defs><g><rect x="47.6" y="36.7" width="13" height="28" rx="6.5" transform="rotate(-50 54.1 50.7)" fill="#C4633E"/><rect x="77.2" y="14.1" width="13" height="28" rx="6.5" transform="rotate(-25 83.7 28.1)" fill="#D9A441"/><rect x="113.5" y="6" width="13" height="28" rx="6.5" fill="#7D8655"/><rect x="149.8" y="14.1" width="13" height="28" rx="6.5" transform="rotate(25 156.3 28.1)" fill="#D9A441"/><rect x="179.4" y="36.7" width="13" height="28" rx="6.5" transform="rotate(50 185.9 50.7)" fill="#C4633E"/></g><circle cx="120" cy="106" r="62" fill="rgba(217,164,65,.10)" stroke="#D9A441" stroke-width="5"/><g clip-path="url(#c15vidrio-m)"><path d="M72 134 C 80 84 162 72 170 118" stroke="#D9A441" stroke-width="13" stroke-linecap="round" opacity=".26"/><path d="M78 146 C 98 102 158 98 166 138" stroke="#C4633E" stroke-width="11" stroke-linecap="round" opacity=".22"/><path d="M88 66 C 112 52 148 54 164 72" stroke="#7D8655" stroke-width="9" stroke-linecap="round" opacity=".20"/></g><path d="M120 101 C 119 89 121 79 120 67" stroke="#7D8655" stroke-width="5" stroke-linecap="round"/><path d="M120 88 C 108 86 100 78 98 67 C 110 69 118 76 120 88 Z" fill="#7D8655"/><path d="M120 80 C 132 78 140 70 142 59 C 130 61 122 68 120 80 Z" fill="#8DA85E"/><rect x="106.5" y="100" width="27" height="22" rx="4" fill="#8DA85E"/><rect x="91" y="122" width="27" height="22" rx="4" fill="#C4633E"/><rect x="122" y="122" width="27" height="22" rx="4" fill="#D9A441"/><path d="M97 164 L143 164 L137 180 L103 180 Z" fill="#C4633E"/><rect x="101" y="181" width="38" height="9" rx="4.5" fill="#D9A441"/><rect x="105" y="192" width="30" height="8" rx="4" fill="#D9A441" opacity=".75"/><rect x="113" y="202" width="14" height="6" rx="3" fill="#B85C39"/><circle cx="36" cy="150" r="3.5" fill="#D9A441"/><circle cx="204" cy="142" r="3" fill="#C4633E"/><circle cx="48" cy="196" r="3" fill="#7D8655"/><circle cx="196" cy="186" r="3.5" fill="#D9A441"/><path d="M30 96 L38 92 L34 102 Z" fill="#7D8655" opacity=".9"/><path d="M206 102 L214 98 L210 108 Z" fill="#C4633E" opacity=".9"/></svg>
+      <span><small>Material de estudio · Clase 15</small><b>Evaluacion y construccion de posibilidad</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#modos">Dos modos</a><a href="#mito">Mito o realidad</a><a href="#proyecto">Proyecto</a><a href="#posibilidad">Posibilidad</a><a href="#autoevaluacion">Autoevaluacion</a><a href="#glosario">Glosario</a>
+    
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 240 240" role="img" aria-label="Documento observado con una lupa del que brota una flecha hacia arriba" fill="none"><circle cx="120" cy="120" r="102" fill="rgba(217,164,65,.08)" stroke="#D9A441" stroke-width="4"/><rect x="62" y="66" width="104" height="124" rx="10" fill="#F7F1E5"/><rect x="78" y="92" width="72" height="9" rx="4.5" fill="#8AA0B8"/><rect x="78" y="112" width="72" height="9" rx="4.5" fill="#8AA0B8"/><rect x="78" y="132" width="46" height="9" rx="4.5" fill="#8AA0B8"/><path d="M114 66 C 114 46, 128 40, 138 26" stroke="#8DA85E" stroke-width="6" stroke-linecap="round"/><path d="M129 27 L140 22 L139 34 Z" fill="#8DA85E"/><path d="M114 54 C 104 52, 96 46, 94 36 C 104 38, 112 44, 114 54 Z" fill="#7D8655"/><path d="M114 46 C 124 44, 132 38, 134 28 C 124 30, 116 36, 114 46 Z" fill="#8DA85E"/><circle cx="156" cy="152" r="32" fill="rgba(217,164,65,.22)" stroke="#D9A441" stroke-width="6"/><path d="M179 175 L202 198" stroke="#D9A441" stroke-width="11" stroke-linecap="round"/></svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · Unidad IV</p>
+  <h1>De evaluar capacidades<br><em>a construir posibilidades</em></h1>
+  <p class="sub">Control frente a comprension · la evaluacion como proyecto educativo · el tesoro escondido de Guerrero Ortiz · del rotulo a la condicion.<br>Material interactivo para estudiar a tu ritmo — con quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · DOS MODOS ═══════════ -->
+<section class="bloque" id="modos">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>Dos maneras de evaluar</h2></div>
+  <p class="sec-intro reveal">La misma informacion puede cerrar un futuro o abrirlo. Todo depende de la pregunta que organice el instrumento.</p>
+  <div class="dos-col">
+    <div class="col-no reveal"><h3>🔒 Para controlar</h3><ul>
+      <li>Pregunta si el chico puede o no puede</li>
+      <li>Misma prueba para todos, mismo tiempo</li>
+      <li>Clasifica, ordena y deja constancia</li>
+      <li>Confirma la sospecha y cierra el futuro</li>
+    </ul></div>
+    <div class="col-si reveal"><h3>🌿 Para comprender</h3><ul>
+      <li>Pregunta bajo que condiciones aprende</li>
+      <li>Observa, registra y documenta el proceso</li>
+      <li>Produce conocimiento para ensenar mejor</li>
+      <li>Orienta lo que sigue y abre el futuro</li>
+    </ul></div>
+  </div>
+  <div class="tarjeta dorado reveal"><h3>La prueba del tramite</h3>
+    <p>Si el texto de una evaluacion solo dice lo que al chico <strong>le falta</strong>, es control. Si dice ademas que va a hacer <strong>la sala</strong> para que avance, es comprension. Probalo con cualquier informe que tengas a mano.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · MITO O REALIDAD ═══════════ -->
+<section class="bloque" id="mito">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Mito o realidad</h2></div>
+  <p class="sec-intro reveal">Cuatro frases que circulan en las salas. Marcá si cada una es mito o realidad y leé por qué.</p>
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Evaluar bien es ser objetivo: medir a todos con la misma vara.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> La misma vara para situaciones distintas no es justicia: es ceguera. La objetividad seria consiste en leer cada situacion con instrumentos adecuados, no en aplicar el mismo molde.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Tratar igual a quienes estan en condiciones distintas consolida la desigualdad. Comprender exige instrumentos sensibles al proceso, no varas unicas.</div>
+  </div>
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«Una devolucion que solo marca el error desalienta aunque la nota sea buena.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> Lo que orienta es la informacion sobre el siguiente paso, no la marca del error. Sin pista de mejora, hasta el aprobado se lee como techo.</div>
+    <div class="feedback ok"><strong>¡Exacto, es realidad!</strong> Evaluar para comprender incluye el proximo paso: que ya logro, que falta y que ayuda viene. Eso sostiene la motivacion (Unidad III).</div>
+  </div>
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«Si la evaluacion es lúdica, no es una evaluacion en serio.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> En el nivel inicial el juego es el modo natural de mostrar lo que se sabe. Observar el juego con criterios claros es evaluacion rigurosa, no informalidad.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> La seriedad esta en los criterios y en el registro, no en el formato solemne. El juego documentado es el instrumento mas valido del nivel.</div>
+  </div>
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«Publicar rankings de rendimiento baja las expectativas de quienes quedan abajo.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> Es el efecto de las expectativas (Clase 11) en version institucional: lo publico confirma el lugar y organiza las practicas futuras alrededor de ese lugar.</div>
+    <div class="feedback ok"><strong>¡Exacto, es realidad!</strong> El ranking naturaliza jerarquias y vuelve profecia lo que era decision. La informacion util circula entre docentes para ensenar, no en cartelera para clasificar.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · PROYECTO ═══════════ -->
+<section class="bloque" id="proyecto">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">3</span><h2>La evaluacion como proyecto</h2></div>
+  <p class="sec-intro reveal">Toda evaluacion expresa la escuela que elegimos sostener. Con Guerrero Ortiz: el tesoro escondido.</p>
+  <div class="tarjeta reveal"><h3>💎 El tesoro escondido</h3>
+    <p>La mision de la educacion inicial es el <strong>florecimiento del potencial humano</strong>: buscar en cada chico el tesoro que todavia no se mostro, en lugar de confirmar carencias. Evaluar, entonces, es salir a buscar tesoros con instrumentos que sepan encontrarlos.</p>
+  </div>
+  <div class="timeline reveal">
+    <div class="tl-item"><div class="dot">1</div><h4>Seleccionar</h4><p>Instrumentos que separan a tiempo</p></div>
+    <div class="tl-item"><div class="dot">2</div><h4>Medir</h4><p>Constancias que archivan lugares</p></div>
+    <div class="tl-item"><div class="dot">3</div><h4>Comprender</h4><p>Lecturas que orientan la ayuda</p></div>
+    <div class="tl-item"><div class="dot">4</div><h4>Incluir</h4><p>Condiciones que sostienen a tiempo</p></div>
+  </div>
+  <p class="destacado reveal">«Quien evalua decide que oportunidades reparte.»</p>
+</section>
+
+<!-- ═══════════ 4 · POSIBILIDAD ═══════════ -->
+<section class="bloque" id="posibilidad">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">4</span><h2>De la capacidad a la posibilidad</h2></div>
+  <p class="sec-intro reveal">El desplazamiento practico que resume la Unidad IV. Tres movimientos para redactar cualquier evaluacion en clave de posibilidad.</p>
+  <details class="acordeon reveal"><summary>Describir conductas, no esencias<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>En lugar de «es inquieto», describir que hace, cuando y en que situaciones: «en la asamblea se levanta a los cinco minutos; en la huerta sostiene cuarenta». La conducta se puede trabajar; la esencia, no.</p></div>
+  </details>
+  <details class="acordeon reveal"><summary>Auditar el instrumento antes que al chico<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>Antes de concluir que no puede, preguntar si la consigna fue clara, si el tiempo alcanzo, si el formato le permitio mostrar lo que sabe. Muchas «incapacidades» son instrumentos mal disenados.</p></div>
+  </details>
+  <details class="acordeon reveal"><summary>Comprometer la ensenanza que sigue<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>Toda evaluacion comprensiva termina con un compromiso docente: que vamos a ofrecer distinto a partir de maniana, quien lo hace y cuando lo revisamos. Sin ese parrafo, es control con buena letra.</p></div>
+  </details>
+</section>
+
+<!-- ═══════════ 5 · AUTOEVALUACION ═══════════ -->
+<section class="bloque" id="autoevaluacion">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">5</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas para chequear lo estudiado. Elegí una opción por pregunta y recibí el feedback al instante.</p>
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">1 · La evaluacion para el control se reconoce porque…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Usa instrumentos variados segun cada situacion</button>
+      <button class="quiz-op">Mide a todos con la misma vara y deja constancia del lugar de cada uno</button>
+      <button class="quiz-op">Termina con un compromiso de ensenanza</button>
+      <button class="quiz-op">Observa el juego y documenta el proceso</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Vara unica, clasificacion y constancia: el dispositivo que separa a tiempo y confirma sospechas.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Las otras tres opciones describen la evaluacion para la comprension. El control mide igual para todos y archiva lugares.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">2 · Evaluar para comprender significa…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Aprobar a todos para no frustrar a nadie</button>
+      <button class="quiz-op">Eliminar las evaluaciones formales del nivel inicial</button>
+      <button class="quiz-op">Leer el desempeno como informacion sobre la situacion para orientar la ayuda que sigue</button>
+      <button class="quiz-op">Reemplazar la observacion por pruebas estandarizadas</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Comprender es convertir lo observado en decisiones de ensenanza: que logro, que falta, que condicion se redisena.</div>
+    <div class="feedback mal"><strong>✘ No.</strong> Comprender no es aprobar sin criterio: es usar criterios rigurosos para decidir como ayudar mejor. Ni laissez-faire ni estandarizacion.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">3 · «El tesoro escondido» de Guerrero Ortiz invita a…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Reenfocar la mision del nivel inicial hacia el florecimiento del potencial de cada chico</button>
+      <button class="quiz-op">Detectar temprano a quienes no podran con la primaria</button>
+      <button class="quiz-op">Guardar los trabajos destacados en una carpeta especial</button>
+      <button class="quiz-op">Premiar a las familias que mas acompanan</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Buscar el tesoro es lo opuesto a confirmar carencias: es organizar la mirada y los instrumentos para encontrar potencial donde la sospecha veia falta.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> Nada de deteccion temprana de incapacidades ni premios: el tesoro es el potencial todavia no mostrado que la buena ensenanza hace emerger.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">4 · Un informe redactado en clave de posibilidad…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Oculta las dificultades para no preocupar a la familia</button>
+      <button class="quiz-op">Enumera solo logros para subir la autoestima</button>
+      <button class="quiz-op">Deriva el caso a gabinete sin describir la situacion</button>
+      <button class="quiz-op">Describe conductas, analiza condiciones y compromete la ensenanza que sigue</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Conductas observables, condiciones analizadas y compromiso docente fechado: ese es el formato que abre futuro.</div>
+    <div class="feedback mal"><strong>✘ Al reves.</strong> La posibilidad no es optimismo decorativo: nombra las dificultades con precision y las convierte en plan de trabajo con responsables.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">5 · Frente al registro de quienes ya escriben su nombre, la decision que construye posibilidad es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Publicar la lista para que las familias practiquen en casa</button>
+      <button class="quiz-op">Usar el registro para armar parejas con desafios graduados</button>
+      <button class="quiz-op">Esperar a que maduren sin intervenir</button>
+      <button class="quiz-op">Bajar la propuesta de escritura hasta fin de ano</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> El mismo dato clasifica o ensena segun la pregunta: usado para disenar desafios, el registro se vuelve herramienta de posibilidad.</div>
+    <div class="feedback mal"><strong>✘ No.</strong> Publicar presiona, esperar abandona y bajar achata. Solo el rediseno de la propuesta convierte la informacion en oportunidad.</div>
+  </div>
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:11.5px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:15.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 6 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">6</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Conceptos clave de la Clase 15. Usá el buscador para encontrar un término.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Evaluacion para el control</dt><dd>Mide y clasifica capacidades con varas comunes. Produce constancias y cierra futuros: confirma sospechas en lugar de orientar ayudas.</dd></dl>
+    <dl class="glos-item reveal"><dt>Evaluacion para la comprension</dt><dd>Lee el desempeno como informacion sobre la situacion. Orienta la ensenanza que sigue y abre futuros: convierte datos en decisiones pedagogicas.</dd></dl>
+    <dl class="glos-item reveal"><dt>Proyecto educativo</dt><dd>La escuela que cada decision evaluativa sostiene: seleccionar a tiempo o incluir a tiempo. Evaluar es optar por un proyecto, no un tramite neutro.</dd></dl>
+    <dl class="glos-item reveal"><dt>Tesoro escondido</dt><dd>El potencial todavia no mostrado de cada chico, que la educacion inicial tiene por mision hacer florecer (Guerrero Ortiz).</dd></dl>
+    <dl class="glos-item reveal"><dt>Instrumento de evaluacion</dt><dd>Dispositivo que recoge informacion: prueba, lista, registro, observacion. Nunca es neutro: produce aquello que dice medir.</dd></dl>
+    <dl class="glos-item reveal"><dt>Devolucion</dt><dd>Informacion que vuelve al estudiante sobre su desempeno. Comprensiva cuando incluye el siguiente paso; controladora cuando solo marca el error.</dd></dl>
+    <dl class="glos-item reveal"><dt>Documentacion pedagogica</dt><dd>Registro sistematico del proceso (fotos, notas, trabajos) que vuelve visible el aprendizaje y fundamenta las decisiones de ensenanza.</dd></dl>
+    <dl class="glos-item reveal"><dt>Construccion de posibilidad</dt><dd>Diseno deliberado de condiciones didacticas, vinculares e institucionales bajo las cuales el aprendizaje se vuelve posible.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Tarea integradora · Insumo del examen final oral</h3>
+    <p class="consigna">«Elegí UNA evaluacion real que hayas vivido u observado. Reescribila en dos versiones: (1) como control que cierra; (2) como comprension que abre.»</p>
+    <p style="font-size:14px;color:#C9D2E0;margin-top:10px">Reflexión escrita · 1 carilla · Guardala con tus escrituras puente: juntas forman el recorrido reflexivo de la materia.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Baquero, R. (2001). La educabilidad bajo sospecha. <em>Cuaderno de Pedagogia Rosario</em>, N° 9. · Guerrero Ortiz, L. (1999). Educacion inicial: a la busqueda del tesoro escondido. <em>RIE</em>, N° 22, Madrid, pp. 75-92, OEI. · Terigi, F. (2009). El fracaso escolar desde la perspectiva psicoeducativa. <em>RIE</em>, N° 50, Madrid, 23-39, OEI.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>Material de estudio interactivo · Clase 15 — Evaluacion y construccion de posibilidad<br>Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuestaNoScore(bien);
+  }));
+});
+
+/* flips */
+document.querySelectorAll('.flip').forEach(f=>{
+  const go=()=>f.classList.toggle('volteada');
+  f.addEventListener('click',go);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+});
+
+/* autoevaluación final con puntaje (cuenta solo las data-corr) */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! Manejás los dos modos de evaluar: lista para redisenar instrumentos.'
+      :aciertos>=3?'¡Muy bien! Repasá lo que fallaste usando el glosario y la ficha de lectura.'
+      :'Volvé a las secciones 1, 2 y 3 e intentá de nuevo: con otra lectura atenta, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+function registrarRespuestaNoScore(bien){ /* mito/realidad: practican sin contar para el puntaje */ }
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>
