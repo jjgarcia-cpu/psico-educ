@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<!--
+  Clase 16 · Integración y repaso — Presentación para proyectar.
+  Atajos: Espacio/→ avanzan · ← vuelve · N notas · G grilla · B negro · Esc cierra.
+-->
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 16 · Integración y repaso — Presentación para Proyectar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════════════
+   MOTOR VISUAL — NO EDITAR
+   (idéntico en Clase 10 y Clase 11; incluye todos los widgets)
+   ════════════════════════════════════════════════════════════════════ */
+:root {
+  --bg-dark: #0b1120;
+  --bg-deck: #131d33;
+  --bg-card: rgba(255, 255, 255, 0.05);
+  --border-card: rgba(255, 255, 255, 0.12);
+
+  --crema: #F9F6EE;
+  --crema-suave: #EFE7D5;
+  --marino: #1e293b;
+  --marino-deep: #070c18;
+
+  /* Colores de alto contraste óptico para proyector */
+  --terracota: #E06D44;
+  --terracota-glow: rgba(224, 109, 68, 0.28);
+
+  --dorado: #E5AC39;
+  --dorado-glow: rgba(229, 172, 57, 0.28);
+
+  --oliva: #8DA85E;
+  --oliva-glow: rgba(141, 168, 94, 0.28);
+
+  --azul-cyan: #38bdf8;
+  --verde-ok: #4ade80;
+  --rojo-err: #f87171;
+
+  --texto-principal: #F8FAFC;
+  --texto-secundario: #CBD5E1;
+  --texto-muted: #94A3B8;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --transition-speed: 0.35s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--marino-deep);
+  font-family: var(--font-sans);
+  color: var(--texto-principal);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CONTENEDOR DE PRESENTACIÓN (16:9 RESPONSIVE VIEWPORT) */
+#presentation-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 30%, #1e2e4a 0%, #0c1322 75%, #070a12 100%);
+  overflow: hidden;
+}
+
+.bg-ambient-glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(229, 172, 57, 0.08) 0%, rgba(224, 109, 68, 0.04) 40%, transparent 70%);
+  top: 20%;
+  left: 20%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  transition: all 1s ease;
+}
+
+/* ESCENARIO DE DIAPOSITIVAS */
+#deck {
+  position: relative;
+  width: min(96vw, calc(96vh * 16 / 9));
+  height: min(96vh, calc(96vw * 9 / 16));
+  max-width: 1500px;
+  max-height: 843px;
+  background: linear-gradient(145deg, rgba(26, 38, 62, 0.96), rgba(16, 25, 42, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  overflow: hidden;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+/* HEADER SUPERIOR DE DIAPOSITIVA */
+.slide-header {
+  height: 56px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(11, 18, 32, 0.5);
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.slide-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.fase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.fase-badge.f1 { background: linear-gradient(135deg, var(--terracota), #b85028); box-shadow: 0 0 12px var(--terracota-glow); }
+.fase-badge.f2 { background: linear-gradient(135deg, var(--dorado), #c2881a); box-shadow: 0 0 12px var(--dorado-glow); }
+.fase-badge.f3 { background: linear-gradient(135deg, var(--oliva), #698040); box-shadow: 0 0 12px var(--oliva-glow); }
+.fase-badge.f4 { background: linear-gradient(135deg, #4f46e5, #3730a3); }
+.fase-badge.f5 { background: linear-gradient(135deg, #0ea5e9, #0284c7); }
+
+.slide-materia-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  letter-spacing: 0.02em;
+}
+
+.slide-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--dorado);
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.25);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--texto-muted);
+}
+.slide-counter span {
+  color: var(--texto-principal);
+}
+
+/* SLIDES CANVAS & TRANSICIONES */
+.slides-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: calc(100% - 56px);
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(40px) scale(0.98);
+  pointer-events: none;
+  transition: opacity var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform var(--transition-speed) cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.slide::-webkit-scrollbar { display: none; }
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.slide.prev {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.98);
+}
+
+/* TIPOGRAFÍA Y ELEMENTOS */
+.kicker {
+  font-size: clamp(0.78rem, 1.1vw, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.slide-title em {
+  font-style: italic;
+  color: var(--dorado);
+  background: linear-gradient(120deg, #F9D976 0%, #E5AC39 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.slide-subtitle {
+  font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+  color: var(--texto-secundario);
+  line-height: 1.45;
+  max-width: 900px;
+}
+
+/* TARJETAS Y PANELES */
+.card-glass {
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 22px 26px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  position: relative;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.card-glass:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.card-glass.terracota-border { border-left: 5px solid var(--terracota); }
+.card-glass.dorado-border { border-left: 5px solid var(--dorado); }
+.card-glass.oliva-border { border-left: 5px solid var(--oliva); }
+.card-glass.cyan-border { border-left: 5px solid var(--azul-cyan); }
+
+/* GRID LAYOUTS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+
+/* LISTAS PROYECTABLES */
+.presentation-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.presentation-list li {
+  position: relative;
+  padding-left: 30px;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.presentation-list li strong {
+  color: #fff;
+}
+.presentation-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 800;
+  color: var(--dorado);
+  font-size: 1.2rem;
+}
+.presentation-list.bullet-check li::before {
+  content: "✓";
+  color: var(--verde-ok);
+}
+.presentation-list.bullet-cross li::before {
+  content: "✕";
+  color: var(--rojo-err);
+}
+
+/* BIG CALLOUT / DESTACADOS */
+.big-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.35;
+  color: #F8FAFC;
+  text-align: center;
+  padding: 20px 28px;
+  background: linear-gradient(135deg, rgba(224, 109, 68, 0.12), rgba(229, 172, 57, 0.12));
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 18px;
+  margin: 14px 0;
+  position: relative;
+}
+.big-quote::before {
+  content: "“";
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  font-size: 3.5rem;
+  color: var(--dorado);
+  opacity: 0.35;
+  font-family: var(--font-serif);
+}
+
+/* TEMPORIZADORES */
+.slide-timer-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(11, 17, 30, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin-top: 14px;
+}
+.timer-display {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 800;
+  color: var(--dorado);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 15px var(--dorado-glow);
+}
+.timer-controls {
+  display: flex;
+  gap: 8px;
+}
+.btn-timer {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-timer:hover {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  border-color: var(--dorado);
+  transform: translateY(-2px);
+}
+.btn-timer.reset:hover {
+  background: var(--terracota);
+  color: #fff;
+  border-color: var(--terracota);
+}
+
+/* HINGE QUESTION INTERACTIVA (autocontenida por slide, sin tocar JS) */
+.hinge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.hinge-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-align: left;
+  color: #fff;
+  font-size: clamp(0.98rem, 1.25vw, 1.15rem);
+  font-weight: 600;
+}
+.hinge-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+.hinge-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(229, 172, 57, 0.18);
+  border: 2px solid var(--dorado);
+  color: var(--dorado);
+  font-family: var(--font-serif);
+  font-weight: 800;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.hinge-card.correct {
+  background: rgba(74, 222, 128, 0.18) !important;
+  border-color: var(--verde-ok) !important;
+  box-shadow: 0 0 30px rgba(74, 222, 128, 0.3) !important;
+}
+.hinge-card.correct .hinge-num {
+  background: var(--verde-ok);
+  border-color: var(--verde-ok);
+  color: #0c1a0e;
+}
+.hinge-card.wrong {
+  background: rgba(248, 113, 113, 0.15) !important;
+  border-color: var(--rojo-err) !important;
+  opacity: 0.65;
+}
+.hinge-card.wrong .hinge-num {
+  background: var(--rojo-err);
+  border-color: var(--rojo-err);
+  color: #fff;
+}
+.hinge-feedback-box {
+  margin-top: 14px;
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 1rem;
+  line-height: 1.45;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+.hinge-feedback-box.correct {
+  display: block;
+  background: rgba(74, 222, 128, 0.15);
+  border: 1.5px solid var(--verde-ok);
+  color: #dcfce7;
+}
+.hinge-feedback-box.wrong {
+  display: block;
+  background: rgba(248, 113, 113, 0.15);
+  border: 1.5px solid var(--rojo-err);
+  color: #fee2e2;
+}
+
+/* TARJETAS FLIP (VAK o cualquier revelado 3D) */
+.vak-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+}
+.flip-card {
+  perspective: 1200px;
+  cursor: pointer;
+  min-height: 180px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+.flip-front {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+}
+.flip-front h4 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--dorado);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flip-front p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+}
+.flip-hint {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+  font-style: italic;
+  text-align: right;
+}
+.flip-back {
+  transform: rotateY(180deg);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+}
+.flip-back.vak-v { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+.flip-back.vak-a { background: linear-gradient(135deg, #78350f, #d97706); }
+.flip-back.vak-k { background: linear-gradient(135deg, #14532d, #16a34a); }
+.flip-back strong {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.flip-back span {
+  font-size: 0.88rem;
+  line-height: 1.35;
+  opacity: 0.95;
+}
+
+/* CICLO DE PASOS VISUAL (estilo Kolb) */
+.kolb-cycle-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+.kolb-step-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 18px 16px;
+  position: relative;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.kolb-step-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--dorado);
+}
+.kolb-step-card .sigla {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--terracota);
+  background: rgba(224, 109, 68, 0.15);
+  padding: 2px 7px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.kolb-step-card h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.kolb-step-card p {
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--texto-secundario);
+}
+.kolb-step-card::after {
+  content: "→";
+  position: absolute;
+  right: -11px;
+  top: 42%;
+  font-size: 1.3rem;
+  color: var(--dorado);
+  font-weight: 800;
+  z-index: 5;
+}
+.kolb-step-card:last-child::after {
+  content: "↺";
+  right: 10px;
+  top: -10px;
+  font-size: 1.4rem;
+}
+
+/* TABLA COMPARATIVA */
+.table-comp-pro {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin-top: 12px;
+}
+.table-comp-pro th {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--dorado);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.table-comp-pro td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--texto-secundario);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+.table-comp-pro tr:last-child td { border-bottom: none; }
+.table-comp-pro td:first-child {
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* SELECTOR DE "LENTES" TEÓRICOS */
+.lentes-btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.btn-lente {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.btn-lente:hover, .btn-lente.active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.btn-lente[data-lente].active { background: var(--dorado); border-color: var(--dorado); color: #0c1a0e; }
+.lente-result-box {
+  margin-top: 18px;
+  padding: 22px 28px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px dashed var(--dorado);
+  text-align: center;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+.lente-result-box h4 {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--dorado);
+  margin-bottom: 6px;
+}
+.lente-result-box p {
+  font-size: 1.1rem;
+  color: var(--texto-secundario);
+  max-width: 750px;
+  line-height: 1.45;
+}
+
+/* BARRA INFERIOR DE CONTROL (FLOATING DOCK) */
+#control-bar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dock-btn {
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: scale(1.1);
+}
+.dock-btn.primary {
+  background: var(--dorado);
+  color: var(--marino-deep);
+  font-weight: 800;
+}
+.dock-btn.primary:hover {
+  background: #fcd34d;
+  box-shadow: 0 0 15px var(--dorado-glow);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+
+.progress-track {
+  width: 140px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--terracota), var(--dorado));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* MODALES (GRID OVERVIEW, NOTAS, SHORTCUTS) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.88);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-content {
+  background: #131c2e;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  width: min(90vw, 1100px);
+  max-height: 85vh;
+  padding: 32px;
+  overflow-y: auto;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
+}
+.modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--dorado);
+}
+.modal-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+/* CUADRÍCULA DE TODAS LAS DIAPOSITIVAS */
+.grid-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.thumb-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
+}
+.thumb-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--dorado);
+  transform: translateY(-3px);
+}
+.thumb-card.current {
+  border-color: var(--dorado);
+  box-shadow: 0 0 15px var(--dorado-glow);
+  background: rgba(229, 172, 57, 0.12);
+}
+.thumb-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--dorado);
+  font-weight: 700;
+}
+.thumb-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.thumb-phase {
+  font-size: 0.75rem;
+  color: var(--texto-muted);
+}
+
+/* NOTAS DOCENTES (DRAWER) */
+#notes-drawer {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  bottom: 0;
+  width: 380px;
+  background: rgba(12, 19, 34, 0.95);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 28px;
+  box-shadow: -15px 0 35px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 50;
+  overflow-y: auto;
+}
+#notes-drawer.open {
+  transform: translateX(0);
+}
+#notes-drawer h4 {
+  font-family: var(--font-serif);
+  color: var(--dorado);
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#notes-drawer p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--texto-secundario);
+  margin-bottom: 16px;
+}
+#notes-drawer .tip-box {
+  background: rgba(229, 172, 57, 0.12);
+  border: 1px solid rgba(229, 172, 57, 0.3);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: #fef08a;
+}
+
+/* SHORTCUTS HELP BOX */
+.shortcut-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.key-badge {
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--dorado);
+}
+
+/* ANIMACIONES */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* RESPONSIVE SMART PROJECTOR ADJUSTMENTS */
+@media (max-width: 1024px) {
+  .slide { padding: 24px 28px; }
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+  .vak-container { grid-template-columns: 1fr 1fr; }
+  .kolb-cycle-grid { grid-template-columns: 1fr 1fr; }
+  .kolb-step-card::after { display: none; }
+}
+
+/* COMPONENTES EXTRA (promovidos de clases anteriores, disponibles siempre) */
+
+.chip-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+.chip-cat {
+  background: rgba(229,172,57,.14); border: 1.5px solid var(--dorado); color: #FDF0D5;
+  padding: 9px 22px; border-radius: 999px; font-weight: 800;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+}
+
+.formula-card { text-align: center; padding: 26px 28px; }
+.formula-big { font-family: var(--font-serif); font-size: clamp(1.7rem, 2.8vw, 2.4rem); color: #fff; }
+.formula-big .op { color: var(--terracota); font-weight: 800; margin: 0 14px; }
+
+.reveal-story { cursor: pointer; }
+.reveal-hidden { display: none; margin-top: 14px; animation: fadeIn 0.3s ease; }
+.reveal-hidden.ver { display: block; }
+
+.canal-card { text-align: center; padding: 18px 12px; }
+.canal-card .icono { font-size: 2rem; display: block; margin-bottom: 10px; }
+.canal-card h4 { font-family: var(--font-serif); font-size: 1.08rem; color: #fff; margin-bottom: 6px; }
+.canal-card p { font-size: .85rem; line-height: 1.4; color: var(--texto-secundario); }
+
+/* TABS DE ACTIVIDADES / PANELES */
+.sit-tabs { display: flex; gap: 10px; justify-content: center; margin-top: 14px; }
+.btn-sit {
+  background: rgba(255,255,255,.08); border: 1.5px solid rgba(255,255,255,.2); color: #fff;
+  padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: .95rem; cursor: pointer;
+  transition: all .25s ease;
+}
+.btn-sit:hover { transform: translateY(-2px); }
+.btn-sit.active { background: var(--oliva); border-color: var(--oliva); }
+.sit-panel { display: none; margin-top: 14px; animation: fadeIn .3s ease; }
+.sit-panel.active { display: block; }
+.btn-analisis {
+  margin-top: 12px; background: rgba(229,172,57,.15); border: 1.5px solid var(--dorado);
+  color: var(--dorado); font-weight: 700; font-size: .92rem; padding: 9px 20px; border-radius: 10px;
+  cursor: pointer; transition: all .2s;
+}
+.btn-analisis:hover { background: var(--dorado); color: #131c2e; }
+
+/* JUEGO DE FRASES / TARJETAS DESPLEGABLES */
+.frase-proy {
+  cursor: pointer; background: rgba(255,255,255,.05); border: 2px solid rgba(255,255,255,.14);
+  border-radius: 14px; padding: 13px 20px; margin-top: 10px; transition: all .25s;
+}
+.frase-proy:hover { border-color: var(--dorado); background: rgba(255,255,255,.09); transform: translateY(-2px); }
+.frase-proy .f-txt { font-size: 1.06rem; font-weight: 600; color: #fff; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.frase-proy .f-res { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.22); font-size: .95rem; line-height: 1.45; color: var(--texto-secundario); animation: fadeIn .3s ease; }
+.frase-proy.abierta .f-res { display: block; }
+.frase-tag { font-family: var(--font-mono); font-size: .72rem; font-weight: 800; padding: 3px 11px; border-radius: 999px; letter-spacing: .05em; flex-shrink: 0; white-space: nowrap; }
+.tag-a { background: rgba(141,168,94,.25); color: #DCE8BC; border: 1px solid var(--oliva); }
+.tag-b { background: rgba(224,109,68,.25); color: #FFD9C4; border: 1px solid var(--terracota); }
+.tag-c { background: rgba(248,113,113,.2); color: #FECACA; border: 1px solid var(--rojo-err); }
+.leyenda-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0 4px; }
+
+/* SECUENCIA DE PASOS (círculo virtuoso/vicioso u otras cadenas) */
+.ciclo-steps { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
+.ciclo-step {
+  display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.05);
+  border-left: 5px solid var(--nodo-color, #8DA85E); padding: 11px 20px; border-radius: 12px;
+  font-size: clamp(1rem, 1.35vw, 1.2rem); font-weight: 600; color: #fff; animation: fadeIn .35s ease both;
+}
+.ciclo-num { width: 32px; height: 32px; border-radius: 50%; background: var(--nodo-color, #8DA85E); color: #10192a; font-family: var(--font-serif); font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ciclo-flecha { text-align: center; color: var(--texto-muted); font-size: 1rem; line-height: 1; margin: 2px 0; }
+
+/* PANTALLA EN NEGRO (tecla B) */
+body.blackout { background: #000 !important; }
+body.blackout #presentation-wrapper { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div id="presentation-wrapper">
+  <div class="bg-ambient-glow" id="ambientGlow"></div>
+
+  <!-- ESCENARIO DE PRESENTACIÓN -->
+  <main id="deck">
+
+    <!-- HEADER SUPERIOR — se autocompleta desde ⚙️ CONFIG al final del archivo -->
+    <header class="slide-header">
+      <div class="slide-header-left">
+        <span class="fase-badge f1" id="badgeFase">Intro</span>
+        <span class="slide-materia-title" id="materiaTitle">Psicología Educacional · Clase 14</span>
+      </div>
+      <div class="slide-header-right">
+        <div class="time-pill" id="timePill">⏱ 80 min</div>
+        <div class="slide-counter"><span id="currSlideNum">01</span> / <span id="totalSlidesNum">14</span></div>
+      </div>
+    </header>
+
+    <!-- ZONA DE CONTENIDO — Clase 16: 14 diapositivas en orden temporal. -->
+    <div class="slides-container" id="slidesContainer">
+      <section class="slide active" data-fase="Intro" data-time="0–80 min" data-notes="Bienvenida: última clase antes del segundo parcial. No agrega teoría nueva: integra y prepara. Anticipar las cuatro estaciones rotando y el cierre con guía de repaso en mano."><p class="kicker">Unidades III y IV · Integración y repaso</p><h1 class="slide-title" style="font-size: clamp(2.4rem, 4.5vw, 3.8rem); margin-bottom: 16px;">Repasamos las dos unidades<br><em>antes del parcial</em></h1><p class="slide-subtitle" style="margin: 0 auto 28px;">Unidad IV a trabajar y Unidad III para repasar: eso es lo que entra el 20 de noviembre.</p><div style="display:flex; gap: 12px; justify-content: center; flex-wrap: wrap;"><span class="fase-badge f2">Unidades III y IV</span><span class="fase-badge f3">Repaso activo</span><span class="fase-badge f5">80 minutos</span></div></section>
+
+      <section class="slide" data-fase="Agenda" data-time="0–80 min" data-notes="Mapa de la clase: apertura con el mapa colectivo, cuarenta minutos de estaciones rotando cada diez, devolución con corrección de vocabulario y cierre con guía de repaso."><p class="kicker">Hoja de Ruta</p><h2 class="slide-title">Hoja de Ruta de los <em>80 Minutos</em></h2><div class="chip-row" style="margin-top: 22px;"><span class="chip-cat">🗺️ El mapa en el pizarrón <small>(min 0–10)</small></span><span class="chip-cat">🔄 Cuatro estaciones <small>(min 10–50)</small></span></div><div class="chip-row"><span class="chip-cat">💬 Devolución y errores <small>(min 50–65)</small></span><span class="chip-cat">🌿 Guía, ejercicio y ticket <small>(min 65–80)</small></span></div><div class="card-glass dorado-border" style="margin-top: 24px; padding: 14px 20px;">💡 Trae la carpeta completa a la mesa: hoy se estudia con todo a la vista, como en el parcial.</div></section>
+
+      <section class="slide" data-fase="Fase 1" data-time="Min 0–10" data-notes="Diez minutos: la docente dibuja tres columnas y las estudiantes dictan una idea por columna con vocabulario preciso. Queda a la vista toda la clase como referencia."><p class="kicker">Fase 1 · Apertura</p><h2 class="slide-title">El mapa completo <em>en cuatro columnas</em></h2><table class="table-comp-pro" style="margin-top: 18px;"><tr><th>🧠 Unidad III</th><th>📉 Fracaso</th><th>🌱 Educabilidad</th><th>📝 Evaluación</th></tr><tr><td>A repasar: estilos y DUA, motivación, resiliencia, creatividad</td><td>Masivo: lo explica la escolaridad, no el chico</td><td>Propiedad de la situación, no del sujeto</td><td>Comprender para enseñar, no para clasificar</td></tr></table><div class="card-glass dorado-border" style="margin-top: 18px; padding: 13px 20px;">✍️ Dictamos juntos: <strong>una idea por columna, con vocabulario preciso</strong>. Este mapa nos acompaña hasta el final.</div></section>
+
+      <section class="slide" data-fase="Fase 2" data-time="Min 10–20" data-notes="Estación uno: con datos de trayectorias, explicar por qué un porcentaje alto de repitencia ya no se explica por casos individuales. Tres líneas con las palabras teóricas, reales y sistema."><p class="kicker">Estación 1 · Fracaso masivo</p><h2 class="slide-title">¿Casos sueltos <em>o sistema?</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><p style="font-size: 1.02rem; margin-bottom: 10px;">Con los datos de trayectorias de tu carpeta: si repite una gran parte, ¿puede ser un problema de cada chico? Escribí <strong>tres líneas</strong> usando las palabras <strong>teóricas, reales y sistema</strong>.</p></div><div class="slide-timer-box"><div><span style="font-size: 0.85rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Estación</span><div class="timer-display" id="timerE1">10:00</div></div><div class="timer-controls"><button class="btn-timer" onclick="startTimer('timerE1', 600)">▶ Iniciar</button><button class="btn-timer" onclick="pauseTimer('timerE1')">⏸ Pausar</button><button class="btn-timer reset" onclick="resetTimer('timerE1', 600)">↺ Reiniciar</button></div></div></section>
+
+      <section class="slide" data-fase="Fase 2" data-time="Min 20–30" data-notes="Estación dos: dado un rótulo típico de sala, reescribirlo en clave de condición. Qué ofrece la situación, que falta, que se rediseña mañana."><p class="kicker">Estación 2 · Educabilidad</p><h2 class="slide-title">Del rótulo <em>a la condición</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><p style="font-size: 1.02rem; margin-bottom: 10px;">Rótulo dado: <strong>«es la lenta de la sala»</strong>. Reescribilo en clave de condición: ¿qué ofrece la situación? ¿qué falta? ¿qué rediseñarías <strong>mañana</strong>?</p></div><div class="slide-timer-box"><div><span style="font-size: 0.85rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Estación</span><div class="timer-display" id="timerE2">10:00</div></div><div class="timer-controls"><button class="btn-timer" onclick="startTimer('timerE2', 600)">▶ Iniciar</button><button class="btn-timer" onclick="pauseTimer('timerE2')">⏸ Pausar</button><button class="btn-timer reset" onclick="resetTimer('timerE2', 600)">↺ Reiniciar</button></div></div></section>
+
+      <section class="slide" data-fase="Fase 2" data-time="Min 30–40" data-notes="Estación tres: frente a un instrumento concreto de sala, decidir si controla o comprende y proponer un cambio mínimo que lo vuelva comprensivo."><p class="kicker">Estación 3 · Evaluación</p><h2 class="slide-title">¿Controla <em>o comprende?</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><p style="font-size: 1.02rem; margin-bottom: 10px;">Instrumento dado: <strong>la prueba igual para todos con nota pública</strong>. Decidí que modelo opera y propone <strong>un cambio mínimo</strong> que lo vuelva comprensivo.</p></div><div class="slide-timer-box"><div><span style="font-size: 0.85rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Estación</span><div class="timer-display" id="timerE3">10:00</div></div><div class="timer-controls"><button class="btn-timer" onclick="startTimer('timerE3', 600)">▶ Iniciar</button><button class="btn-timer" onclick="pauseTimer('timerE3')">⏸ Pausar</button><button class="btn-timer reset" onclick="resetTimer('timerE3', 600)">↺ Reiniciar</button></div></div></section>
+
+      <section class="slide" data-fase="Fase 2" data-time="Min 40–50" data-notes="Estación cuatro: mini caso de sala de cinco en tres bloques: conceptos en juego, análisis con autores y propuesta docente. Es el ensayo del parcial con reloj."><p class="kicker">Estación 4 · Caso integrador</p><h2 class="slide-title">Ensayo del parcial <em>con reloj</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><p style="font-size: 1.02rem; margin-bottom: 10px;">Caso: sala de cinco donde un niño es descripto como <strong>inquieto</strong> y su familia como <strong>poco presente</strong>. Tres bloques: conceptos en juego · análisis con autores · propuesta docente.</p></div><div class="card-glass dorado-border" style="margin-top: 14px; padding: 13px 20px;">⏱️ Escribí como si fuera el parcial: <strong>orden, vocabulario y tiempo</strong> también se entrenan.</div><div class="slide-timer-box"><div><span style="font-size: 0.85rem; color: var(--texto-muted); text-transform: uppercase; font-weight: 700;">Temporizador de Estación</span><div class="timer-display" id="timerE4">10:00</div></div><div class="timer-controls"><button class="btn-timer" onclick="startTimer('timerE4', 600)">▶ Iniciar</button><button class="btn-timer" onclick="pauseTimer('timerE4')">⏸ Pausar</button><button class="btn-timer reset" onclick="resetTimer('timerE4', 600)">↺ Reiniciar</button></div></div></section>
+
+      <section class="slide" data-fase="Fase 3" data-time="Min 50–62" data-notes="Doce minutos: una voz por estación presenta. Corregir vocabulario en vivo: capacidad frente a posibilidad, rótulo frente a condición, control frente a comprensión."><p class="kicker">Fase 3 · Devolución</p><h2 class="slide-title">Corrección <em>en vivo</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><ul class="presentation-list"><li>Una voz por estación: <strong>solo la respuesta</strong>, sin leer la consigna.</li><li>La docente marca el vocabulario: ¿capacidad o posibilidad? ¿rótulo o condición?</li><li>El mapa del pizarrón se completa con lo que faltó.</li></ul></div></section>
+
+      <section class="slide" data-fase="Fase 3" data-time="Min 62–65" data-notes="Tres minutos: los tres errores que más restan en el parcial, con ejemplo de cada uno. Directo y sin vueltas."><p class="kicker">Fase 3 · Errores frecuentes</p><h2 class="slide-title">Los tres que <em>más restan</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><ul class="presentation-list"><li><strong>Culpar a la familia</strong> sin analizar la oferta: el parcial pide condiciones, no culpables.</li><li><strong>Usar educabilidad como sinónimo de capacidad</strong>: es exactamente al revés, es propiedad de la situación.</li><li><strong>Proponer más de lo mismo</strong>: más apoyo, más paciencia. El parcial pide <strong>rediseñar condiciones</strong>.</li></ul></div></section>
+
+      <section class="slide" data-fase="Fase 4" data-time="Min 65–70" data-notes="Repartir la guía de repaso y leerla juntos: qué entra, con qué materiales y el formato del parcial. Abrir a consultas y dudas."><p class="kicker">Fase 4 · Repaso</p><h2 class="slide-title">Guía de repaso: <em>qué entra y cómo</em></h2><div class="card-glass dorado-border" style="margin-top: 10px; padding: 14px 20px;">📄 <strong>Parcial escrito: viernes 20 de noviembre, noventa minutos, con carpeta y materiales.</strong> Cuatro bloques: preguntas cortas · desarrollo conceptual · análisis de caso integrador · reflexión docente. Se aprueba con trece sobre veinticinco.</div><div class="card-glass terracota-border" style="margin-top: 14px; padding: 13px 20px;">📅 El viernes 13 de noviembre: ejercicio preparatorio en clase, con el mismo formato del parcial.</div><div class="card-glass terracota-border" style="margin-top: 14px; padding: 13px 20px;">❓ Cinco minutos de consultas: la duda de una es la duda de varias. Pregunten todo ahora.</div></section>
+
+      <section class="slide" data-fase="Fase 4" data-time="Min 70–73" data-notes="Presentar los cuatro criterios con los que se corrige y el error típico de cada uno. Que quede claro que se espera antes de salir."><p class="kicker">Fase 4 · Criterios</p><h2 class="slide-title">Con qué se <em>corrige</em></h2><table class="table-comp-pro" style="margin-top: 18px;"><tr><th>Criterio</th><th>Que se espera</th></tr><tr><td>Vocabulario</td><td>Términos precisos y bien usados, no como sinónimos</td></tr><tr><td>Autores</td><td>Articulados con la sala, no nombrados al pasar</td></tr><tr><td>Caso</td><td>Condiciones antes que rótulos ni culpables</td></tr><tr><td>Propuesta</td><td>Concreta: qué cambia, quién lo hace, cuándo</td></tr></table></section>
+
+      <section class="slide" data-fase="Fase 4" data-time="Min 73–75" data-notes="Explicar la consigna del ejercicio integrador. Se trabaja en el momento: no hay entrega a domicilio. Es síntesis sobre fracaso y educabilidad con posicionamiento argumentado."><p class="kicker">Fase 4 · Ejercicio</p><h2 class="slide-title">Ejercicio integrador <em>en clase</em></h2><div class="card-glass dorado-border" style="margin-top: 10px; padding: 14px 20px;">✍️ Síntesis sobre fracaso escolar y educabilidad con <strong>posicionamiento argumentado</strong>: ¿qué escuela elegís sostener como docente futura y por qué? Se explica la consigna y se deja la hoja: no hay entrega a domicilio.</div></section>
+
+      <section class="slide" data-fase="Cierre" data-time="Min 75–80" data-notes="Ticket de salida en clase: que tema tengo sólido, que tema repaso primero y una duda concreta. Sirve para ordenar el estudio de cada una. Retirar las hojas."><p class="kicker">Cierre · Ticket</p><h2 class="slide-title">Mi plan <em>de repaso</em></h2><div class="card-glass terracota-border" style="margin-top: 10px;"><ul class="presentation-list"><li>¿Qué tema tengo <strong>más sólido</strong> y por qué?</li><li>¿Qué tema repaso <strong>primero</strong> y con qué material?</li><li>¿Cuál es mi <strong>duda concreta</strong> en una línea?</li></ul></div><div class="card-glass dorado-border" style="margin-top: 14px; padding: 13px 20px;">🎟️ Cinco minutos, en clase, sin nota. Ordena tu estudio antes de salir.</div></section>
+
+      <section class="slide" data-fase="Cierre" data-time="Min 78–80" data-notes="Cierre emotivo antes del parcial: el estudio también es una construcción de posibilidad. Despedida, recordatorio del material interactivo y las dos fechas: 13 de noviembre, ejercicio preparatorio; 20 de noviembre, parcial."><p class="kicker">Cierre · Unidades III y IV</p><h2 class="slide-title">Estudiar también es <em>construir posibilidad</em></h2><div class="big-quote" style="margin-top: 18px;">Llegaron hasta acá con la carpeta llena y las ideas claras.<br>El parcial es la oportunidad de <strong>mostrar cómo piensan</strong>, no de repetir de memoria.</div><div class="card-glass dorado-border" style="margin-top: 22px; padding: 14px 20px;">📅 <strong>Viernes 13 de noviembre:</strong> ejercicio preparatorio en clase. <strong>Viernes 20 de noviembre:</strong> segundo parcial, con carpeta.</div><div class="card-glass dorado-border" style="margin-top: 14px; padding: 14px 20px;">🌐 Para repasar: material interactivo en <strong>jjgarcia-cpu.github.io/psico-educ/clase-16/</strong> · Guía de repaso en mano y carpeta completa.</div><footer style="margin-top: 22px; text-align: center; font-size: 0.88rem; color: var(--texto-muted);"><b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b> · Instituto Superior Terciario Fátima Soldati</footer></section>
+
+
+        </div>
+
+    <!-- DRAWER DE NOTAS DOCENTES -->
+    <aside id="notes-drawer">
+      <h4>🎓 Notas del Docente</h4>
+      <div id="notesContent">
+        <p>Notas para la diapositiva actual...</p>
+      </div>
+      <div class="tip-box">
+        💡 <b>Atajo:</b> Presioná la tecla <kbd class="key-badge">N</kbd> para abrir/cerrar estas notas en cualquier momento.
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- BARRA FLOTANTE DE CONTROL -->
+  <nav id="control-bar">
+    <button class="dock-btn" onclick="prevSlide()" title="Diapositiva Anterior (← / RePág)">◀</button>
+    <button class="dock-btn primary" onclick="nextSlide()" title="Siguiente Diapositiva (Espacio / →)">▶</button>
+
+    <div class="dock-divider"></div>
+
+    <div class="progress-track" id="progressTrack" onclick="seekSlide(event)" title="Progreso de la clase">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="dock-divider"></div>
+
+    <button class="dock-btn" onclick="openModal('gridModal')" title="Ver todas las diapositivas (G)">⊞</button>
+    <button class="dock-btn" onclick="toggleNotes()" title="Notas del docente (N)">📝</button>
+    <button class="dock-btn" onclick="toggleFullscreen()" title="Pantalla Completa (F)">⛶</button>
+    <button class="dock-btn" onclick="openModal('helpModal')" title="Atajos de teclado (?)">?</button>
+  </nav>
+
+</div>
+
+<!-- MODAL: CUADRÍCULA DE DIAPOSITIVAS -->
+<div class="modal-overlay" id="gridModal" onclick="closeModalOnBackdrop(event, 'gridModal')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalSlideCount">Navegador de Diapositivas</h3>
+      <button class="modal-close" onclick="closeModal('gridModal')">✕</button>
+    </div>
+    <div class="grid-thumbnails" id="thumbnailsContainer"></div>
+  </div>
+</div>
+
+<!-- MODAL: AYUDA DE ATAJOS -->
+<div class="modal-overlay" id="helpModal" onclick="closeModalOnBackdrop(event, 'helpModal')">
+  <div class="modal-content" style="max-width: 550px;">
+    <div class="modal-header">
+      <h3>Atajos de Teclado</h3>
+      <button class="modal-close" onclick="closeModal('helpModal')">✕</button>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div class="shortcut-row"><span>Siguiente diapositiva</span><div><span class="key-badge">→</span> <span class="key-badge">Espacio</span> <span class="key-badge">AvPág</span></div></div>
+      <div class="shortcut-row"><span>Diapositiva anterior</span><div><span class="key-badge">←</span> <span class="key-badge">RePág</span> <span class="key-badge">Retroceso</span></div></div>
+      <div class="shortcut-row"><span>Pantalla completa</span><span class="key-badge">F</span></div>
+      <div class="shortcut-row"><span>Cuadrícula de diapositivas</span><span class="key-badge">G</span></div>
+      <div class="shortcut-row"><span>Notas del docente</span><span class="key-badge">N</span></div>
+      <div class="shortcut-row"><span>Pantalla en negro (debate)</span><span class="key-badge">B</span></div>
+      <div class="shortcut-row"><span>Cerrar modales / salir</span><span class="key-badge">Esc</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   ⚙️ CONFIG — ÚNICO LUGAR DEL JS QUE SE EDITA POR CLASE
+   ════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  materia:     'Psicología Educacional',
+  claseNumero: '16'
+};
+
+/* 🗺️ FASES — mapea cada valor de data-fase al badge del encabezado.
+   Agregar/quitar entradas según las fases de TU clase.
+   Clases de badge disponibles: f1 (terracota) f2 (dorado) f3 (oliva)
+   f4 (violeta) f5 (celeste). Las fases no listadas caen a f1. */
+const FASES = {
+  'Intro':   { class: 'f1', text: 'Intro' },
+  'Agenda':  { class: 'f1', text: 'Hoja de Ruta' },
+  'Fase 1':  { class: 'f1', text: 'Fase 1 · Apertura' },
+  'Fase 2':  { class: 'f2', text: 'Fase 2 · Marco Conceptual' },
+  'Checkpoint': { class: 'f4', text: 'Checkpoint Formativo' },
+  'Fase 3':  { class: 'f3', text: 'Fase 3 · Construir Posibilidad' },
+  'Fase 4':  { class: 'f4', text: 'Fase 4 · Cierre' },
+  'Cierre':  { class: 'f5', text: 'Tarea Final' }
+};
+
+/* ════════════════════════════════════════════════════════════════════
+   MOTOR — NO EDITAR DE ACÁ PARA ABAJO
+   ════════════════════════════════════════════════════════════════════ */
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slides-container > .slide');
+const totalSlides = slides.length;
+const currSlideNum = document.getElementById('currSlideNum');
+const totalSlidesNum = document.getElementById('totalSlidesNum');
+const progressFill = document.getElementById('progressFill');
+const badgeFase = document.getElementById('badgeFase');
+const timePill = document.getElementById('timePill');
+const notesDrawer = document.getElementById('notes-drawer');
+const notesContent = document.getElementById('notesContent');
+const ambientGlow = document.getElementById('ambientGlow');
+
+totalSlidesNum.textContent = String(totalSlides).padStart(2, '0');
+
+function updateSlide(index) {
+  if (index < 0) index = 0;
+  if (index >= totalSlides) index = totalSlides - 1;
+
+  slides.forEach((slide, i) => {
+    slide.classList.remove('active', 'prev');
+    if (i === index) slide.classList.add('active');
+    else if (i < index) slide.classList.add('prev');
+  });
+
+  currentSlide = index;
+  currSlideNum.textContent = String(currentSlide + 1).padStart(2, '0');
+  progressFill.style.width = (((currentSlide + 1) / totalSlides) * 100) + '%';
+
+  const activeSlide = slides[currentSlide];
+  const fase = activeSlide.dataset.fase || 'Intro';
+  const time = activeSlide.dataset.time || '80 min';
+  const notes = activeSlide.dataset.notes || 'Sin notas adicionales para esta diapositiva.';
+  const styleConfig = FASES[fase] || { class: 'f1', text: fase };
+
+  badgeFase.className = 'fase-badge ' + styleConfig.class;
+  badgeFase.textContent = styleConfig.text;
+  timePill.textContent = '⏱ ' + time;
+  notesContent.innerHTML = '<p>' + notes + '</p>';
+
+  const posX = 15 + (index * 4) % 65;
+  const posY = 15 + (index * 5) % 60;
+  ambientGlow.style.left = posX + '%';
+  ambientGlow.style.top = posY + '%';
+}
+
+function nextSlide() { if (currentSlide < totalSlides - 1) updateSlide(currentSlide + 1); }
+function prevSlide() { if (currentSlide > 0) updateSlide(currentSlide - 1); }
+function goToSlide(idx) { updateSlide(idx); closeModal('gridModal'); }
+
+function seekSlide(e) {
+  const rect = document.getElementById('progressTrack').getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  updateSlide(Math.floor(percent * totalSlides));
+}
+
+// CONTROL DE TECLADO
+document.addEventListener('keydown', (e) => {
+  if (document.querySelector('.modal-overlay.open') && e.key !== 'Escape') return;
+  switch(e.key) {
+    case 'ArrowRight': case ' ': case 'PageDown':
+      e.preventDefault(); nextSlide(); break;
+    case 'ArrowLeft': case 'PageUp': case 'Backspace':
+      e.preventDefault(); prevSlide(); break;
+    case 'f': case 'F':
+      e.preventDefault(); toggleFullscreen(); break;
+    case 'g': case 'G':
+      e.preventDefault(); toggleModal('gridModal'); break;
+    case 'n': case 'N':
+      e.preventDefault(); toggleNotes(); break;
+    case 'b': case 'B':
+      document.body.classList.toggle('blackout'); break;
+    case '?':
+      toggleModal('helpModal'); break;
+    case 'Escape':
+      closeAllModales(); break;
+  }
+});
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(() => console.log('Fullscreen no disponible'));
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+function toggleNotes() { notesDrawer.classList.toggle('open'); }
+
+function openModal(id) {
+  if (id === 'gridModal') renderThumbnails();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function toggleModal(id) {
+  const m = document.getElementById(id);
+  m.classList.contains('open') ? closeModal(id) : openModal(id);
+}
+function closeModalOnBackdrop(e, id) { if (e.target.id === id) closeModal(id); }
+function closeAllModales() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  notesDrawer.classList.remove('open');
+}
+
+function renderThumbnails() {
+  const container = document.getElementById('thumbnailsContainer');
+  container.innerHTML = '';
+  slides.forEach((slide, idx) => {
+    const titleEl = slide.querySelector('.slide-title');
+    const titleText = titleEl ? titleEl.innerText.replace(/\n/g, ' ') : ('Diapositiva ' + (idx + 1));
+    const card = document.createElement('div');
+    card.className = 'thumb-card ' + (idx === currentSlide ? 'current' : '');
+    card.onclick = () => goToSlide(idx);
+    card.innerHTML = '<div><div class="thumb-num">' + String(idx + 1).padStart(2, '0') + '</div><div class="thumb-title">' + titleText + '</div></div><div class="thumb-phase">' + (slide.dataset.fase || '') + '</div>';
+    container.appendChild(card);
+  });
+}
+
+// ==========================================
+// TEMPORIZADORES EN VIVO
+// ==========================================
+const timerState = {};
+
+function formatTime(secs) {
+  const m = Math.floor(secs / 60);
+  const s = secs % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+function startTimer(elementId, defaultSecs) {
+  if (!timerState[elementId]) {
+    timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  }
+  const state = timerState[elementId];
+  if (state.running) return;
+  state.running = true;
+  state.interval = setInterval(() => {
+    if (state.remaining > 0) {
+      state.remaining--;
+      document.getElementById(elementId).textContent = formatTime(state.remaining);
+    } else {
+      clearInterval(state.interval);
+      state.running = false;
+      document.getElementById(elementId).textContent = '¡TIEMPO!';
+      document.getElementById(elementId).style.color = 'var(--rojo-err)';
+    }
+  }, 1000);
+}
+
+function pauseTimer(elementId) {
+  if (timerState[elementId] && timerState[elementId].running) {
+    clearInterval(timerState[elementId].interval);
+    timerState[elementId].running = false;
+  }
+}
+
+function resetTimer(elementId, defaultSecs) {
+  pauseTimer(elementId);
+  timerState[elementId] = { remaining: defaultSecs, interval: null, running: false };
+  const el = document.getElementById(elementId);
+  el.textContent = formatTime(defaultSecs);
+  el.style.color = 'var(--dorado)';
+}
+
+// ==========================================
+// HINGE QUESTION GENÉRICA (sin editar JS)
+// Lee data-correct / data-ok / data-no del contenedor .hinge-grid.
+// Admite varias hinges por clase: cada una vive en su propia slide.
+// ==========================================
+function checkHinge(opNumber, element) {
+  const grid = element.closest('.hinge-grid');
+  const slide = element.closest('.slide');
+  const feedback = slide ? slide.querySelector('.hinge-feedback-box') : null;
+  if (!grid || !feedback || grid.dataset.done === 'true') return;
+  grid.dataset.done = 'true';
+
+  const correct = parseInt(grid.dataset.correct, 10) || 1;
+  const okText = grid.dataset.ok || '';
+  const noText = grid.dataset.no || '';
+  const cards = grid.querySelectorAll('.hinge-card');
+
+  if (opNumber === correct) {
+    element.classList.add('correct');
+    feedback.className = 'hinge-feedback-box correct';
+    feedback.innerHTML = '✅ <strong>¡Correcto!</strong> ' + okText;
+  } else {
+    element.classList.add('wrong');
+    if (cards[correct - 1]) cards[correct - 1].classList.add('correct');
+    feedback.className = 'hinge-feedback-box wrong';
+    feedback.innerHTML = '❌ <strong>La mejor respuesta es la opción ' + correct + '.</strong> ' + noText;
+  }
+}
+
+// ==========================================
+// HELPERS DE CONTENIDO (todos genéricos)
+// ==========================================
+
+// Tabs de actividad: activa el panel indicado dentro de la MISMA slide.
+function showTab(panelId, btn) {
+  const slide = btn.closest('.slide');
+  if (slide) {
+    slide.querySelectorAll('.sit-panel').forEach(p => p.classList.remove('active'));
+    slide.querySelectorAll('.btn-sit').forEach(b => b.classList.remove('active'));
+  }
+  const panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('active');
+  btn.classList.add('active');
+}
+
+// Revela una vez (tarjetas .reveal-story): oculta el botón al abrirse.
+function revealCard(card) {
+  const hidden = card.querySelector('.reveal-hidden');
+  if (!hidden || hidden.classList.contains('ver')) return;
+  hidden.classList.add('ver');
+  const btn = card.querySelector('.btn-analisis');
+  if (btn) btn.style.display = 'none';
+}
+
+// Alterna el análisis orientativo (botón + hermano siguiente).
+function toggleAnalisis(btn) {
+  const box = btn.nextElementSibling;
+  if (!box) return;
+  const abierto = box.classList.toggle('ver');
+  btn.textContent = abierto ? '🙈 Ocultar análisis' : '🔍 Mostrar análisis orientativo (después de discutir)';
+}
+
+// ==========================================
+// OPCIONAL · CÍRCULO VIRTUOSO/VICIOSO
+// Solo si usás ese widget: editar los pasos acá y llamar
+// setCiclo('virtuoso', boton) desde la slide.
+// ==========================================
+const ciclosData = {
+  virtuoso: { color: '#8DA85E', steps: ['Libertad con encuadre', 'Se animan a probar', 'El error informa', 'Más ideas y confianza', 'Un clima que crea'] },
+  vicioso:  { color: '#E06D44', steps: ['Miedo al equivocarse', 'Respuestas seguras y repetidas', 'El error se castiga', 'Menos riesgo, menos ideas', 'Creatividad enterrada'] }
+};
+
+function renderCiclo(modo) {
+  const data = ciclosData[modo];
+  let html = '<div class="ciclo-steps">';
+  data.steps.forEach((paso, i) => {
+    html += '<div class="ciclo-step" style="--nodo-color:' + data.color + '; animation-delay:' + (i * 0.06) + 's">'
+         +  '<span class="ciclo-num" style="background:' + data.color + '">' + (i + 1) + '</span>'
+         +  '<span>' + paso + '</span></div>';
+    if (i < data.steps.length - 1) html += '<div class="ciclo-flecha">↓</div>';
+  });
+  html += '</div>';
+  const target = document.getElementById('cicloSteps');
+  if (target) target.innerHTML = html;
+}
+
+function setCiclo(modo, btn) {
+  renderCiclo(modo);
+  const botones = btn.parentElement.querySelectorAll('.btn-sit');
+  botones.forEach(b => {
+    b.classList.remove('active');
+    b.style.background = 'transparent';
+    b.style.borderColor = 'rgba(255,255,255,.25)';
+    b.style.color = '#fff';
+  });
+  const activoColor = modo === 'virtuoso' ? 'var(--oliva)' : 'var(--terracota)';
+  btn.classList.add('active');
+  btn.style.background = activoColor;
+  btn.style.borderColor = activoColor;
+}
+
+// INICIALIZACIÓN
+document.getElementById('materiaTitle').textContent = CONFIG.materia + ' · Clase ' + CONFIG.claseNumero;
+document.title = 'Clase ' + CONFIG.claseNumero + ' — Presentación para Proyectar';
+const modalSlideCount = document.getElementById('modalSlideCount');
+if (modalSlideCount) modalSlideCount.textContent = 'Navegador de Diapositivas (' + totalSlides + ')';
+updateSlide(0);
+</script>
+</body>
+</html>

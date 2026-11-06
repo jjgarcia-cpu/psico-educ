@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clase 16 · Integración y repaso — Material de estudio interactivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crema:#F7F1E5;--crema-2:#EFE6D3;--papel:#FDFAF3;
+  --terracota:#C4633E;--terracota-suave:#F3E0D6;
+  --dorado:#D9A441;--dorado-suave:#F0DFB8;
+  --oliva:#7D8655;--oliva-suave:#E3E6CF;
+  --menta:#9DB89A;
+  --marino:#22334D;--marino-2:#18263C;--tinta:#2A3547;--gris:#6B7280;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Source Sans 3','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--tinta);background:var(--crema);line-height:1.6}
+
+#lectura{position:fixed;top:0;left:0;height:4px;width:0;background:linear-gradient(90deg,var(--terracota),var(--dorado));z-index:2000}
+
+/* ===== HEADER ===== */
+header.top{position:sticky;top:0;z-index:1000;background:rgba(24,38,60,.94);backdrop-filter:blur(8px)}
+.top-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--crema)}
+.marca svg{width:34px;height:28px}
+.marca b{font-family:var(--serif);font-size:16px;line-height:1.15;display:block}
+.marca small{display:block;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);font-weight:700}
+nav.secciones{display:flex;gap:2px;flex-wrap:wrap}
+nav.secciones a{color:#C9D2E0;text-decoration:none;font-size:12.5px;font-weight:600;padding:6px 11px;border-radius:999px;transition:.2s}
+nav.secciones a:hover{background:rgba(247,241,229,.14);color:#fff}
+nav.secciones a.activa{background:var(--dorado);color:var(--marino-2)}
+nav.secciones a.volver{background:var(--dorado);color:var(--marino-2);font-weight:800;margin-left:6px;white-space:nowrap}
+nav.secciones a.volver:hover{background:var(--terracota);color:#fff}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(155deg,var(--marino) 0%,var(--marino-2) 75%);color:var(--crema);padding:70px 24px 76px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -60% -10%;height:70%;background:radial-gradient(ellipse at center,rgba(217,164,65,.16),transparent 65%)}
+.hero .kicker{color:var(--dorado);letter-spacing:.24em;text-transform:uppercase;font-weight:700;font-size:12px}
+.hero h1{font-family:var(--serif);font-weight:800;font-size:clamp(34px,5.5vw,62px);line-height:1.07;margin:14px 0 8px}
+.hero h1 em{font-style:italic;color:var(--dorado)}
+.hero .sub{color:#C9D2E0;font-size:clamp(15px,1.8vw,19px);max-width:60ch;margin:0 auto}
+.prisma-hero{width:min(220px,38vw);margin:0 auto 8px;display:block}
+
+/* ===== LAYOUT ===== */
+main{max-width:1100px;margin:0 auto;padding:0 24px}
+section.bloque{padding:58px 0 20px;scroll-margin-top:80px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:6px}
+.sec-num{flex:none;width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:24px;color:#fff;background:var(--terracota)}
+.sec-head h2{font-family:var(--serif);font-size:clamp(23px,3.2vw,36px);color:var(--marino);line-height:1.12}
+.sec-intro{color:var(--gris);font-size:15px;margin-bottom:24px;padding-left:64px;max-width:75ch}
+.tarjeta{background:var(--papel);border:1px solid var(--crema-2);border-left:5px solid var(--terracota);border-radius:14px;padding:20px 24px;box-shadow:0 2px 10px rgba(34,51,77,.05);margin-bottom:16px}
+.tarjeta.oliva{border-left-color:var(--oliva)}.tarjeta.dorado{border-left-color:var(--dorado)}.tarjeta.marino{border-left-color:var(--marino)}
+.tarjeta h3{font-family:var(--serif);font-size:clamp(17px,2vw,22px);color:var(--marino);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.destacado{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.1vw,23px);line-height:1.45;color:var(--terracota);text-align:center;padding:8px 16px}
+.mini{font-size:13px;color:var(--gris)}
+
+/* ===== TIMELINE ===== */
+.timeline{display:flex;justify-content:space-between;position:relative;margin:26px 0 8px;flex-wrap:wrap;gap:18px}
+.timeline::before{content:"";position:absolute;top:19px;left:4%;right:4%;height:2.5px;background:linear-gradient(90deg,var(--terracota),var(--dorado),var(--oliva))}
+.tl-item{position:relative;z-index:1;text-align:center;flex:1;min-width:120px;padding:0 6px}
+.tl-item .dot{width:40px;height:40px;border-radius:50%;background:var(--papel);border:3px solid var(--dorado);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:800;font-size:14px;color:var(--marino)}
+.tl-item h4{font-family:var(--serif);font-size:15px;color:var(--marino)}
+.tl-item p{font-size:12.5px;color:var(--gris)}
+
+/* ===== ACORDEONES ===== */
+details.acordeon{background:var(--papel);border:1px solid var(--crema-2);border-radius:13px;margin-bottom:10px;overflow:hidden;transition:.25s}
+details.acordeon[open]{box-shadow:0 4px 16px rgba(34,51,77,.09)}
+details.acordeon summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:14px;padding:16px 20px;font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px)}
+details.acordeon summary::-webkit-details-marker{display:none}
+details.acordeon summary .chev{margin-left:auto;flex:none;width:26px;height:26px;border-radius:50%;background:var(--dorado-suave);color:#7A5A14;display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform .3s}
+details.acordeon[open] summary .chev{transform:rotate(180deg)}
+details.acordeon .cuerpo{padding:0 20px 18px;font-size:14.5px;border-top:1px dashed var(--crema-2);padding-top:14px}
+details.acordeon .cuerpo p+p{margin-top:8px}
+
+/* ===== QUIZ GENÉRICO ===== */
+.quiz-caja{background:#fff;border:1.5px solid var(--crema-2);border-radius:15px;padding:20px 24px;margin-bottom:14px}
+.quiz-caja .pregunta{font-weight:700;color:var(--marino);font-size:clamp(14.5px,1.6vw,17px);margin-bottom:12px}
+.quiz-ops{display:flex;flex-direction:column;gap:8px}
+.quiz-op{text-align:left;border:2px solid var(--crema-2);background:var(--papel);border-radius:11px;padding:11px 16px;cursor:pointer;font-family:var(--sans);font-size:14.5px;color:var(--tinta);transition:.2s}
+.quiz-op:hover:not(:disabled){border-color:var(--dorado);transform:translateX(4px)}
+.quiz-op:disabled{cursor:default;opacity:.75}
+.quiz-op.elegida-bien{border-color:var(--oliva);background:#EDF2E6;opacity:1;font-weight:600}
+.quiz-op.elegida-mal{border-color:var(--terracota);background:#F9E9E1;opacity:1}
+.quiz-op.revelada{border-color:var(--oliva);background:#EDF2E6}
+.feedback{display:none;margin-top:12px;border-radius:11px;padding:12px 16px;font-size:13.5px}
+.feedback.ver{display:block;animation:aparecer .3s ease}
+.feedback.ok{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.feedback.mal{background:#F9E9E1;border:1.5px solid var(--terracota)}
+@keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* mito/realidad */
+.mr-btns{display:flex;gap:10px;margin-top:10px}
+.mr-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:9px;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.mr-btn:hover:not(:disabled){border-color:var(--dorado)}
+.mr-btn:disabled{cursor:default;opacity:.7}
+.mr-btn.si-bien,.mr-btn.no-mal-elec{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.mr-btn.si-mal-elec,.mr-btn.no-bien{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== FLIP CARDS KOLB ===== */
+.kolb-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:16px}
+.flip{perspective:1000px;cursor:pointer;min-height:210px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:210px;transition:transform .55s;transform-style:preserve-3d}
+.flip.volteada .flip-inner{transform:rotateY(180deg)}
+.flip-cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.flip-frontal{background:#fff;border:1.5px solid var(--crema-2);align-items:flex-start}
+.flip-frontal .combo{font-size:11px;font-weight:700;letter-spacing:.08em;background:var(--dorado-suave);color:#7A5A14;padding:3px 10px;border-radius:999px}
+.flip-frontal h4{font-family:var(--serif);font-size:19px;color:var(--marino)}
+.flip-frontal p{font-size:12.5px;line-height:1.42}
+.flip-frontal .ayuda{margin-top:auto;font-size:11px;color:var(--gris);font-style:italic}
+.flip-dorso{transform:rotateY(180deg);color:#fff;justify-content:center;text-align:center}
+.flip-dorso strong{font-family:var(--serif);font-size:17px}
+.flip-dorso span{font-size:12px;opacity:.93;line-height:1.4}
+.flip-dorso.k1{background:#A56A3F}.flip-dorso.k2{background:#4A5F85}.flip-dorso.k3{background:#5F7D62}.flip-dorso.k4{background:#8A5A74}
+
+/* ===== CICLO KOLB SVG INTERACTIVO ===== */
+.ciclo-flex{display:grid;grid-template-columns:1.1fr 1fr;gap:26px;align-items:center;margin-top:10px}
+.ciclo-nodos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nodo{border:2px solid var(--crema-2);background:#fff;border-radius:13px;padding:13px 15px;cursor:pointer;transition:.2s;font-family:var(--sans);text-align:left}
+.nodo:hover{border-color:var(--dorado)}
+.nodo.sel{border-color:var(--terracota);background:var(--terracota-suave)}
+.nodo b{font-family:var(--serif);color:var(--marino);font-size:15.5px;display:block}
+.nodo small{color:var(--gris);font-size:12px}
+.nodo-detalle{background:var(--papel);border:1.5px dashed var(--dorado);border-radius:14px;padding:20px 22px;min-height:170px}
+.nodo-detalle h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:6px}
+.nodo-detalle p{font-size:14.5px}
+
+/* ===== TABLA CLIMA + QUIZ CASOS ===== */
+table.comp{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(34,51,77,.07);margin:14px 0}
+table.comp th{background:var(--marino);color:var(--crema);text-align:left;padding:10px 14px;font-size:13px}
+table.comp td{padding:10px 14px;font-size:13.5px;line-height:1.45;border-top:1px solid var(--crema-2);vertical-align:top}
+table.comp td:first-child{font-weight:700;color:var(--terracota);white-space:nowrap}
+table.comp tr:nth-child(even) td{background:#FBF7EE}
+.caso-vak{background:#fff;border:1.5px solid var(--crema-2);border-radius:14px;padding:16px 20px;margin-bottom:12px}
+.caso-vak h4{font-family:var(--serif);color:var(--marino);font-size:16.5px;margin-bottom:4px}
+.caso-vak p{font-size:14px}
+.vak-btns{display:flex;gap:8px;margin-top:10px}
+.vak-btn{flex:1;border:2px solid var(--crema-2);background:var(--papel);border-radius:999px;padding:8px;font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--sans);transition:.2s}
+.vak-btn:hover:not(:disabled){border-color:var(--dorado)}
+.vak-btn:disabled{cursor:default;opacity:.72}
+.vak-btn.bien{border-color:var(--oliva)!important;background:#EDF2E6!important;opacity:1}
+.vak-btn.mal{border-color:var(--terracota)!important;background:#F9E9E1!important;opacity:1}
+
+/* ===== INVENTARIO DE AULA ===== */
+.chaea-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:13px;padding:14px 18px;margin-bottom:10px}
+.chaea-item .par{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;font-size:13.5px}
+.chaea-item label{display:flex;gap:8px;align-items:flex-start;cursor:pointer;padding:6px 8px;border-radius:9px;transition:.15s}
+.chaea-item label:hover{background:var(--crema)}
+.chaea-item input{accent-color:var(--terracota);margin-top:3px}
+.chaea-item .sep{color:var(--dorado);font-weight:800}
+#chaeaResultado{display:none;margin-top:16px;border-radius:14px;padding:20px 24px;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema)}
+#chaeaResultado.ver{display:block;animation:aparecer .4s ease}
+#chaeaResultado h4{font-family:var(--serif);font-size:21px;color:var(--dorado);margin-bottom:6px}
+.btn-principal{display:inline-block;border:none;background:var(--terracota);color:#fff;font-family:var(--sans);font-weight:700;font-size:15px;padding:12px 26px;border-radius:999px;cursor:pointer;transition:.2s;margin-top:14px}
+.btn-principal:hover{background:#A94F2E;transform:translateY(-2px);box-shadow:0 8px 20px rgba(196,99,62,.35)}
+
+/* ===== VALENTINA ===== */
+.capas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.capa-btn{border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.capa-btn[data-lente="kolb"]{background:var(--terracota);color:#fff}.capa-btn[data-lente="vak"]{background:var(--dorado);color:var(--marino-2)}.capa-btn[data-lente="chaea"]{background:var(--oliva);color:#fff}
+.capa-btn:hover{transform:translateY(-2px)}
+.capa-out{max-width:640px;margin:0 auto;background:#fff;border:1.5px dashed var(--dorado);border-radius:14px;padding:18px 22px;text-align:center;display:none}
+.capa-out.ver{display:block;animation:aparecer .35s ease}
+.capa-out h4{font-family:var(--serif);color:var(--marino);font-size:19px;margin-bottom:4px}
+
+/* ===== RESULTADO AUTOEVALUACIÓN ===== */
+#scoreFinal{display:none;text-align:center;background:linear-gradient(140deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:16px;padding:26px;margin-top:18px}
+#scoreFinal.ver{display:block;animation:aparecer .4s ease}
+#scoreFinal .puntaje{font-family:var(--serif);font-size:44px;font-weight:800;color:var(--dorado)}
+
+/* ===== GLOSARIO BÚSQUEDA ===== */
+#glosarioBusca{width:100%;max-width:420px;display:block;margin:0 auto 18px;border:2px solid var(--crema-2);border-radius:999px;padding:11px 20px;font-family:var(--sans);font-size:14.5px;background:#fff}
+#glosarioBusca:focus{outline:none;border-color:var(--dorado)}
+.glos-item{background:#fff;border:1.5px solid var(--crema-2);border-radius:12px;padding:13px 18px;margin-bottom:9px}
+.glos-item dt{font-family:var(--serif);font-weight:700;color:var(--marino);font-size:15.5px}
+.glos-item dd{font-size:13.5px;margin-top:3px}
+.glos-item.oculto{display:none}
+
+/* si/no */
+.dos-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col-si,.col-no{border-radius:16px;padding:20px 24px}
+.col-si{background:#EDF2E6;border:1.5px solid var(--oliva)}
+.col-no{background:#F6E3DA;border:1.5px solid var(--terracota)}
+.col-si h3{font-family:var(--serif);color:#4C5A2E;font-size:20px;margin-bottom:10px}
+.col-no h3{font-family:var(--serif);color:#96482A;font-size:20px;margin-bottom:10px}
+.col-si li,.col-no li{list-style:none;position:relative;padding-left:24px;font-size:14.5px;margin-bottom:7px}
+.col-si li::before{content:"✓";position:absolute;left:0;color:var(--oliva);font-weight:700}
+.col-no li::before{content:"✕";position:absolute;left:0;color:var(--terracota);font-weight:700}
+
+/* cierre oscuro */
+.cierre-band{background:linear-gradient(150deg,var(--marino),var(--marino-2));color:var(--crema);border-radius:20px;padding:38px 34px;margin-top:24px}
+.cierre-band h3{font-family:var(--serif);font-size:clamp(19px,2.4vw,27px);margin-bottom:10px;color:var(--crema)}
+.cierre-band .consigna{font-family:var(--serif);font-style:italic;font-size:clamp(16px,2vw,22px);color:var(--dorado)}
+.refs{font-size:13px;color:#C9D2E0;line-height:1.8}
+
+footer{background:var(--marino-2);color:#8FA0B8;text-align:center;padding:32px 24px;font-size:13px;margin-top:60px}
+footer b{color:var(--crema)}
+
+#arriba{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:19px;cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:1500;box-shadow:0 6px 18px rgba(196,99,62,.4)}
+#arriba.ver{opacity:1;pointer-events:auto}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .top-inner{flex-direction:column;align-items:flex-start}
+  nav.secciones{width:100%}
+  .grid2,.grid3,.dos-col,.ciclo-flex{grid-template-columns:1fr}
+  .grid4,.kolb-grid{grid-template-columns:1fr 1fr}
+  .sec-intro{padding-left:0}
+}
+@media(max-width:520px){.grid4,.kolb-grid{grid-template-columns:1fr}.chaea-item .par{grid-template-columns:1fr}.chaea-item .sep{display:none}}
+</style>
+</head>
+<body>
+
+<div id="lectura"></div>
+
+<header class="top">
+  <div class="top-inner">
+    <a class="marca" href="#inicio">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Bombilla de crayones con un brote creciendo de bloques de juego" style="width:34px;height:34px" fill="none"><defs><clipPath id="c16vidrio-m"><circle cx="120" cy="106" r="58"/></clipPath></defs><g><rect x="47.6" y="36.7" width="13" height="28" rx="6.5" transform="rotate(-50 54.1 50.7)" fill="#C4633E"/><rect x="77.2" y="14.1" width="13" height="28" rx="6.5" transform="rotate(-25 83.7 28.1)" fill="#D9A441"/><rect x="113.5" y="6" width="13" height="28" rx="6.5" fill="#7D8655"/><rect x="149.8" y="14.1" width="13" height="28" rx="6.5" transform="rotate(25 156.3 28.1)" fill="#D9A441"/><rect x="179.4" y="36.7" width="13" height="28" rx="6.5" transform="rotate(50 185.9 50.7)" fill="#C4633E"/></g><circle cx="120" cy="106" r="62" fill="rgba(217,164,65,.10)" stroke="#D9A441" stroke-width="5"/><g clip-path="url(#c16vidrio-m)"><path d="M72 134 C 80 84 162 72 170 118" stroke="#D9A441" stroke-width="13" stroke-linecap="round" opacity=".26"/><path d="M78 146 C 98 102 158 98 166 138" stroke="#C4633E" stroke-width="11" stroke-linecap="round" opacity=".22"/><path d="M88 66 C 112 52 148 54 164 72" stroke="#7D8655" stroke-width="9" stroke-linecap="round" opacity=".20"/></g><path d="M120 101 C 119 89 121 79 120 67" stroke="#7D8655" stroke-width="5" stroke-linecap="round"/><path d="M120 88 C 108 86 100 78 98 67 C 110 69 118 76 120 88 Z" fill="#7D8655"/><path d="M120 80 C 132 78 140 70 142 59 C 130 61 122 68 120 80 Z" fill="#8DA85E"/><rect x="106.5" y="100" width="27" height="22" rx="4" fill="#8DA85E"/><rect x="91" y="122" width="27" height="22" rx="4" fill="#C4633E"/><rect x="122" y="122" width="27" height="22" rx="4" fill="#D9A441"/><path d="M97 164 L143 164 L137 180 L103 180 Z" fill="#C4633E"/><rect x="101" y="181" width="38" height="9" rx="4.5" fill="#D9A441"/><rect x="105" y="192" width="30" height="8" rx="4" fill="#D9A441" opacity=".75"/><rect x="113" y="202" width="14" height="6" rx="3" fill="#B85C39"/><circle cx="36" cy="150" r="3.5" fill="#D9A441"/><circle cx="204" cy="142" r="3" fill="#C4633E"/><circle cx="48" cy="196" r="3" fill="#7D8655"/><circle cx="196" cy="186" r="3.5" fill="#D9A441"/><path d="M30 96 L38 92 L34 102 Z" fill="#7D8655" opacity=".9"/><path d="M206 102 L214 98 L210 108 Z" fill="#C4633E" opacity=".9"/></svg>
+      <span><small>Material de estudio · Clase 16</small><b>Integración y repaso antes del parcial</b></span>
+    </a>
+    <nav class="secciones" id="navSecs">
+      <a href="#mapa">Mapa</a><a href="#unidad3">Unidad III</a><a href="#estaciones">Estaciones</a><a href="#errores">Errores</a><a href="#ensayo">Ensayo</a><a href="#autoevaluación">Autoevaluación</a><a href="#glosario">Glosario</a><a href="../../../index.html" class="volver">← Volver al menú</a>
+    
+  </div>
+</header>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero" id="inicio">
+  <svg class="prisma-hero" viewBox="0 0 240 240" role="img" aria-label="Tres bloques de colores que confluyen en una marca de verificación" fill="none"><circle cx="120" cy="120" r="102" fill="rgba(217,164,65,.08)" stroke="#D9A441" stroke-width="4"/><rect x="42" y="52" width="42" height="42" rx="9" fill="#C4633E"/><rect x="99" y="52" width="42" height="42" rx="9" fill="#D9A441"/><rect x="156" y="52" width="42" height="42" rx="9" fill="#7D8655"/><path d="M63 94 L110 150" stroke="#C9D2E0" stroke-width="4" opacity=".7"/><path d="M120 94 L120 148" stroke="#C9D2E0" stroke-width="4" opacity=".7"/><path d="M177 94 L130 150" stroke="#C9D2E0" stroke-width="4" opacity=".7"/><circle cx="120" cy="180" r="27" fill="#8DA85E"/><path d="M107 180 l10 10 l18 -21" stroke="#F7F1E5" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  <p class="kicker">Psicología Educacional · Profesorado de Educación Inicial · Unidad IV</p>
+  <h1>Repasamos las dos unidades<br><em>antes del parcial</em></h1>
+  <p class="sub">Mapa de fracaso, educabilidad y evaluación · puente a la Unidad III · cuatro estaciones de repaso · errores que restan · ensayo de caso integrador.<br>Material interactivo para estudiar a tu ritmo — con quizzes autocorregidos.</p>
+</div>
+
+<main>
+
+<!-- ═══════════ 1 · MAPA ═══════════ -->
+<section class="bloque" id="mapa">
+  <div class="sec-head reveal"><span class="sec-num">1</span><h2>El mapa en una página</h2></div>
+  <p class="sec-intro reveal">Si la Unidad IV entrara en un bolsillo, sería esta línea de tiempo. Cada parada es una clase que ya cursaste.</p>
+  <div class="timeline reveal">
+    <div class="tl-item"><div class="dot">14</div><h4>Fracaso masivo</h4><p>Lo explica la escolaridad, no el chico</p></div>
+    <div class="tl-item"><div class="dot">14</div><h4>Educabilidad</h4><p>Propiedad de la situación</p></div>
+    <div class="tl-item"><div class="dot">15</div><h4>Evaluación</h4><p>Comprender en lugar de clasificar</p></div>
+    <div class="tl-item"><div class="dot">16</div><h4>Hoy</h4><p>Integramos y repasamos todo</p></div>
+  </div>
+  <p class="destacado reveal">«De mirar al chico a mirar las condiciones.»</p>
+
+  <div class="tarjeta reveal" id="unidad3" style="margin-top:22px">
+    <h3>Y la Unidad III, que también entra en el parcial</h3>
+    <p>El parcial del <strong>viernes 20 de noviembre</strong> cubre las dos unidades. La Unidad IV es lo de hoy; de la Unidad III hay que repasar:</p>
+    <ul class="presentation-list">
+      <li><strong>Estilos y diseño universal (DUA):</strong> la variabilidad es la norma, no la excepción.</li>
+      <li><strong>Motivación:</strong> intrínseca y extrínseca, y el peso de las expectativas y de las etiquetas.</li>
+      <li><strong>Autoestima y resiliencia:</strong> la resiliencia como proceso, con sus factores protectores.</li>
+      <li><strong>Creatividad y vínculo:</strong> clima de aula y vínculo afectivo más desafío cognitivo.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ 2 · Estaciones ═══════════ -->
+<section class="bloque" id="estaciones">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">2</span><h2>Las cuatro estaciones</h2></div>
+  <p class="sec-intro reveal">Lo que se trabajo en clase, para practicar en casa con la carpeta al lado. Diez minutos por estación, con reloj.</p>
+  <div class="grid2">
+    <div class="tarjeta reveal"><h3>1 · ¿Casos sueltos o sistema?</h3>
+      <p>Con datos de trayectorias: si repite una gran parte, ¿puede ser un problema de cada chico? Escribí tres líneas con <strong>teóricas, reales y sistema</strong>.</p>
+    </div>
+    <div class="tarjeta oliva reveal"><h3>2 · Del rótulo a la condición</h3>
+      <p>Rótulo: «es la lenta de la sala». Reescribilo: ¿qué ofrece la situación? ¿qué falta? ¿qué rediseñarías <strong>mañana</strong>?</p>
+    </div>
+    <div class="tarjeta dorado reveal"><h3>3 · ¿Controla o comprende?</h3>
+      <p>Instrumento: la prueba igual para todos con nota pública. Decidí el modelo y proponé <strong>un cambio mínimo</strong> que lo vuelva comprensivo.</p>
+    </div>
+    <div class="tarjeta marino reveal"><h3>4 · Caso integrador</h3>
+      <p>Sala de cinco: niño «inquieto», familia «poco presente». Tres bloques: conceptos · análisis con autores · <strong>propuesta docente</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3 · ERRORES ═══════════ -->
+<section class="bloque" id="errores">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--terracota)">3</span><h2>Los tres errores que más restan</h2></div>
+  <p class="sec-intro reveal">Detectados en parciales anteriores. Leelos antes de entregar: cada uno tiene arreglo simple.</p>
+  <details class="acordeon reveal"><summary>Culpar a la familia sin analizar la oferta<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>«La familia no acompaña» puede ser cierto, pero no es un análisis: el parcial pide <strong>condiciones</strong>. Pregunta obligada: ¿qué podría ofrecer distinto la sala aunque la familia no cambie?</p></div>
+  </details>
+  <details class="acordeon reveal"><summary>Usar educabilidad como sinónimo de capacidad<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>Es exactamente al revés: educabilidad es <strong>propiedad de la situación</strong>. Si tu respuesta dice «tiene poca educabilidad», reescribila: «la situación le ofrece pocas condiciones».</p></div>
+  </details>
+  <details class="acordeon reveal"><summary>Proponer más de lo mismo<span class="chev">▼</span></summary>
+    <div class="cuerpo"><p>«Más apoyo, más paciencia, más diálogo» no es rediseño. El parcial pide <strong>una condición concreta</strong>: qué cambia, quién lo hace y cuándo se revisa.</p></div>
+  </details>
+  <div class="quiz-caja reveal" data-mr="mito">
+    <p class="pregunta">«En el parcial conviene escribir largo aunque sea impreciso: lo que abunda no daña.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es un mito.</strong> La precisión conceptual es criterio de corrección. Tres líneas con vocabulario exacto valen más que una carilla con sinónimos mezclados.</div>
+    <div class="feedback ok"><strong>¡Exacto, es un mito!</strong> Cada criterio mira precisión: términos bien usados, autores articulados, propuesta concreta. Lo largo e impreciso resta en los cuatro.</div>
+  </div>
+  <div class="quiz-caja reveal" data-mr="realidad">
+    <p class="pregunta">«Nombrar autores sin articularlos con el caso resta puntos.»</p>
+    <div class="mr-btns"><button class="mr-btn">✅ Realidad</button><button class="mr-btn">❌ Mito</button></div>
+    <div class="feedback mal"><strong>Es realidad.</strong> El criterio dice «articulados con la sala, no nombrados al pasar». Cada autor citado tiene que trabajar en tu análisis o mejor no citarlo.</div>
+    <div class="feedback ok"><strong>¡Exacto, es realidad!</strong> Un Baquero bien usado en el caso vale más que tres autores enumerados. Calidad de articulación, no cantidad de nombres.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 4 · ENSAYO ═══════════ -->
+<section class="bloque" id="ensayo">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">4</span><h2>Ensayo de caso integrador</h2></div>
+  <p class="sec-intro reveal">El formato del parcial, paso a paso, con el caso de la estación cuatro. Práctica con reloj: planteo, análisis y propuesta.</p>
+  <div class="tarjeta reveal"><h3>El caso</h3>
+    <p>Sala de cinco, segundo cuatrimestre. La maestra describe a un niño como «inquieto, no se concentra en la asamblea» y a su familia como «poco presente: nunca vienen a las reuniones». Pide derivación a gabinete.</p>
+  </div>
+  <div class="tarjeta oliva reveal"><h3>Bloque uno · Conceptos en juego</h3>
+    <p>Subraya en el caso: ¿qué rótulos operan? ¿qué sospechas aparecen? Nombra <strong>tres conceptos</strong> de la Unidad IV presentes (por ejemplo: rótulo, sospecha sobre educabilidad, evaluación para el control).</p>
+  </div>
+  <div class="tarjeta dorado reveal"><h3>Bloque dos · Análisis con autores</h3>
+    <p>Elegí <strong>dos autores</strong> y hacelos trabajar: ¿qué diría Terigi de esta derivación? ¿qué preguntaría Baquero antes de firmar? Una idea por autor, pegada al caso.</p>
+  </div>
+  <div class="tarjeta marino reveal"><h3>Bloque tres · Propuesta docente</h3>
+    <p>Rediseña <strong>una condición concreta</strong> de esa sala para las próximas dos semanas: qué cambia, quién lo hace, cuándo se revisa. Si tu propuesta sirve para cualquier sala, todavía no es concreta.</p>
+  </div>
+</section>
+
+<!-- ═══════════ 5 · Autoevaluación ═══════════ -->
+<section class="bloque" id="autoevaluación">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--dorado)">5</span><h2>Autoevaluación final</h2></div>
+  <p class="sec-intro reveal">Cinco preguntas de la Unidad IV. Si te salen fluidas, el parcial sale fluido. Lo de la Unidad III se repasa en el bloque anterior.</p>
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">1 · Trayectorias teóricas frente a trayectorias reales: la diferencia muestra…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Que los chicos de hoy estudian menos que antes</button>
+      <button class="quiz-op">Que cada familia elige libremente su recorrido</button>
+      <button class="quiz-op">Que el recorrido supuesto por el sistema no coincide con el vivido, atravesado por repitencias e interrupciones</button>
+      <button class="quiz-op">Que la teoría siempre se equívoca</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> La brecha entre lo supuesto (un año por grado) y lo vivido revela los mecanismos silenciosos de filtrado del sistema.</div>
+    <div class="feedback mal"><strong>✘ No.</strong> No es nostalgia ni elección libre: es la distancia entre el recorrido ideal que el sistema supone y los recorridos reales que produce.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="1">
+    <p class="pregunta">2 · «La educabilidad es propiedad de las situaciones educativas» significa que…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Algunos chicos nacen más educables que otros</button>
+      <button class="quiz-op">Depende de la calidad de la oferta: misma persona, otra propuesta, otra posibilidad</button>
+      <button class="quiz-op">Solo se aplica en contextos de pobreza</button>
+      <button class="quiz-op">Se mide con tests al ingresar a la escuela</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Relación sujeto–oferta: cambia la propuesta, cambia lo posible. Por eso es responsabilidad docente, no diagnóstico.</div>
+    <div class="feedback mal"><strong>✘ Al revés.</strong> Nada de rasgos fijos ni tests: la reformulación saca la educabilidad del interior del sujeto y la pone en la situación.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="0">
+    <p class="pregunta">3 · Un informe que solo enumera carencias del chico, sin comprometer la enseñanza, es…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Evaluación para el control, aunque este bien redactado</button>
+      <button class="quiz-op">Evaluación para la comprensión, porque describe con detalle</button>
+      <button class="quiz-op">Documentación pedagógica completa</button>
+      <button class="quiz-op">Una devolución formativa</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Sin compromiso docente fechado, la descripción prolija sigue siendo control: clasifica sin abrir caminos.</div>
+    <div class="feedback mal"><strong>✘ No.</strong> El detalle no la vuelve comprensiva: lo que la vuelve comprensiva es el párrafo donde la sala dice que va a hacer distinto.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="3">
+    <p class="pregunta">4 · El efecto de las expectativas sobre el rendimiento (Pigmalion) advierte que…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Hay que elogiar todo para motivar</button>
+      <button class="quiz-op">Las expectativas no influyen si el instrumento es objetivo</button>
+      <button class="quiz-op">Solo afecta a los chicos más pequeños</button>
+      <button class="quiz-op">Lo que la docente espera organiza oportunidades y termina produciendo lo esperado</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Expectativa alta o baja distribuye desafíos, tiempos y ayudas: el resultado confirma el pronóstico. Versión individual del círculo de la sospecha.</div>
+    <div class="feedback mal"><strong>✘ No es eso.</strong> No es elogio indiscriminado ni cuestión de edad: es como las expectativas silenciosas reparten oportunidades distintas.</div>
+  </div>
+  <div class="quiz-caja reveal" data-corr="2">
+    <p class="pregunta">5 · En el parcial, una buena propuesta docente se reconoce porque…</p>
+    <div class="quiz-ops">
+      <button class="quiz-op">Usa palabras técnicas difíciles</button>
+      <button class="quiz-op">Propone derivar rápidamente a especialistas</button>
+      <button class="quiz-op">Dice qué condición cambia, quién lo hace y cuándo se revisa</button>
+      <button class="quiz-op">Abarca toda la institución en un trimestre</button>
+    </div>
+    <div class="feedback ok"><strong>✔ Correcto.</strong> Concreción con responsables y tiempos: esa es la construcción de posibilidad evaluable. Lo grandilocuente sin pasos no suma.</div>
+    <div class="feedback mal"><strong>✘ No.</strong> Ni tecnicismos ni derivaciones ni planes gigantes: una condición concreta, con quién y cuándo. Eso es lo que el criterio pide.</div>
+  </div>
+  <div id="scoreFinal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:11.5px;color:var(--dorado);font-weight:700">Tu resultado</p>
+    <div class="puntaje"><span id="scoreNum">0</span> / 5</div>
+    <p id="scoreMsg" style="font-size:15.5px;max-width:52ch;margin:8px auto 0"></p>
+  </div>
+</section>
+
+<!-- ═══════════ 6 · GLOSARIO ═══════════ -->
+<section class="bloque" id="glosario">
+  <div class="sec-head reveal"><span class="sec-num" style="background:var(--oliva)">6</span><h2>Glosario</h2></div>
+  <p class="sec-intro reveal">Todo el vocabulario de las dos unidades, junto. Usá el buscador antes del parcial.</p>
+  <input type="search" id="glosarioBusca" placeholder="🔎 Buscar término…" aria-label="Buscar en el glosario">
+  <div id="glosLista">
+    <dl class="glos-item reveal"><dt>Fracaso escolar masivo</dt><dd>Cuando el fracaso deja de ser excepcional y afecta sistemáticamente a amplios sectores: su escala exige explicarlo por la escolaridad y no por atributos individuales.</dd></dl>
+    <dl class="glos-item reveal"><dt>Trayectoria teórica / real</dt><dd>Recorrido supuesto por el sistema (un año por grado) frente al efectivamente vivido, con repitencias, interrupciones y cambios.</dd></dl>
+    <dl class="glos-item reveal"><dt>Educabilidad</dt><dd>Como propiedad de las situaciones educativas: depende de la calidad de la oferta de enseñanza. Lo opuesto a usarla como sinónimo de capacidad.</dd></dl>
+    <dl class="glos-item reveal"><dt>Efecto de expectativas</dt><dd>Lo que la docente espera organiza oportunidades (desafíos, tiempos, ayudas) y termina produciendo lo esperado. Versión individual del círculo de la sospecha.</dd></dl>
+    <dl class="glos-item reveal"><dt>Evaluación para el control</dt><dd>Mide y clasifica con varas comunes. Cierra futuros.</dd></dl>
+    <dl class="glos-item reveal"><dt>Evaluación para la comprensión</dt><dd>Lee situaciones y orienta la enseñanza que sigue. Abre futuros.</dd></dl>
+    <dl class="glos-item reveal"><dt>Rótulo / condición</dt><dd>El rótulo nombra una esencia del chico; la condición describe la situación. El oficio docente traduce rótulos a condiciones redisenables.</dd></dl>
+    <dl class="glos-item reveal"><dt>Construcción de posibilidad</dt><dd>Diseño deliberado de condiciones bajo las cuales el aprendizaje se vuelve posible: qué cambia, quién lo hace, cuándo se revisa.</dd></dl>
+    <dl class="glos-item reveal"><dt>Diseño universal (DUA)</dt><dd>La variabilidad como norma: no se busca un único camino de aprendizaje, sino que se ofrece más de una forma de acceder al contenido y de participar.</dd></dl>
+    <dl class="glos-item reveal"><dt>Motivación intrínseca / extrínseca</dt><dd>La que viene del hacer y del interés propio, frente a la que viene del premio, la nota o la mirada de los demás.</dd></dl>
+    <dl class="glos-item reveal"><dt>Resiliencia como proceso</dt><dd>No es un rasgo fijo: se construye y se sostiene con factores protectores, y se apoya en la red de apoyo de la escuela.</dd></dl>
+    <dl class="glos-item reveal"><dt>Clima de aula</dt><dd>Lo que hace posible el riesgo cognitivo: seguridad, pertenencia y alternativa para el error.</dd></dl>
+  </div>
+</section>
+
+<!-- ═══════════ 7 · CIERRE ═══════════ -->
+<section class="bloque" id="referencias">
+  <div class="cierre-band reveal">
+    <p style="letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--dorado);font-weight:700">Para cerrar</p>
+    <h3>Ejercicio integrador y parcial · Lo que sigue</h3>
+    <p class="consigna">«Síntesis sobre fracaso escolar y educabilidad con posicionamiento: ¿qué escuela elegís sostener como docente futura y por qué?» Se trabaja en clase, en cinco minutos: no hay entrega a domicilio.</p>
+    <p style="font-size:14px;color:#C9D2E0;margin-top:10px">Viernes 13 de noviembre · ejercicio preparatorio en clase, con el mismo formato del parcial.</p>
+    <p style="font-size:14px;color:#C9D2E0;margin-top:10px">Viernes 20 de noviembre · parcial escrito · 90 minutos · con carpeta y materiales · preguntas cortas, desarrollo, caso integrador y reflexión docente · se aprueba con 13 sobre 25.</p>
+    <hr style="border:none;border-top:1px solid rgba(247,241,229,.2);margin:22px 0">
+    <p class="refs"><strong style="color:var(--crema)">Referencias:</strong> Baquero, R. (2001). La educabilidad bajo sospecha. <em>Cuaderno de Pedagogía Rosario</em>, N° 9. · Guerrero Ortiz, L. (1999). Educación inicial: a la búsqueda del tesoro escondido. <em>RIE</em>, N° 22, OEI. · Terigi, F. (2009). El fracaso escolar desde la perspectiva psicoeducativa. <em>RIE</em>, N° 50, 23–39, OEI. · Toscano, A., Pérez, A., Serial, A. y López, M. (2008). Educabilidad y contextos de pobreza. REDUEI, UNCuyo.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <b>Psicología Educacional · Profesorado de Educación Inicial · 2° Año</b><br>Material de estudio interactivo · Clase 16 — Integración y repaso antes del parcial<br>Instituto Superior Terciario Fátima Soldati
+</footer>
+
+<button id="arriba" title="Volver arriba">↑</button>
+
+<script>
+/* barra de lectura + botón arriba */
+const lectura=document.getElementById('lectura');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  lectura.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  document.getElementById('arriba').classList.toggle('ver',h.scrollTop>600);
+},{passive:true});
+document.getElementById('arriba').onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* reveal on-scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* scroll-spy */
+const links=[...document.querySelectorAll('#navSecs a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ links.forEach(l=>l.classList.toggle('activa',l.getAttribute('href')==='#'+e.target.id)); }});
+},{rootMargin:'-25% 0px -65% 0px'});
+secs.forEach(s=>s&&spy.observe(s));
+
+/* helper quiz de opciones */
+function armarQuiz(caja){
+  const ops=[...caja.querySelectorAll('.quiz-op')];
+  const corr=parseInt(caja.dataset.corr);
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  ops.forEach((op,i)=>op.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const bien=i===corr;
+    op.classList.add(bien?'elegida-bien':'elegida-mal');
+    ops[corr].classList.add('revelada');
+    ops.forEach(o=>o.disabled=true);
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuesta(bien);
+  }));
+}
+
+/* mito/realidad */
+document.querySelectorAll('.quiz-caja[data-mr]').forEach(caja=>{
+  const esMito=caja.dataset.mr==='mito';
+  const btns=caja.querySelectorAll('.mr-btn');
+  const btnRealidad=btns[0],btnMito=btns[1];
+  const fbOk=caja.querySelector('.feedback.ok'),fbMal=caja.querySelector('.feedback.mal');
+  let resuelta=false;
+  [btnRealidad,btnMito].forEach(b=>b.addEventListener('click',()=>{
+    if(resuelta)return; resuelta=true;
+    const dijoRealidad=b===btnRealidad;
+    const bien=(esMito&&!dijoRealidad)||(!esMito&&dijoRealidad);
+    if(dijoRealidad){btnRealidad.classList.add(bien?'si-bien':'si-mal-elec');}
+    else{btnMito.classList.add(bien?'si-bien':'si-mal-elec');}
+    btnRealidad.disabled=btnMito.disabled=true;
+    (bien?fbOk:fbMal).classList.add('ver');
+    registrarRespuestaNoScore(bien);
+  }));
+});
+
+/* flips */
+document.querySelectorAll('.flip').forEach(f=>{
+  const go=()=>f.classList.toggle('volteada');
+  f.addEventListener('click',go);
+  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+});
+
+/* autoevaluación final con puntaje (cuenta solo las data-corr) */
+let respondidas=0,aciertos=0;
+function registrarRespuesta(bien){
+  respondidas++; if(bien)aciertos++;
+  if(respondidas===5){
+    document.getElementById('scoreNum').textContent=aciertos;
+    const msg=aciertos===5?'¡Excelente! La Unidad IV está sólida: al parcial con confianza.'
+      :aciertos>=3?'¡Muy bien! Repasá lo que fallaste usando el glosario y la ficha de lectura.'
+      :'Volvé al mapa y a las estaciones e intentá de nuevo: con otra lectura atenta, sale.';
+    document.getElementById('scoreMsg').textContent=msg;
+    const sf=document.getElementById('scoreFinal');
+    sf.classList.remove('ver');void sf.offsetWidth;sf.classList.add('ver');
+    sf.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+function registrarRespuestaNoScore(bien){ /* mito/realidad: practican sin contar para el puntaje */ }
+document.querySelectorAll('.quiz-caja[data-corr]').forEach(armarQuiz);
+
+/* buscador de glosario */
+document.getElementById('glosarioBusca').addEventListener('input',e=>{
+  const q=e.target.value.toLowerCase().trim();
+  document.querySelectorAll('.glos-item').forEach(it=>{
+    it.classList.toggle('oculto', q && !it.textContent.toLowerCase().includes(q));
+  });
+});
+</script>
+</body>
+</html>
